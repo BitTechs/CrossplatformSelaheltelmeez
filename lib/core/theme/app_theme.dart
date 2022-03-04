@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:selaheltelmeez/widgets/buttons/fancy_elevated_button.dart';
 
 class AppTheme{
   static get lightTheme  => ThemeData(

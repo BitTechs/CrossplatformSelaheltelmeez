@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:selaheltelmeez/core/theme/app_theme.dart';
 
 class FancyElevatedButton extends StatelessWidget {
   final String title;
