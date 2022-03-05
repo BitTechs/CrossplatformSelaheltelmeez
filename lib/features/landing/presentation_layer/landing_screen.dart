@@ -74,10 +74,16 @@ class LandingScreen extends ConsumerWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: result.value.listSection?[0].listItem?.length,
                     itemBuilder: (BuildContext context, int index) => Card(
-                      child: Image(
-                        image: NetworkImage(result.value.listSection?[0]
-                                .listItem?[index].thumbnail ??
-                            ""),
+                      child: InkWell(
+                        onTap: () => Navigator.of(context).pushNamed(
+                            "/YouTubeViewer",
+                            arguments:
+                                result.value.listSection?[0].listItem?[index]),
+                        child: Image(
+                          image: NetworkImage(result.value.listSection?[0]
+                                  .listItem?[index].thumbnail ??
+                              ""),
+                        ),
                       ),
                     ),
                   ),
@@ -105,11 +111,12 @@ class LandingScreen extends ConsumerWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: result.value.listSection?[1].listItem?.length,
                     itemBuilder: (BuildContext context, int index) => Card(
+                      color: Colors.white,
                       child: InkWell(
                         onTap: () => Navigator.of(context).pushNamed(
                             "/WebViewer",
                             arguments:
-                                result.value.listSection?[1].listItem?[index]),
+                                result.value.listSection?[1].listItem?[index],),
                         child: Image(
                           image: NetworkImage(result.value.listSection?[1]
                                   .listItem?[index].thumbnail ??
