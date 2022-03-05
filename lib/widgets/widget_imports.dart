@@ -5,3 +5,4 @@ export 'package:selaheltelmeez/widgets/scaffold/navigated_app_scaffold.dart';
 export 'package:selaheltelmeez/widgets/scaffold/youtube_scaffold.dart';
 export 'package:selaheltelmeez/widgets/web_view/web_viewer.dart';
 export 'package:selaheltelmeez/widgets/web_view/youtube_viewer.dart';
+export 'package:selaheltelmeez/widgets/layouts/scroll_column_expandable.dart';
