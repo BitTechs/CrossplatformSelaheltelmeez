@@ -16,94 +16,100 @@ class LandingScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     AsyncValue<ValueCommitResult<LandingSection>> result =
         ref.watch(LandingProviderContainer.futureLandingProvider);
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Stack(
-            children: [
-              const Image(image: AssetImage(AssetsImage.landing)),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 8.0,
-                  top: 32.0,
-                ),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: SizedBox(
-                    width: 95.0,
-                    height: 40.0,
-                    child: FancyElevatedButton(
-                      title: 'دخول',
-                      backGroundColor: CommonColors.fancyElevatedButtonBackGroundColor,
-                      titleColor: CommonColors.fancyElevatedTitleColor,
-                      shadowColor: CommonColors.fancyElevatedShadowTitleColor,
-                      onPressed: ()=>{},
-                    ),
+    return FlatAppScaffold(
+      child: SingleChildScrollView(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Stack(
+          children: [
+            const Image(image: AssetImage(AssetsImage.landing)),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 8.0,
+                top: 32.0,
+              ),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: SizedBox(
+                  width: 95.0,
+                  height: 40.0,
+                  child: FancyElevatedButton(
+                    title: 'دخول',
+                    backGroundColor:
+                        CommonColors.fancyElevatedButtonBackGroundColor,
+                    titleColor: CommonColors.fancyElevatedTitleColor,
+                    shadowColor: CommonColors.fancyElevatedShadowTitleColor,
+                    onPressed: () => {},
                   ),
                 ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 8.0,
-          ),
-          result.when(
-            loading: () => const Center(
-                child: DoubleBounce()),
-            error: (err, stack) => Text('Error: $err'),
-            data: (result) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text("تعرف على منهجك الدراسي بطريقة سهلة وأكثر تفاعلية",style: Theme.of(context).textTheme.bodyText2,),
+              ),
+            )
+          ],
+        ),
+        const SizedBox(
+          height: 8.0,
+        ),
+        result.when(
+          loading: () => const Center(child: DoubleBounce()),
+          error: (err, stack) => Text('Error: $err'),
+          data: (result) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  "تعرف على منهجك الدراسي بطريقة سهلة وأكثر تفاعلية",
+                  style: Theme.of(context).textTheme.bodyText2,
                 ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: SizedBox(
-                    height: 180.0,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: result.value.listSection?[0].listItem?.length,
-                      itemBuilder: (BuildContext context, int index) => Card(
-                        child: Image(
-                          image: NetworkImage(result.value.listSection?[0]
-                                  .listItem?[index].thumbnail ??
-                              ""),
-                        ),
+              ),
+              const SizedBox(
+                height: 8.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: SizedBox(
+                  height: 180.0,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: result.value.listSection?[0].listItem?.length,
+                    itemBuilder: (BuildContext context, int index) => Card(
+                      child: Image(
+                        image: NetworkImage(result.value.listSection?[0]
+                                .listItem?[index].thumbnail ??
+                            ""),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 8.0,
+              ),
+              const SizedBox(
+                height: 8.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  "تعرف على مايقدمه التطبيق وأهم مميزاته",
+                  style: Theme.of(context).textTheme.bodyText2,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    "تعرف على مايقدمه التطبيق وأهم مميزاته",
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: SizedBox(
-                    height: 95.0,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: result.value.listSection?[1].listItem?.length,
-                      itemBuilder: (BuildContext context, int index) => Card(
+              ),
+              const SizedBox(
+                height: 8.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: SizedBox(
+                  height: 95.0,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: result.value.listSection?[1].listItem?.length,
+                    itemBuilder: (BuildContext context, int index) => Card(
+                      child: InkWell(
+                        onTap: () => Navigator.of(context).pushNamed(
+                            "/WebViewer",
+                            arguments:
+                                result.value.listSection?[1].listItem?[index]),
                         child: Image(
                           image: NetworkImage(result.value.listSection?[1]
                                   .listItem?[index].thumbnail ??
@@ -113,25 +119,25 @@ class LandingScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              "قريبا Joy School",
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text(
+            "قريبا Joy School",
+            style: Theme.of(context).textTheme.bodyText2,
           ),
-          const SizedBox(
-            height: 8.0,
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Image(image: AssetImage(AssetsImage.joySchool)),
-          )
-        ])),
-      ),
+        ),
+        const SizedBox(
+          height: 8.0,
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: Image(image: AssetImage(AssetsImage.joySchool)),
+        )
+      ])),
     );
   }
 }
