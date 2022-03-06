@@ -14,7 +14,6 @@ class YouTubeScaffold extends StatelessWidget {
       body: SafeArea(child: child),
       floatingActionButton: FloatingActionButton.small(
         onPressed: () async {
-          await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
           await Navigator.of(context).maybePop();
         },
         backgroundColor: CommonColors.youTubeCloseButtonBackGroundColor,

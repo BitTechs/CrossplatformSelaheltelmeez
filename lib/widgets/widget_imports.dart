@@ -6,3 +6,6 @@ export 'package:selaheltelmeez/widgets/scaffold/youtube_scaffold.dart';
 export 'package:selaheltelmeez/widgets/web_view/web_viewer.dart';
 export 'package:selaheltelmeez/widgets/web_view/youtube_viewer.dart';
 export 'package:selaheltelmeez/widgets/layouts/scroll_column_expandable.dart';
+export 'package:selaheltelmeez/widgets/layouts/image_with_bottom_header.dart';
+export 'package:selaheltelmeez/widgets/inputs/fancy_text_form_field.dart';
+export 'package:selaheltelmeez/widgets/inputs/fancy_fixed_text_form_button.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:selaheltelmeez/features/authentication/login/presentation_layer/login_screen.dart';
 import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_object/landing_section.dart';
 import 'package:selaheltelmeez/features/landing/presentation_layer/landing_screen.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
@@ -17,6 +18,8 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return PageTransition(child: const LandingScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case '/login':
+        return PageTransition(child: const LoginScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
      case '/WebViewer':
       // Validation of correct data type
         ListItem listItem = (args as ListItem);

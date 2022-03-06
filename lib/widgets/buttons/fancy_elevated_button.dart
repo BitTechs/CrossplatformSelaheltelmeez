@@ -6,30 +6,34 @@ class FancyElevatedButton extends StatelessWidget {
   final Color titleColor;
   final Color shadowColor;
   final VoidCallback? onPressed;
-  const FancyElevatedButton({Key? key, required this.title, required this.backGroundColor, required this.titleColor, this.onPressed, required this.shadowColor}) : super(key: key);
+  final double? width;
+  const FancyElevatedButton({Key? key, required this.title, required this.backGroundColor, required this.titleColor, this.onPressed, required this.shadowColor, this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(backGroundColor),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
+    return SizedBox(
+      width: width,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(backGroundColor),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+            ),
           ),
         ),
-      ),
-      onPressed: onPressed,
-      child: Text(title,
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            color: titleColor,
-            shadows: <Shadow>[
-               Shadow(
-                offset: const Offset(-1.0, -1.0),
-                blurRadius: 0.5,
-                color: shadowColor,
-              ),
-            ]
+        onPressed: onPressed,
+        child: Text(title,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: titleColor,
+              shadows: <Shadow>[
+                 Shadow(
+                  offset: const Offset(-1.0, -1.0),
+                  blurRadius: 0.5,
+                  color: shadowColor,
+                ),
+              ]
+          ),
         ),
       ),
     );

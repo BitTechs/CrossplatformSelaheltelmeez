@@ -13,4 +13,6 @@ class CommonColors{
   /// Loader Colors
   static get doubleBounderColor => Colors.blue;
 
+  static get inputBackgroundColor => const Color(0xfff4f4f4);
+
 }

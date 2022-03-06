@@ -28,6 +28,7 @@ class _YouTubeViewerState extends State<YouTubeViewer> {
 
   @override
   void dispose(){
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     super.dispose();
   }
 

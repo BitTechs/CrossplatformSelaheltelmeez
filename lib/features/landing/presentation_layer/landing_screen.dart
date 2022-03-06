@@ -42,7 +42,7 @@ class LandingScreen extends ConsumerWidget {
                           titleColor: CommonColors.fancyElevatedTitleColor,
                           shadowColor: CommonColors
                               .fancyElevatedShadowTitleColor,
-                          onPressed: () => {},
+                          onPressed: () => Navigator.of(context).pushNamed('/login'),
                         ),
                       ),
                     ),
