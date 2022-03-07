@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
-import 'package:selaheltelmeez/core/data_transfer_object/value_commit_result.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/features/landing/business_logic_layer/landing_provider_container.dart';
-import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_object/landing_section.dart';
+import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_object/landing_section_commit_result.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class LandingScreen extends ConsumerWidget {
@@ -14,7 +13,7 @@ class LandingScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AsyncValue<ValueCommitResult<LandingSection>> result =
+    AsyncValue<LandingSectionCommitResult> result =
     ref.watch(LandingProviderContainer.futureLandingProvider);
     return FlatAppScaffold(
         child: ScrollColumnExpandable(
@@ -81,8 +80,7 @@ class LandingScreen extends ConsumerWidget {
                         child: ListView.builder(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
-                          itemCount: result.value.listSection?[0].listItem
-                              ?.length,
+                          itemCount: result.value?.listSection[0].listItem.length,
                           itemBuilder: (BuildContext context, int index) =>
                               Card(
                                 child: InkWell(
@@ -90,12 +88,10 @@ class LandingScreen extends ConsumerWidget {
                                       Navigator.of(context).pushNamed(
                                           "/YouTubeViewer",
                                           arguments:
-                                          result.value.listSection?[0]
-                                              .listItem?[index]),
+                                          result.value?.listSection[0].listItem[index]),
                                   child: Image(
                                     image: NetworkImage(
-                                        result.value.listSection?[0]
-                                            .listItem?[index].thumbnail ??
+                                        result.value?.listSection[0].listItem[index].thumbnail ??
                                             ""),
                                   ),
                                 ),
@@ -126,8 +122,8 @@ class LandingScreen extends ConsumerWidget {
                         child: ListView.builder(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
-                          itemCount: result.value.listSection?[1].listItem
-                              ?.length,
+                          itemCount: result.value?.listSection[1].listItem
+                              .length,
                           itemBuilder: (BuildContext context, int index) =>
                               Card(
                                 color: Colors.white,
@@ -136,12 +132,12 @@ class LandingScreen extends ConsumerWidget {
                                       Navigator.of(context).pushNamed(
                                         "/WebViewer",
                                         arguments:
-                                        result.value.listSection?[1]
-                                            .listItem?[index],),
+                                        result.value?.listSection[1]
+                                            .listItem[index],),
                                   child: Image(
                                     image: NetworkImage(
-                                        result.value.listSection?[1]
-                                            .listItem?[index].thumbnail ??
+                                        result.value?.listSection[1]
+                                            .listItem[index].thumbnail ??
                                             ""),
                                   ),
                                 ),

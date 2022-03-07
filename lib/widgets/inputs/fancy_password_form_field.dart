@@ -4,17 +4,12 @@ import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 
-class FancyTextFormField extends StatelessWidget {
+class FancyPasswordFormField extends StatelessWidget {
   final String hintTitle;
   final double width;
   final List<IValidationRule>? validators;
   final TextEditingController controller;
-  const FancyTextFormField(
-      {Key? key,
-      required this.hintTitle,
-      required this.width,
-      this.validators, required this.controller})
-      : super(key: key);
+  const FancyPasswordFormField({Key? key, required this.hintTitle, required this.width,  this.validators, required this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,22 +24,20 @@ class FancyTextFormField extends StatelessWidget {
         TextFormField(
             textAlign: TextAlign.center,
             controller: controller,
-            decoration: InputDecoration(
+            obscureText: true,
+            enableSuggestions: false,
+            autocorrect: false,
+            decoration:  InputDecoration(
               hintText: hintTitle,
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
               errorBorder: InputBorder.none,
               disabledBorder: InputBorder.none,
-              contentPadding:
-                  const EdgeInsets.only(left: 35, bottom: 0, top: 0, right: 35),
-              errorStyle: Theme.of(context)
-                  .textTheme
-                  .bodySmall
-                  ?.copyWith(color: CommonColors.errorTextColor, height: 0.3),
-            ),
-            validator: (value) =>
-                validators?.getValidationErrorMessages(value)),
+              contentPadding: const EdgeInsets.only(left: 35, bottom: 0, top: 0, right: 35),
+              errorStyle:Theme.of(context).textTheme.bodySmall?.copyWith(color: CommonColors.errorTextColor, height: 0.3, fontSize: 12),),
+            validator: (value)=> validators?.getValidationErrorMessages(value)
+        ),
       ],
     );
   }

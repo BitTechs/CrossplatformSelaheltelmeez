@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
-import 'package:selaheltelmeez/core/data_transfer_object/value_commit_result.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
+import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:selaheltelmeez/features/authentication/login/business_logic_layer/login_provider_container.dart';
-import 'package:selaheltelmeez/features/authentication/login/data_access_layer/data_transfer_object/login_request.dart';
-import 'package:selaheltelmeez/features/authentication/login/data_access_layer/data_transfer_object/login_response.dart';
+import 'package:selaheltelmeez/features/authentication/login/data_access_layer/data_transfer_object/login_user.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -18,9 +17,8 @@ class LoginScreen extends ConsumerStatefulWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final emailOrMobileNumberController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -54,24 +52,27 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ]),
             ),
             const SizedBox(
-              height: 30.0,
+              height: 16.0,
             ),
             Form(
               key: _formKey,
+              autovalidateMode: AutovalidateMode.always,
               child: Column(
                 children: [
                   FancyTextFormField(
                     hintTitle: 'البريد الإلكتروني / رقم الموبايل',
+                    controller: emailController,
                     width: inputWidth,
-                    controller: emailOrMobileNumberController,
+                    validators: [IsValidRequiredRule('هذا الحقل مطلوب'), IsValidEmailAddressRule('البريد الإلكتروني مكتوب بشكل غير صحيح')],
                   ),
                   const SizedBox(
                     height: 8.0,
                   ),
-                  FancyTextFormField(
+                  FancyPasswordFormField(
                     hintTitle: 'كلمة المرور',
-                    width: inputWidth,
                     controller: passwordController,
+                    width: inputWidth,
+                    validators: [IsValidRequiredRule('هذا الحقل مطلوب'),],
                   ),
                 ],
               ),
@@ -79,19 +80,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             const SizedBox(
               height: 8.0,
             ),
-            TextButton(
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.all(16.0),
-                primary: Colors.transparent,
-                textStyle: const TextStyle(fontSize: 20),
-              ),
-              onPressed: () {},
-              child: Text(
-                'هل نسيت كلمة المرور؟',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(color: Colors.red),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: CustomTextButton(
+                text: 'هل نسيت كلمة المرور؟',
+                color:  CommonColors.errorTextColor,
               ),
             ),
             const SizedBox(
@@ -106,16 +99,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 titleColor: CommonColors.fancyElevatedTitleColor,
                 shadowColor: CommonColors.fancyElevatedShadowTitleColor,
                 onPressed: () async {
-                  final commitResult = await ref
-                      .read(LoginProviderContainer.futureLoginProvider.notifier)
-                      .loginAsync(LoginRequest(
-                        mobileNumber: emailOrMobileNumberController.text,
-                        passwordHash: passwordController.text,
-                      ));
-                  if (commitResult.isSuccess) {
-                    ///TODO: Add Navigation.
-                  } else {
-
+                  if (_formKey.currentState!.validate()) {
+                    final commitResult = await ref
+                        .read(LoginProviderContainer.futureLoginProvider.notifier)
+                        .loginAsync(LoginUser()
+                        ..email = emailController.text
+                        ..passwordHash = passwordController.text
+                    );
+                    if (commitResult.isSuccess ?? false) {
+                      ///TODO: Add Navigation.
+                    } else {
+                      final snackBar = SnackBar(
+                        content: Text(commitResult.errorMessage ?? "Error"),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
                   }
                 },
               ),
@@ -161,22 +159,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ],
               ),
             ),
-            TextButton(
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.all(16.0),
-                primary: Colors.transparent,
-                textStyle: const TextStyle(fontSize: 20),
-              ),
-              onPressed: () {},
-              child: Text(
-                'تسجيل حساب جديد',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(color: Colors.blue),
+            const Center(
+              child: CustomTextButton(
+                text: 'تسجيل حساب جديد',
+                color:  Colors.blue,
               ),
             ),
-            Row(
+           /* Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: const [
@@ -202,7 +191,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   headerBackgroundColor: Colors.blue,
                 ),
               ],
-            ),
+            ),*/
           ],
         ),
       ),

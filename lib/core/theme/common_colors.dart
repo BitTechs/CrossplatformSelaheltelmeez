@@ -15,4 +15,8 @@ class CommonColors{
 
   static get inputBackgroundColor => const Color(0xfff4f4f4);
 
+  /// Error Text
+
+  static get errorTextColor=> const Color(0xffff3333);
+
 }

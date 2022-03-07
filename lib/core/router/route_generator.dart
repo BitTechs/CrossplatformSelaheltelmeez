@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:selaheltelmeez/features/authentication/login/presentation_layer/login_screen.dart';
-import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_object/landing_section.dart';
+import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_object/list_item.dart';
 import 'package:selaheltelmeez/features/landing/presentation_layer/landing_screen.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
