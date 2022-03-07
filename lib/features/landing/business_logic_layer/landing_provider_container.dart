@@ -5,5 +5,5 @@ import 'package:selaheltelmeez/features/landing/data_access_layer/repository/lan
 
 class LandingProviderContainer {
 
-  static final futureLandingProvider = FutureProvider<ValueCommitResult<LandingSection>>((ref) async => await LandingRepository().getLandingSections());
+  static final futureLandingProvider = FutureProvider<ValueCommitResult<LandingSection>>((ref) async => await LandingRepository().getLandingSectionsAsync());
 }

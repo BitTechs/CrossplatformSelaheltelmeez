@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
+import 'package:selaheltelmeez/core/data_transfer_object/value_commit_result.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
+import 'package:selaheltelmeez/features/authentication/login/business_logic_layer/login_provider_container.dart';
+import 'package:selaheltelmeez/features/authentication/login/data_access_layer/data_transfer_object/login_request.dart';
+import 'package:selaheltelmeez/features/authentication/login/data_access_layer/data_transfer_object/login_response.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final emailOrMobileNumberController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   FancyTextFormField(
                     hintTitle: 'البريد الإلكتروني / رقم الموبايل',
                     width: inputWidth,
+                    controller: emailOrMobileNumberController,
                   ),
                   const SizedBox(
                     height: 8.0,
@@ -57,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   FancyTextFormField(
                     hintTitle: 'كلمة المرور',
                     width: inputWidth,
+                    controller: passwordController,
                   ),
                 ],
               ),
@@ -84,12 +99,26 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Center(
               child: FancyElevatedButton(
-                  width: 140.0,
-                  title: 'دخول',
-                  backGroundColor:
-                      CommonColors.fancyElevatedButtonBackGroundColor,
-                  titleColor: CommonColors.fancyElevatedTitleColor,
-                  shadowColor: CommonColors.fancyElevatedShadowTitleColor),
+                width: 140.0,
+                title: 'دخول',
+                backGroundColor:
+                    CommonColors.fancyElevatedButtonBackGroundColor,
+                titleColor: CommonColors.fancyElevatedTitleColor,
+                shadowColor: CommonColors.fancyElevatedShadowTitleColor,
+                onPressed: () async {
+                  final commitResult = await ref
+                      .read(LoginProviderContainer.futureLoginProvider.notifier)
+                      .loginAsync(LoginRequest(
+                        mobileNumber: emailOrMobileNumberController.text,
+                        passwordHash: passwordController.text,
+                      ));
+                  if (commitResult.isSuccess) {
+                    ///TODO: Add Navigation.
+                  } else {
+
+                  }
+                },
+              ),
             ),
             const SizedBox(
               height: 8.0,

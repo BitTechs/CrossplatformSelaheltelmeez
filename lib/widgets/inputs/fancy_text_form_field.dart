@@ -6,7 +6,8 @@ import 'package:selaheltelmeez/core/theme/common_colors.dart';
 class FancyTextFormField extends StatelessWidget {
   final String hintTitle;
   final double width;
-  const FancyTextFormField({Key? key, required this.hintTitle, required this.width}) : super(key: key);
+  final TextEditingController controller;
+  const FancyTextFormField({Key? key, required this.hintTitle, required this.width, required this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class FancyTextFormField extends StatelessWidget {
           width: width,
         ),
         TextFormField(
+          controller: controller,
           textAlign: TextAlign.center,
           decoration: InputDecoration.collapsed(hintText: hintTitle,),
         ),
