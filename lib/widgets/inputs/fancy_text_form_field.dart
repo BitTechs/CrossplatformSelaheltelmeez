@@ -27,7 +27,6 @@ class FancyTextFormField extends StatelessWidget {
           width: width,
         ),
         TextFormField(
-            textAlign: TextAlign.center,
             controller: controller,
             decoration: InputDecoration(
               hintText: hintTitle,

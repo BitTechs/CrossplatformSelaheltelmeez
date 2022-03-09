@@ -9,4 +9,9 @@ class AssetsImage {
   static const String studentUser = "assets/images/shared/users/student.png";
   static const String parentUser = "assets/images/shared/users/parent.png";
   static const String teacherUser = "assets/images/shared/users/teacher.png";
+
+  static const String studentPrize = "assets/images/student/prizeTab.png";
+
+
+
 }

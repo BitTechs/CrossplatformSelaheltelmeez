@@ -19,4 +19,8 @@ class CommonColors{
 
   static get errorTextColor=> const Color(0xffff3333);
 
+  /// StudentHomeTopBar
+  static get studentHomeTopBar=> const Color(0xffD95555);
+
+
 }

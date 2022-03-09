@@ -7,23 +7,26 @@ import 'package:selaheltelmeez/features/authentication/login/business_logic_laye
 import 'package:selaheltelmeez/features/authentication/login/data_access_layer/data_transfer_object/login_user.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
-
 final futureLoginProvider = StateNotifierProvider((ref) {
   return LoginRequestState();
 });
 
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends ConsumerStatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
+  final fullNameController = TextEditingController();
+  final gradeController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -33,7 +36,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     final inputWidth = (MediaQuery.of(context).size.width) - 24.0;
     return NavigatedAppScaffold(
-      title: 'تسجيل الدخول',
+      title: 'تسجيل مستخدم جديد',
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,13 +51,37 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Align(
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      'تسجيل الدخول',
+                      'تسجيل مستخدم جديد',
                       style: Theme.of(context)
                           .textTheme
                           .bodyLarge
                           ?.copyWith(color: Colors.white),
                     )),
               ]),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                InkWell(onTap: ()=>{}, child:const ImageWithBottomHeader(
+                  width: 100.0,
+                  image: AssetsImage.studentUser,
+                  header: 'طالب',
+                  headerBackgroundColor: Colors.red,
+                )),
+                InkWell(onTap: ()=>{}, child:  const ImageWithBottomHeader(
+                  width: 100.0,
+                  image: AssetsImage.parentUser,
+                  header: 'ولي أمر',
+                  headerBackgroundColor: Colors.green,
+                )),
+                InkWell(onTap: ()=>{}, child: const ImageWithBottomHeader(
+                  width: 100.0,
+                  image: AssetsImage.teacherUser,
+                  header: 'مدرس',
+                  headerBackgroundColor: Colors.blue,
+                )),
+              ],
             ),
             const SizedBox(
               height: 16.0,
@@ -72,8 +99,36 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const SizedBox(
                     height: 8.0,
                   ),
+                  FancyTextFormField(
+                    hintTitle: 'الاسم بالكامل',
+                    controller: emailController,
+                    width: inputWidth,
+                    validators: [IsValidRequiredRule('هذا الحقل مطلوب')],
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  FancyDropDownFormField<String>(
+                    width: inputWidth,
+                    hintTitle: 'اختر الصف الدراسي',
+                    validators: [IsValidRequiredRule('هذا الحقل مطلوب')],
+                    items: const ['الصف الدراسي الاول', 'الصف الدراسي الثاني', 'الصف الدراسي الثالث'],
+                    itemBuilder: (context, item) => Text(item, style: Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: 14),),
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
                   FancyPasswordFormField(
                     hintTitle: 'كلمة المرور',
+                    controller: passwordController,
+                    width: inputWidth,
+                    validators: [IsValidRequiredRule('هذا الحقل مطلوب'),],
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  FancyPasswordFormField(
+                    hintTitle: 'تأكيد كلمة المرور',
                     controller: passwordController,
                     width: inputWidth,
                     validators: [IsValidRequiredRule('هذا الحقل مطلوب'),],
@@ -84,25 +139,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             const SizedBox(
               height: 8.0,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-              child: CustomTextButton(
-                text: 'هل نسيت كلمة المرور؟',
-                color:  CommonColors.errorTextColor,
-              ),
-            ),
-            const SizedBox(
-              height: 8.0,
-            ),
             Center(
               child: FancyElevatedButton(
                 width: 140.0,
-                title: 'دخول',
+                title: 'تسجيل',
                 backGroundColor:
                     CommonColors.fancyElevatedButtonBackGroundColor,
                 titleColor: CommonColors.fancyElevatedTitleColor,
                 shadowColor: CommonColors.fancyElevatedShadowTitleColor,
                 onPressed: () async {
+
+                  Navigator.of(context).pushNamed('/StudentHome');
+
+
                   if (_formKey.currentState!.validate()) {
                     final commitResult = await ref
                         .read(futureLoginProvider.notifier)
@@ -110,6 +159,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ..email = emailController.text
                         ..passwordHash = passwordController.text
                     );
+
+
                     if (commitResult.isSuccess ?? false) {
                       ///TODO: Add Navigation.
                     } else {
@@ -158,13 +209,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
             const SizedBox(
               height: 16.0,
-            ),
-            Center(
-              child: CustomTextButton(
-                text: 'تسجيل حساب جديد',
-                color:  Colors.blue,
-                onPressed: ()=> Navigator.of(context).pushNamed('/register'),
-              ),
             ),
           ],
         ),

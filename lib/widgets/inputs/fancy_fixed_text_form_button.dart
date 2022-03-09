@@ -21,7 +21,6 @@ class FancyFixedTextFormField extends StatelessWidget {
         TextFormField(
           readOnly: true,
           initialValue: hintTitle,
-          textAlign: TextAlign.center,
           decoration: InputDecoration.collapsed(hintText: hintTitle,),
         ),
       ],
