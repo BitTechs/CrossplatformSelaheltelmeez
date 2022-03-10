@@ -6,6 +6,7 @@ import 'package:selaheltelmeez/features/student/home/data_access_layer/data_tran
 import 'package:selaheltelmeez/features/student/home/data_access_layer/repository/student_home_repository.dart';
 
 class StudentHomeProviderContainer {
+
   static final futureGetRecentLessonsProvider =
       FutureProvider<RecentLessonCommitResult>((ref) async => await StudentHomeRepository().getRecentLessonsAsync());
 

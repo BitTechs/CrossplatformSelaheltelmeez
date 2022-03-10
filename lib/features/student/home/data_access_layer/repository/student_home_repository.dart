@@ -14,6 +14,6 @@ class StudentHomeRepository {
   Future<SubjectIEnumerableCommitResult> getSubjectsAsync() async {
     Dio dioClient = await DioClient.getHttpClient();
     Response<dynamic> responseResult = await dioClient.get("/Student/Subject");
-    return SubjectIEnumerableCommitResult.fromJson(responseResult.data);
+    return SubjectIEnumerableCommitResult.fromJson(responseResult.data[0]);
   }
 }

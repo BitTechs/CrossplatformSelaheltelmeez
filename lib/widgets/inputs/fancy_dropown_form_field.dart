@@ -8,10 +8,11 @@ class FancyDropDownFormField<T> extends StatelessWidget {
   final String hintTitle;
   final double width;
   final List<T> items;
+  final T? initialValue;
   final List<IValidationRule>? validators;
   final Widget Function(BuildContext, T) itemBuilder;
   final ValueChanged<T?>? onChanged;
-  const FancyDropDownFormField({Key? key, required this.hintTitle, required this.width,  this.validators, required this.items, required this.itemBuilder, this.onChanged}) : super(key: key);
+  const FancyDropDownFormField({Key? key, required this.hintTitle, required this.width,  this.validators, required this.items, required this.itemBuilder, this.onChanged, this.initialValue}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class FancyDropDownFormField<T> extends StatelessWidget {
           width: width,
         ),
         DropdownButtonFormField<T>(
+            value: initialValue,
             items: <DropdownMenuItem<T>>[
               for (var item in items)
                 DropdownMenuItem(
@@ -35,6 +37,7 @@ class FancyDropDownFormField<T> extends StatelessWidget {
               alignment: Alignment.center,
               decoration:  InputDecoration(
               hintText: hintTitle,
+
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
@@ -43,7 +46,7 @@ class FancyDropDownFormField<T> extends StatelessWidget {
               contentPadding: const EdgeInsets.only(left: 35, bottom: 0, top: 0, right: 35),
               errorStyle:Theme.of(context).textTheme.bodySmall?.copyWith(color: CommonColors.errorTextColor, height: 0.3, fontSize: 12),),
               validator: (value)=> validators?.getValidationErrorMessages(value == null ? "" : (value as String)),
-              onChanged: (value) {  },
+              onChanged: onChanged,
         ),
       ],
     );
