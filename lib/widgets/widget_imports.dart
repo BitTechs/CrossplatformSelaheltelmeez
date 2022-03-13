@@ -12,3 +12,4 @@ export 'package:selaheltelmeez/widgets/inputs/fancy_fixed_text_form_button.dart'
 export 'package:selaheltelmeez/widgets/inputs/fancy_password_form_field.dart';
 export 'package:selaheltelmeez/widgets/buttons/custom_text_button.dart';
 export 'package:selaheltelmeez/widgets/inputs/fancy_dropown_form_field.dart';
+export 'package:selaheltelmeez/widgets/layouts/opacity_loading.dart';

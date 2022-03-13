@@ -42,8 +42,7 @@ class FancyTextFormField extends StatelessWidget {
                   .bodySmall
                   ?.copyWith(color: CommonColors.errorTextColor, height: 0.3),
             ),
-            validator: (value) =>
-                validators?.getValidationErrorMessages(value)),
+            validator: (value) => validators?.getValidationErrorMessages(value)),
       ],
     );
   }

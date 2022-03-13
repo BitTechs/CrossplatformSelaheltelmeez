@@ -1,12 +1,12 @@
 import 'package:collection/collection.dart';
 
-abstract class IValidationRule {
+abstract class IValidationRule<T> {
   final String validationError;
   IValidationRule([this.validationError = ""]);
-  bool check(String? value);
+  bool check(T? value);
 }
 
-class IsValidEmailAddressRule extends IValidationRule {
+class IsValidEmailAddressRule extends IValidationRule<String> {
   IsValidEmailAddressRule(String validationError): super(validationError);
   RegExp regExp = RegExp(
     r"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([azA-Z]{2,4}|[0-9]{1,3})(\]?)$",
@@ -23,7 +23,7 @@ class IsValidEmailAddressRule extends IValidationRule {
   }
 }
 
-class IsValidRequiredRule extends IValidationRule {
+class IsValidRequiredRule extends IValidationRule<String> {
   IsValidRequiredRule(String validationError): super(validationError);
   @override
   bool check(String? value) {
@@ -33,6 +33,6 @@ class IsValidRequiredRule extends IValidationRule {
     return value.isNotEmpty;
   }
 }
-extension ValidationExtension on List<IValidationRule> {
-  String? getValidationErrorMessages(String? value) => firstWhereOrNull((element) => !element.check(value))?.validationError;
+extension ValidationExtension<T> on List<IValidationRule<T>> {
+  String? getValidationErrorMessages(T? value) => firstWhereOrNull((element) => !element.check(value))?.validationError;
 }

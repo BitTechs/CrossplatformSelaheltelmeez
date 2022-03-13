@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
-import 'package:selaheltelmeez/features/landing/business_logic_layer/landing_provider_container.dart';
-import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_object/landing_section_commit_result.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
-class LandingScreen extends ConsumerWidget {
+class LandingScreen extends StatelessWidget {
   const LandingScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    AsyncValue<LandingSectionCommitResult> result =
-    ref.watch(LandingProviderContainer.futureLandingProvider);
+  Widget build(BuildContext context) {
     return FlatAppScaffold(
         child: ScrollColumnExpandable(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +48,7 @@ class LandingScreen extends ConsumerWidget {
               ),
             ],
           ),
-          centeredExpandedWidgets: result.when(
+          centeredExpandedWidgets:const Center(child: DoubleBounce()), /*result.when(
             loading: () => const Center(child: DoubleBounce()),
             error: (err, stack) => Text('Error: $err'),
             data: (result) =>
@@ -147,7 +142,7 @@ class LandingScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
-          ),
+          ),*/
           footerWidgets: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

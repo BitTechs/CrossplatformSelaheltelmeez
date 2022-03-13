@@ -7,16 +7,14 @@ part 'subject_status_state.dart';
 
 class SubjectStatusCubit extends Cubit<SubjectStatusState> {
   final repo = StudentHomeRepository();
-  final List<Subject> subjects = [];
   SubjectStatusCubit() : super(SubjectStatusInitial());
 
   Future<void> getSubjectsAsync(String termName)async {
     emit(SubjectStatusLoading());
     final result = await repo.getSubjectsAsync();
     if(result.isSuccess ?? false){
-      subjects.addAll(result.value.where((element) => element.termName == termName));
-      if(subjects.isNotEmpty){
-        emit(SubjectStatusLoaded(subjects: subjects));
+      if(result.value.isNotEmpty){
+        emit(SubjectStatusLoaded(subjects: result.value.where((element) => element.termName == termName).toList()));
       }else{
         emit(SubjectStatusEmpty());
       }

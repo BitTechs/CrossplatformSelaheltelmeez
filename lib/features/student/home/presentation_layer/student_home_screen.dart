@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
-import 'package:selaheltelmeez/features/student/home/business_logic_layer/student_home_provider_container.dart';
-import 'package:selaheltelmeez/features/student/home/business_logic_layer/subject_state_provider.dart';
 import 'package:selaheltelmeez/features/student/home/business_logic_layer/subject_status_cubit.dart';
-import 'package:selaheltelmeez/features/student/home/data_access_layer/data_transfer_object/recent_lesson/recent_lesson_commit_result.dart';
-import 'package:selaheltelmeez/features/student/home/data_access_layer/data_transfer_object/subject/subject_i_enumerable_commit_result.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class StudentHomeScreen extends ConsumerWidget {
+class StudentHomeScreen extends StatelessWidget {
   const StudentHomeScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    AsyncValue<RecentLessonCommitResult> recentLessonsResult =
-        ref.watch(StudentHomeProviderContainer.futureGetRecentLessonsProvider);
+  Widget build(BuildContext context) {
     return FlatAppScaffold(
         child: ScrollColumnExpandable(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,7 +116,7 @@ class StudentHomeScreen extends ConsumerWidget {
       ),
       centeredExpandedWidgets: Column(
         children: [
-          recentLessonsResult.when(
+         /* recentLessonsResult.when(
             loading: () => const Center(child: DoubleBounce()),
             error: (err, stack) => Text('Error: $err'),
             data: (result) => Padding(
@@ -203,7 +196,7 @@ class StudentHomeScreen extends ConsumerWidget {
                 ],
               ),
             ),
-          ),
+          ),*/
           const SizedBox(
             height: 16.0,
           ),

@@ -1,46 +1,14 @@
-class CommitResult {
-  
-  String? errorMessage;
+import 'package:json_annotation/json_annotation.dart';
+part 'commit_result.g.dart';
 
-  int? errorCode;
+@JsonSerializable()
+class CommitResult{
+  final String errorMessage;
+  final String errorCode;
+  final int resultType;
+  final bool isSuccess;
 
-  bool? isSuccess;
-
-  bool? isExceptionOccurred;
-
-  CommitResult();
-
-  @override
-  String toString() {
-    return 'CommitResult[errorMessage=$errorMessage, errorCode=$errorCode, isSuccess=$isSuccess, isExceptionOccurred=$isExceptionOccurred, ]';
-  }
-
-  CommitResult.fromJson(Map<String, dynamic>? json) {
-    if (json == null) return;
-    errorMessage = json['errorMessage'];
-    errorCode = json['errorCode'];
-    isSuccess = json['isSuccess'];
-    isExceptionOccurred = json['isExceptionOccurred'];
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'errorMessage': errorMessage,
-      'errorCode': errorCode,
-      'isSuccess': isSuccess,
-      'isExceptionOccurred': isExceptionOccurred,
-     };
-  }
-
-  static List<CommitResult> listFromJson(List<dynamic>? json) {
-    return json == null ? List<CommitResult>.empty() : json.map((value) => CommitResult.fromJson(value)).toList();
-  }
-
-  static Map<String, CommitResult> mapFromJson(Map<String, Map<String, dynamic>>? json) {
-    var map = <String, CommitResult>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, Map<String, dynamic> value) => map[key] = CommitResult.fromJson(value));
-    }
-    return map;
-  }
+  CommitResult({required this.errorMessage, required this.errorCode, required this.resultType, required this.isSuccess});
+  factory CommitResult.fromJson(Map<String,dynamic> json)=> _$CommitResultFromJson(json);
+  Map<String,dynamic> toJson()=> _$CommitResultToJson(this);
 }
