@@ -6,6 +6,7 @@ import 'package:selaheltelmeez/features/authentication/validate_otp/view/validat
 import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_object/list_item.dart';
 import 'package:selaheltelmeez/features/landing/presentation_layer/landing_screen.dart';
 import 'package:selaheltelmeez/features/student/home/presentation_layer/student_home_screen.dart';
+import 'package:selaheltelmeez/features/student/layout/view/student_layout_screen.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class RouteGenerator {
@@ -27,6 +28,8 @@ class RouteGenerator {
         return PageTransition(child: const RegisterScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/validate_otp':
         return PageTransition(child: const ValidateOTPScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case '/StudentLayout':
+        return PageTransition(child: const StudentLayoutScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
      case '/WebViewer':
       case '/StudentHome':
       return PageTransition(child: const StudentHomeScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);

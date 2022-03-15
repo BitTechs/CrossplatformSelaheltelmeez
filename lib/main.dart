@@ -12,6 +12,7 @@ import 'package:selaheltelmeez/features/authentication/register/model/repository
 import 'package:selaheltelmeez/features/authentication/register/view_model/grade_menu_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/register/view_model/register_cubit.dart';
 import 'package:selaheltelmeez/features/student/home/business_logic_layer/subject_status_cubit.dart';
+import 'package:selaheltelmeez/features/student/layout/view_model/student_layout_cubit.dart';
 
 void main() {
   runApp(
@@ -28,7 +29,8 @@ void main() {
           BlocProvider(create: (BuildContext context) => LoginCubit(context.read<LoginRepository>())),
           BlocProvider(create: (BuildContext context) => RegisterCubit(context.read<RegisterRepository>())),
           BlocProvider(create: (BuildContext context) => GradeMenuCubit(context.read<RegisterRepository>())),
-          BlocProvider(create: (BuildContext context) => SubjectStatusCubit())
+          BlocProvider(create: (BuildContext context) => SubjectStatusCubit()),
+          BlocProvider(create: (BuildContext context) => StudentLayoutCubit())
         ],
         child: const SelaheltelmeezLauncher(),
       ),
@@ -47,9 +49,11 @@ class SelaheltelmeezLauncher extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      initialRoute: '/',
+      //initialRoute: '/',
+      initialRoute: '/StudentLayout',
       locale: const Locale("ar"),
       onGenerateRoute: RouteGenerator.generateRoute,
+
     );
   }
 }
