@@ -23,4 +23,9 @@ class CommonColors{
   static get studentHomeTopBar=> const Color(0xffD95555);
 
 
+  /// OTP Colors
+  static get otpInputColor => const Color(0xff000000);
+
+
+
 }

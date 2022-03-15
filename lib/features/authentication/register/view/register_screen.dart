@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
+import 'package:selaheltelmeez/core/helpers/utilities.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
+import 'package:selaheltelmeez/features/authentication/register/model/data_transfer_object/grade_menu_item.dart';
 import 'package:selaheltelmeez/features/authentication/register/model/data_transfer_object/register_request.dart';
+import 'package:selaheltelmeez/features/authentication/register/view_model/grade_menu_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/register/view_model/register_cubit.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
@@ -44,7 +47,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             }
             if (state is RegisterSuccess) {
               //TODO: Save In Shared Preference.
-              Navigator.of(context).pushNamed("/StudentHome");
+              Navigator.of(context).pushNamed("/validate_otp");
             }
           },
           builder: (context, state) => OpacityLoading(
@@ -75,7 +78,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     InkWell(
-                        onTap: () => {},
+                        onTap: () async {
+                          context.read<RegisterCubit>().setIdentityRoleId(1);
+                          await context
+                              .read<GradeMenuCubit>()
+                              .getGradeMenuItemsAsync();
+                        },
                         child: const ImageWithBottomHeader(
                           width: 100.0,
                           image: AssetsImage.studentUser,
@@ -83,7 +91,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           headerBackgroundColor: Colors.red,
                         )),
                     InkWell(
-                        onTap: () => {},
+                        onTap: () =>
+                            context.read<RegisterCubit>().setIdentityRoleId(2),
                         child: const ImageWithBottomHeader(
                           width: 100.0,
                           image: AssetsImage.parentUser,
@@ -91,7 +100,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           headerBackgroundColor: Colors.green,
                         )),
                     InkWell(
-                        onTap: () => {},
+                        onTap: () =>
+                            context.read<RegisterCubit>().setIdentityRoleId(3),
                         child: const ImageWithBottomHeader(
                           width: 100.0,
                           image: AssetsImage.teacherUser,
@@ -117,20 +127,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     shadowColor: CommonColors.fancyElevatedShadowTitleColor,
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        await context.read<RegisterCubit>().registerAsync(RegisterRequest(
-                            fullName: fullNameController.text,
-                            grade: 1,
-                            identityRoleId: 1,
-                            countryId: 1,
-                            governorateId: 1,
-                            gender: 1,
-                            isEmailSubscribed: false,
-                            email: "",
-                            mobileNumber: emailOrMobileController.text,
-                            passwordHash: passwordController.text,
-                            facebookId: "",
-                            googleId: "",
-                            officeId: ""));
+                        await context.read<RegisterCubit>().registerAsync(
+                            RegisterRequest(
+                                fullName: fullNameController.text,
+                                grade: 1,
+                                identityRoleId: context
+                                    .read<RegisterCubit>()
+                                    .getIdentityRoleId,
+                                countryId: 1,
+                                governorateId: 1,
+                                gender:
+                                    context.read<RegisterCubit>().getGradeId,
+                                isEmailSubscribed: false,
+                                email: Utilities.isEmail(
+                                        emailOrMobileController.text)
+                                    ? emailOrMobileController.text
+                                    : "",
+                                mobileNumber: Utilities.isMobile(
+                                        emailOrMobileController.text)
+                                    ? emailOrMobileController.text
+                                    : "",
+                                passwordHash: passwordController.text,
+                                facebookId: "",
+                                googleId: "",
+                                officeId: ""));
                       }
                     },
                   ),
@@ -179,6 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
   Widget _registerForm(double inputWidth) => Form(
         key: _formKey,
         child: Column(
@@ -189,7 +210,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               width: inputWidth,
               validators: [
                 IsValidRequiredRule('هذا الحقل مطلوب'),
-              //  IsValidEmailAddressRule('البريد الإلكتروني مكتوب بشكل غير صحيح')
+                IsValidEmailOrMobileRule(
+                    'البريد الإلكتروني او الموبايل مكتوب بشكل غير صحيح')
               ],
             ),
             const SizedBox(
@@ -204,22 +226,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const SizedBox(
               height: 8.0,
             ),
-            FancyDropDownFormField<String>(
-              width: inputWidth,
-              hintTitle: 'اختر الصف الدراسي',
-            //  validators: [IsValidRequiredRule('هذا الحقل مطلوب')],
-              items: const [
-                'الصف الدراسي الاول',
-                'الصف الدراسي الثاني',
-                'الصف الدراسي الثالث'
-              ],
-              itemBuilder: (context, item) => Text(
-                item,
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1
-                    ?.copyWith(fontSize: 14),
-              ),
+            BlocConsumer<GradeMenuCubit, GradeMenuState>(
+              listener: (context, state) async {
+                if (state is GradeMenuInitial) {}
+                if (state is GradeMenuError) {
+                  final snackBar = SnackBar(
+                    content: Text(state.errorMessage ?? "Error"),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+              },
+              builder: (context, state) {
+                if (state is GradeMenuLoading) {
+                  const Center(child: DoubleBounce());
+                }
+                if (state is GradeMenuLoaded) {
+                  return FancyDropDownFormField<GradeMenuItem>(
+                    width: inputWidth,
+                    hintTitle: 'اختر الصف الدراسي',
+                    validators: (value)=> [IsValidRequiredRule('هذا الحقل مطلوب')].getValidationErrorMessage(value?.name),
+                    items: state.items ?? [],
+                    itemBuilder: (context, item) => Text(
+                      item.name,
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1
+                          ?.copyWith(fontSize: 14),
+                    ),
+                    onChanged: (value) =>
+                        context.read<RegisterCubit>().setGradeId(value!.id),
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
             ),
             const SizedBox(
               height: 8.0,
@@ -241,6 +281,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               width: inputWidth,
               validators: [
                 IsValidRequiredRule('هذا الحقل مطلوب'),
+                IsValidConfirmPasswordRule(
+                    'كلمة المرور وتأكيد كلمة المرور غير متطابقين',
+                    password: passwordController.text)
               ],
             ),
           ],

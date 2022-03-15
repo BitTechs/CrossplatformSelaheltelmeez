@@ -7,7 +7,7 @@ import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 class FancyPasswordFormField extends StatelessWidget {
   final String hintTitle;
   final double width;
-  final List<IValidationRule>? validators;
+  final List<ValidationRule>? validators;
   final TextEditingController controller;
   const FancyPasswordFormField({Key? key, required this.hintTitle, required this.width,  this.validators, required this.controller}) : super(key: key);
 

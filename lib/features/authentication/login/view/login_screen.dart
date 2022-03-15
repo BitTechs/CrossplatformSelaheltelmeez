@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
-import 'package:selaheltelmeez/core/data_transfer_object/value_commit_result.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:selaheltelmeez/features/authentication/login/model/data_transfer_object/login_request.dart';
-import 'package:selaheltelmeez/features/authentication/login/model/data_transfer_object/login_response.dart';
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
@@ -170,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
               width: inputWidth,
               validators: [
                 IsValidRequiredRule('هذا الحقل مطلوب'),
-                IsValidEmailAddressRule('البريد الإلكتروني مكتوب بشكل غير صحيح')
+                IsValidEmailOrMobileRule('البريد الإلكتروني مكتوب بشكل غير صحيح')
               ],
             ),
             const SizedBox(

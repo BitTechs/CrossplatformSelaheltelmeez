@@ -7,7 +7,7 @@ import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 class FancyTextFormField extends StatelessWidget {
   final String hintTitle;
   final double width;
-  final List<IValidationRule>? validators;
+  final List<ValidationRule>? validators;
   final TextEditingController controller;
   const FancyTextFormField(
       {Key? key,
