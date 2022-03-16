@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaheltelmeez/features/student/classes/presentation_layer/student_classes_screen.dart';
 import 'package:selaheltelmeez/features/student/games/presentation_layer/student_Games_screen.dart';
-import 'package:selaheltelmeez/features/student/home/presentation_layer/student_home_screen.dart';
+import 'package:selaheltelmeez/features/student/home/view/student_home_screen.dart';
 import 'package:selaheltelmeez/features/student/invitations/presentation_layer/student_invitations_screen.dart';
 import 'package:selaheltelmeez/features/student/layout/view_model/stduent_layout_states.dart';
 import 'package:selaheltelmeez/features/student/notifications/presentation_layer/student_notifications_screen.dart';
@@ -22,26 +22,26 @@ class StudentLayoutCubit extends Cubit<StudentLayoutStates>
       ),
       label: '',
     ),
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(
         Icons.class_,
       ),
       label: '',
     ),
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(
         Icons.videogame_asset,
       ),
       label: '',
     ),
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(
         Icons.notifications,
       ),
       label: '',
 
     ),
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(
         Icons.people,
       ),
@@ -50,11 +50,11 @@ class StudentLayoutCubit extends Cubit<StudentLayoutStates>
   ];
 
   List<Widget> screens = [
-    StudentHomeScreen(),
-    StudentClassesScreen(),
-    StudentGamesScreen(),
-    StudentNotificationsScreen(),
-    StudentInvitationsScreen(),
+    const StudentHomeScreen(),
+    const StudentClassesScreen(),
+    const StudentGamesScreen(),
+    const StudentNotificationsScreen(),
+    const StudentInvitationsScreen(),
   ];
 
 

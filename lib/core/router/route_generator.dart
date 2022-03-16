@@ -5,7 +5,7 @@ import 'package:selaheltelmeez/features/authentication/register/view/register_sc
 import 'package:selaheltelmeez/features/authentication/validate_otp/view/validate_otp_screen.dart';
 import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_object/list_item.dart';
 import 'package:selaheltelmeez/features/landing/presentation_layer/landing_screen.dart';
-import 'package:selaheltelmeez/features/student/home/presentation_layer/student_home_screen.dart';
+import 'package:selaheltelmeez/features/student/home/view/student_home_screen.dart';
 import 'package:selaheltelmeez/features/student/layout/view/student_layout_screen.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 

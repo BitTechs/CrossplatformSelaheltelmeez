@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
-import 'package:selaheltelmeez/features/student/home/business_logic_layer/subject_status_cubit.dart';
+import 'package:selaheltelmeez/features/student/home/model/entity/term_entity.dart';
+import 'package:selaheltelmeez/features/student/home/view_model/curriculum_cubit.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 class StudentHomeScreen extends StatelessWidget {
   const StudentHomeScreen({
@@ -208,34 +208,34 @@ class StudentHomeScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.subtitle1,
               ),
               Expanded(
-                child: FancyDropDownFormField<String>(
+                child: FancyDropDownFormField<TermEntity>(
                   width: MediaQuery.of(context).size.width - 170,
                   hintTitle: 'اختر الفصل الدراسي',
-                  items: const [
-                    'الفصل الدراسي الاول',
-                    'الفصل الدراسي الثاني'
+                  items:  [
+                    TermEntity(id: 1, name: 'الفصل الدراسي الاول'),
+                    TermEntity(id: 2, name: 'الفصل الدراسي الثاني')
                   ],
                   itemBuilder: (context, item) => Text(
-                    item,
+                    item.name,
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1
                         ?.copyWith(fontSize: 14),
                   ),
-                  onChanged: (value)=> context.read<SubjectStatusCubit>().getSubjectsAsync(value!),
+                  onChanged: (value)=> context.read<CurriculumCubit>().getSubjectsAsync(value?.id),
                 ),
               ),
             ],
           ),
-          BlocBuilder<SubjectStatusCubit, SubjectStatusState>(
+          BlocBuilder<CurriculumCubit, CurriculumState>(
               builder: (context, state) {
-            if (state is SubjectStatusLoading) {
-              return const Center(child: DoubleBounce());
+            if (state is CurriculumLoading) {
+              return  Center(child: SizedBox(height: MediaQuery.of(context).size.height /2 , child: const DoubleBounce()));
             }
-            if (state is SubjectStatusError) {
+            if (state is CurriculumError) {
               Text('Error: ${state.errorMessage}');
             }
-            if (state is SubjectStatusLoaded) {
+            if (state is CurriculumLoaded) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Column(
@@ -254,8 +254,8 @@ class StudentHomeScreen extends StatelessWidget {
                           return Card(
                             color: Colors.grey[100],
                             child: ImageWithFloatingBottomHeader(
-                              image: state.subjects[index].iconOfSlider ?? "",
-                              header: state.subjects[index].subjectName ?? "",
+                              image: state.subjects[index].backgroundImage ?? "",
+                              header: state.subjects[index].name ?? "",
                               headerColor: Colors.black,
                               headerBackgroundColor: Colors.white,
                               alignment: Alignment.bottomCenter,
