@@ -14,8 +14,6 @@ class  RegisterSubmit extends RegisterState {
   List<Object> get props => [];
 }
 class RegisterSuccess extends RegisterState {
-  final RegisterResponse? response;
-  const RegisterSuccess({required this.response});
   @override
   List<Object> get props => [];
 }

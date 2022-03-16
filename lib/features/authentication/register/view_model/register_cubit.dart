@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:selaheltelmeez/core/data_transfer_object/value_commit_result.dart';
+import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/features/authentication/register/model/data_transfer_object/register_request.dart';
 import 'package:selaheltelmeez/features/authentication/register/model/data_transfer_object/register_response.dart';
 import 'package:selaheltelmeez/features/authentication/register/model/repository/register_repository.dart';
@@ -22,7 +23,8 @@ class RegisterCubit extends Cubit<RegisterState> {
     emit(RegisterSubmit());
     ValueCommitResult<RegisterResponse> response = await _repo.registerAsync(registerRequest);
     if(response.isSuccess){
-      emit(RegisterSuccess(response: response.value));
+      await AppUserLocalStorageProvider.addAsJsonAsync(response.value!.toJson());
+      emit(RegisterSuccess());
     }else{
       emit(RegisterFailed(errorMessage: response.errorMessage ?? "Error"));
     }

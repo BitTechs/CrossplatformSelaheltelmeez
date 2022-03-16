@@ -46,7 +46,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
             if (state is RegisterSuccess) {
-              //TODO: Save In Shared Preference.
               Navigator.of(context).pushNamed("/validate_otp");
             }
           },

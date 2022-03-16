@@ -8,6 +8,7 @@ part of 'register_response.dart';
 
 RegisterResponse _$RegisterResponseFromJson(Map<String, dynamic> json) =>
     RegisterResponse(
+      isVerified: json['isVerified'] as bool,
       fullName: json['fullName'] as String,
       email: json['email'] as String?,
       mobileNumber: json['mobileNumber'] as String?,
@@ -38,4 +39,5 @@ Map<String, dynamic> _$RegisterResponseToJson(RegisterResponse instance) =>
       'accessToken': instance.accessToken,
       'refreshToken': instance.refreshToken,
       'isPremium': instance.isPremium,
+      'isVerified': instance.isVerified,
     };

@@ -8,6 +8,7 @@ part of 'login_response.dart';
 
 LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
     LoginResponse(
+      json['isVerified'] as bool,
       fullName: json['fullName'] as String,
       email: json['email'] as String,
       mobileNumber: json['mobileNumber'] as String,
@@ -38,4 +39,5 @@ Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
       'accessToken': instance.accessToken,
       'refreshToken': instance.refreshToken,
       'isPremium': instance.isPremium,
+      'isVerified': instance.isVerified,
     };

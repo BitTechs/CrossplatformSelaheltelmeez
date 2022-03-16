@@ -12,7 +12,15 @@ class LoginSubmit extends LoginState {
   @override
   List<Object> get props => [];
 }
-class LoginSuccess extends LoginState {
+class LoginVerifiedSuccess extends LoginState {
+  final LoginResponse response;
+  const LoginVerifiedSuccess({required this.response});
+  @override
+  List<Object> get props => [];
+}
+class LoginNotVerifiedSuccess extends LoginState {
+  final LoginResponse response;
+  const LoginNotVerifiedSuccess({required this.response});
   @override
   List<Object> get props => [];
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
+import 'package:selaheltelmeez/core/local_storage/AppUserProvider.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/features/student/home/model/entity/term_entity.dart';
 import 'package:selaheltelmeez/features/student/home/view_model/curriculum_cubit.dart';
@@ -13,6 +14,7 @@ class StudentHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appUserProvider = context.watch<AppUserProvider>();
     return FlatAppScaffold(
         child: ScrollColumnExpandable(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,10 +39,14 @@ class StudentHomeScreen extends StatelessWidget {
                     child: Wrap(
                       spacing: 0,
                       children: [
-                        const Image(
-                          image: AssetImage(AssetsImage.studentPrize),
-                          height: 65,
-                          width: 65,
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(35.0),
+                          child: Image(
+                            image: NetworkImage(
+                                appUserProvider.getAppUser.avatarUrl),
+                            height: 70,
+                            width: 70,
+                          ),
                         ),
                         PhysicalModel(
                           elevation: 0,
@@ -53,14 +59,14 @@ class StudentHomeScreen extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text(
-                                  'Ahmed Abuelnour',
+                                  appUserProvider.getAppUser.fullName,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge
                                       ?.copyWith(color: Colors.white),
                                 ),
                                 Text(
-                                  'الصف السادس الابتدائي',
+                                  appUserProvider.getAppUser.grade,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge
@@ -114,171 +120,179 @@ class StudentHomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      centeredExpandedWidgets: Column(
-        children: [
-         /* recentLessonsResult.when(
-            loading: () => const Center(child: DoubleBounce()),
-            error: (err, stack) => Text('Error: $err'),
-            data: (result) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "دروسي الأخيرة",
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
-                      const Image(
-                        image: AssetImage(AssetsImage.studentPrize),
-                        height: 35,
-                        width: 35,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                  SizedBox(
-                    height: (result.value?.recentLessons.length ?? 0) * 60.0,
-                    child: ListView.builder(
-                        itemCount: result.value?.recentLessons.length,
-                        itemBuilder: (context, index) => Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      result.value?.recentLessons[index]
-                                              .lessonName ??
-                                          "",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                    ),
-                                    Text(
-                                      '${result.value?.recentLessons[index].progress} %',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 8.0,
-                                ),
-                                LinearPercentIndicator(
-                                  animation: true,
-                                  lineHeight: 20.0,
-                                  animationDuration: 2000,
-                                  percent: (result.value?.recentLessons[index]
-                                              .progress ??
-                                          0) *
-                                      0.01,
-                                  barRadius: const Radius.circular(16),
-                                  progressColor: Colors.greenAccent,
-                                ),
-                              ],
-                            )),
-                  ),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                  FancyElevatedButton(
-                      title: 'أشترك الآن',
-                      backGroundColor:
-                          CommonColors.fancyElevatedButtonBackGroundColor,
-                      titleColor: CommonColors.fancyElevatedTitleColor,
-                      shadowColor: CommonColors.fancyElevatedShadowTitleColor)
-                ],
-              ),
-            ),
-          ),*/
-          const SizedBox(
-            height: 16.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "المواد الدراسية",
-                style: Theme.of(context).textTheme.subtitle1,
-              ),
-              Expanded(
-                child: FancyDropDownFormField<TermEntity>(
-                  width: MediaQuery.of(context).size.width - 170,
-                  hintTitle: 'اختر الفصل الدراسي',
-                  items:  [
-                    TermEntity(id: 1, name: 'الفصل الدراسي الاول'),
-                    TermEntity(id: 2, name: 'الفصل الدراسي الثاني')
-                  ],
-                  itemBuilder: (context, item) => Text(
-                    item.name,
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1
-                        ?.copyWith(fontSize: 14),
-                  ),
-                  onChanged: (value)=> context.read<CurriculumCubit>().getSubjectsAsync(value?.id),
-                ),
-              ),
-            ],
-          ),
-          BlocBuilder<CurriculumCubit, CurriculumState>(
-              builder: (context, state) {
-            if (state is CurriculumLoading) {
-              return  Center(child: SizedBox(height: MediaQuery.of(context).size.height /2 , child: const DoubleBounce()));
-            }
-            if (state is CurriculumError) {
-              Text('Error: ${state.errorMessage}');
-            }
-            if (state is CurriculumLoaded) {
-              return Padding(
+      centeredExpandedWidgets: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            /* recentLessonsResult.when(
+              loading: () => const Center(child: DoubleBounce()),
+              error: (err, stack) => Text('Error: $err'),
+              data: (result) => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "دروسي الأخيرة",
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                        const Image(
+                          image: AssetImage(AssetsImage.studentPrize),
+                          height: 35,
+                          width: 35,
+                        ),
+                      ],
+                    ),
                     const SizedBox(
                       height: 8.0,
                     ),
                     SizedBox(
-                      height: ((state.subjects.length / 2).round() * 190),
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: state.subjects.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            color: Colors.grey[100],
-                            child: ImageWithFloatingBottomHeader(
-                              image: state.subjects[index].backgroundImage ?? "",
-                              header: state.subjects[index].name ?? "",
-                              headerColor: Colors.black,
-                              headerBackgroundColor: Colors.white,
-                              alignment: Alignment.bottomCenter,
-                              isNetworkImage: true,
-                            ),
-                          );
-                        },
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 12.0,
-                                crossAxisSpacing: 12.0),
-                      ),
-                    )
+                      height: (result.value?.recentLessons.length ?? 0) * 60.0,
+                      child: ListView.builder(
+                          itemCount: result.value?.recentLessons.length,
+                          itemBuilder: (context, index) => Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        result.value?.recentLessons[index]
+                                                .lessonName ??
+                                            "",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                      ),
+                                      Text(
+                                        '${result.value?.recentLessons[index].progress} %',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 8.0,
+                                  ),
+                                  LinearPercentIndicator(
+                                    animation: true,
+                                    lineHeight: 20.0,
+                                    animationDuration: 2000,
+                                    percent: (result.value?.recentLessons[index]
+                                                .progress ??
+                                            0) *
+                                        0.01,
+                                    barRadius: const Radius.circular(16),
+                                    progressColor: Colors.greenAccent,
+                                  ),
+                                ],
+                              )),
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    FancyElevatedButton(
+                        title: 'أشترك الآن',
+                        backGroundColor:
+                            CommonColors.fancyElevatedButtonBackGroundColor,
+                        titleColor: CommonColors.fancyElevatedTitleColor,
+                        shadowColor: CommonColors.fancyElevatedShadowTitleColor)
                   ],
                 ),
-              );
-            }
-            else {
-              return const SizedBox();
-            }
-          }),
-        ],
+              ),
+            ),*/
+            const SizedBox(
+              height: 16.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "المواد الدراسية",
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+                Expanded(
+                  child: FancyDropDownFormField<TermEntity>(
+                    width: MediaQuery.of(context).size.width - 170,
+                    hintTitle: 'اختر الفصل الدراسي',
+                    items: [
+                      TermEntity(id: 1, name: 'الفصل الدراسي الاول'),
+                      TermEntity(id: 2, name: 'الفصل الدراسي الثاني')
+                    ],
+                    itemBuilder: (context, item) => Text(
+                      item.name,
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1
+                          ?.copyWith(fontSize: 14),
+                    ),
+                    onChanged: (value) => context
+                        .read<CurriculumCubit>()
+                        .getSubjectsAsync(value?.id),
+                  ),
+                ),
+              ],
+            ),
+            BlocBuilder<CurriculumCubit, CurriculumState>(
+                builder: (context, state) {
+              if (state is CurriculumLoading) {
+                return Center(
+                    child: SizedBox(
+                        height: MediaQuery.of(context).size.height / 2,
+                        child: const DoubleBounce()));
+              }
+              if (state is CurriculumError) {
+                Text('Error: ${state.errorMessage}');
+              }
+              if (state is CurriculumLoaded) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      SizedBox(
+                        height: ((state.subjects.length / 2).round() * 190),
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: state.subjects.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              color: Colors.grey[100],
+                              child: ImageWithFloatingBottomHeader(
+                                image:
+                                    state.subjects[index].backgroundImage ?? "",
+                                header: state.subjects[index].name ?? "",
+                                headerColor: Colors.black,
+                                headerBackgroundColor: Colors.white,
+                                alignment: Alignment.bottomCenter,
+                                isNetworkImage: true,
+                              ),
+                            );
+                          },
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 12.0,
+                                  crossAxisSpacing: 12.0),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              } else {
+                return const SizedBox();
+              }
+            }),
+          ],
+        ),
       ),
       footerWidgets: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

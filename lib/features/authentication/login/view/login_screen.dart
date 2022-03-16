@@ -39,8 +39,11 @@ class _LoginScreenState extends State<LoginScreen> {
               );
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
-            if (state is LoginSuccess) {
+            if (state is LoginVerifiedSuccess) {
               Navigator.of(context).pushNamed("/StudentHome");
+            }
+            if(state is LoginNotVerifiedSuccess){
+              Navigator.of(context).pushNamed("/validate_otp");
             }
           },
           builder: (context, state) => OpacityLoading(

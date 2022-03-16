@@ -16,7 +16,8 @@ class LoginResponse{
   final String accessToken;
   final String refreshToken;
   final bool isPremium;
-  LoginResponse({required this.fullName, required this.email, required this.mobileNumber, required this.grade, required this.country, required this.dateOfBirth, required this.referralCode, required this.role, required this.governorate, required this.avatarUrl, required this.accessToken, required this.refreshToken, required this.isPremium});
+  final bool isVerified;
+  LoginResponse(this.isVerified, {required this.fullName, required this.email, required this.mobileNumber, required this.grade, required this.country, required this.dateOfBirth, required this.referralCode, required this.role, required this.governorate, required this.avatarUrl, required this.accessToken, required this.refreshToken, required this.isPremium});
   factory LoginResponse.fromJson(Map<String,dynamic> json)=> _$LoginResponseFromJson(json);
   Map<String,dynamic> toJson()=> _$LoginResponseToJson(this);
 }

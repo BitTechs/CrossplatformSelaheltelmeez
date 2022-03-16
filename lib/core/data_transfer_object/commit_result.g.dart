@@ -7,8 +7,8 @@ part of 'commit_result.dart';
 // **************************************************************************
 
 CommitResult _$CommitResultFromJson(Map<String, dynamic> json) => CommitResult(
-      errorMessage: json['errorMessage'] as String,
-      errorCode: json['errorCode'] as String,
+      errorMessage: json['errorMessage'] as String?,
+      errorCode: json['errorCode'] as String?,
       resultType: json['resultType'] as int,
       isSuccess: json['isSuccess'] as bool,
     );

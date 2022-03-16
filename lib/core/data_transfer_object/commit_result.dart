@@ -3,8 +3,8 @@ part 'commit_result.g.dart';
 
 @JsonSerializable()
 class CommitResult{
-  final String errorMessage;
-  final String errorCode;
+  final String? errorMessage;
+  final String? errorCode;
   final int resultType;
   final bool isSuccess;
 

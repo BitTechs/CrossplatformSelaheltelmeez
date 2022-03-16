@@ -16,7 +16,6 @@ class CurriculumRepository {
 
   Future<ValueCommitResult<List<StudentCurriculum>>> getCurriculumsAsync() async {
     Response<dynamic> responseResult = await dataProvider.getStudentCurriculumsAsync();
-    await Future.delayed(Duration(seconds: 5));
     return ValueCommitResult<List<StudentCurriculum>>.fromJson(responseResult.data,(data)=> (data as List).map((e) => StudentCurriculum.fromJson(e as Map<String,dynamic>)).toList());
   }
 }
