@@ -6,8 +6,10 @@ import 'package:selaheltelmeez/features/authentication/register/view/register_sc
 import 'package:selaheltelmeez/features/authentication/validate_otp/view/validate_otp_screen.dart';
 import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_object/list_item.dart';
 import 'package:selaheltelmeez/features/landing/presentation_layer/landing_screen.dart';
-import 'package:selaheltelmeez/features/student/home/view/student_home_screen.dart';
-import 'package:selaheltelmeez/features/student/layout/view/student_layout_screen.dart';
+import 'package:selaheltelmeez/features/student/dashboard/dashboard/view/student_dashboard_screen.dart';
+import 'package:selaheltelmeez/features/student/dashboard/lesson/view/lesson_screen.dart';
+import 'package:selaheltelmeez/features/student/dashboard/subject/view/subject_screen.dart';
+import 'package:selaheltelmeez/features/student/student_navigation_bar/view/student%20_navigation_bar_screen.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class RouteGenerator {
@@ -21,7 +23,7 @@ class RouteGenerator {
     // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
     if(AppUserLocalStorageProvider.sharedAppUserEntity?.isVerified ?? false){
-      return PageTransition(child: const StudentLayoutScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      return PageTransition(child: const StudentNavBarScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
     }
     switch (settings.name) {
       case '/':
@@ -32,10 +34,14 @@ class RouteGenerator {
         return PageTransition(child: const RegisterScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/validate_otp':
         return PageTransition(child: const ValidateOTPScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/StudentLayout':
-        return PageTransition(child: const StudentLayoutScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/StudentHome':
-      return PageTransition(child: const StudentHomeScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case '/StudentDashboard':
+        return PageTransition(child: const StudentNavBarScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case '/StudentSubject':
+        return PageTransition(child: const SubjectScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case '/StudentLesson':
+        return PageTransition(child: LessonScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+        case '/StudentHome':
+      return PageTransition(child: const StudentDashboardScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       // Validation of correct data type
       case '/WebViewer':
         ListItem listItem = (args as ListItem);

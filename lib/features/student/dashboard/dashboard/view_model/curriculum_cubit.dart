@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:selaheltelmeez/features/student/home/model/data_transfer_object/curriculum/student_curriculum.dart';
-import 'package:selaheltelmeez/features/student/home/model/repository/curriculum_repository.dart';
+import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/data_transfer_object/curriculum/student_curriculum.dart';
+import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/repository/curriculum_repository.dart';
+
+
 
 part 'curriculum_state.dart';
 

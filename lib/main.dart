@@ -15,11 +15,12 @@ import 'package:selaheltelmeez/features/authentication/register/view_model/grade
 import 'package:selaheltelmeez/features/authentication/register/view_model/register_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/validate_otp/model/data_provider/validate_otp_data_provider.dart';
 import 'package:selaheltelmeez/features/authentication/validate_otp/model/repository/validate_otp_repository.dart';
-import 'package:selaheltelmeez/features/student/home/model/repository/curriculum_repository.dart';
-import 'package:selaheltelmeez/features/student/home/view_model/curriculum_cubit.dart';
-import 'package:selaheltelmeez/features/student/layout/view_model/student_layout_cubit.dart';
+import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/data_provider/curriculum_data_provider.dart';
+import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/repository/curriculum_repository.dart';
+import 'package:selaheltelmeez/features/student/dashboard/dashboard/view_model/curriculum_cubit.dart';
+import 'package:selaheltelmeez/features/student/student_navigation_bar/view_model/navigation_bar_cubit.dart';
 import 'features/authentication/validate_otp/view_model/validate_otp_cubit.dart';
-import 'features/student/home/model/data_provider/curriculum_data_provider.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -93,7 +94,7 @@ class SelaheltelmeezLauncher extends StatelessWidget {
           BlocProvider(
               create: (BuildContext context) =>
                   ValidateOtpCubit(context.read<ValidateOTPRepository>())),
-          BlocProvider(create: (BuildContext context) => StudentLayoutCubit()),
+          BlocProvider(create: (BuildContext context) => StudentNavBarCubit()),
         ],
         child: _materialApp(),
       ),

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:selaheltelmeez/features/student/classes/presentation_layer/student_classes_screen.dart';
-import 'package:selaheltelmeez/features/student/games/presentation_layer/student_Games_screen.dart';
-import 'package:selaheltelmeez/features/student/home/view/student_home_screen.dart';
-import 'package:selaheltelmeez/features/student/invitations/presentation_layer/student_invitations_screen.dart';
-import 'package:selaheltelmeez/features/student/layout/view_model/stduent_layout_states.dart';
-import 'package:selaheltelmeez/features/student/notifications/presentation_layer/student_notifications_screen.dart';
+import 'package:selaheltelmeez/features/student/classes/classes/view/student_classes_screen.dart';
+import 'package:selaheltelmeez/features/student/dashboard/dashboard/view/student_dashboard_screen.dart';
+import 'package:selaheltelmeez/features/student/games/games/view/student_games_screen.dart';
+import 'package:selaheltelmeez/features/student/invitations/invitations/view/student_invitations_screen.dart';
+import 'package:selaheltelmeez/features/student/notifications/notifications/view/student_notifications_screen.dart';
+import 'package:selaheltelmeez/features/student/student_navigation_bar/view_model/navigation_bar_states.dart';
 
-class StudentLayoutCubit extends Cubit<StudentLayoutStates>
+class StudentNavBarCubit extends Cubit<StudentNavBarStates>
 {
-  StudentLayoutCubit() : super(StudentLayoutInitial());
+  StudentNavBarCubit() : super(StudentLayoutInitial());
 
-  static StudentLayoutCubit get(context) => BlocProvider.of(context);
+  static StudentNavBarCubit get(context) => BlocProvider.of(context);
 
   int currentIndex = 0;
 
@@ -50,7 +50,7 @@ class StudentLayoutCubit extends Cubit<StudentLayoutStates>
   ];
 
   List<Widget> screens = [
-    const StudentHomeScreen(),
+    const StudentDashboardScreen(),
     const StudentClassesScreen(),
     const StudentGamesScreen(),
     const StudentNotificationsScreen(),

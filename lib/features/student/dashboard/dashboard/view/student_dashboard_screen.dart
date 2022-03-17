@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
-import 'package:selaheltelmeez/features/student/home/model/entity/term_entity.dart';
-import 'package:selaheltelmeez/features/student/home/view_model/curriculum_cubit.dart';
+import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/entity/term_entity.dart';
+import 'package:selaheltelmeez/features/student/dashboard/dashboard/view_model/curriculum_cubit.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
-class StudentHomeScreen extends StatelessWidget {
-  const StudentHomeScreen({
+class StudentDashboardScreen extends StatelessWidget {
+  const StudentDashboardScreen({
     Key? key,
   }) : super(key: key);
 

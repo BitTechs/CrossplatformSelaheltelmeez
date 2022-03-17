@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/widgets/scaffold/flat_app_scaffold.dart';
 
-import '../../../../widgets/buttons/fancy_elevated_button.dart';
 
 class StudentNotificationsScreen extends StatelessWidget {
   const StudentNotificationsScreen({Key? key}) : super(key: key);
