@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
+import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:selaheltelmeez/features/authentication/login/model/data_transfer_object/login_request.dart';
@@ -32,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
       title: 'تسجيل الدخول',
       child: SingleChildScrollView(
         child: BlocConsumer<LoginCubit, LoginState>(
-          listener: (context, state) {
+          listener: (context, state) async {
             if (state is LoginFailed) {
               final snackBar = SnackBar(
                 content: Text(state.errorMessage),
@@ -40,9 +41,13 @@ class _LoginScreenState extends State<LoginScreen> {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
             if (state is LoginVerifiedSuccess) {
+              // Trying to loading App User Entity Values
+              await AppUserLocalStorageProvider.tryToLoadAppUserEntity();
               Navigator.of(context).pushNamed("/StudentHome");
             }
             if(state is LoginNotVerifiedSuccess){
+              // Trying to loading App User Entity Values
+              await AppUserLocalStorageProvider.tryToLoadAppUserEntity();
               Navigator.of(context).pushNamed("/validate_otp");
             }
           },

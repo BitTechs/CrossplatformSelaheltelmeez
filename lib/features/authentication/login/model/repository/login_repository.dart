@@ -1,5 +1,5 @@
 import 'package:selaheltelmeez/core/data_transfer_object/value_commit_result.dart';
-import 'package:selaheltelmeez/features/authentication/login/model/data_provider/login_data_provider.dart';
+import 'package:selaheltelmeez/features/authentication/login/model/data_provider/i_login_data_provider.dart';
 import 'package:selaheltelmeez/features/authentication/login/model/data_transfer_object/login_request.dart';
 import 'package:selaheltelmeez/features/authentication/login/model/data_transfer_object/login_response.dart';
 

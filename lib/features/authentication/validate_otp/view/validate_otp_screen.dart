@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
-import 'package:selaheltelmeez/core/local_storage/AppUserProvider.dart';
+import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/features/authentication/validate_otp/view_model/validate_otp_cubit.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
@@ -20,8 +20,6 @@ class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final appUserProvider = context.watch<AppUserProvider>();
-    appUserProvider.loadFromSharedPreference();
     return NavigatedAppScaffold(
       title: "رمز التفعيل",
       child: SingleChildScrollView(
@@ -35,9 +33,10 @@ class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
             if(state is ValidateOtpSuccess){
+              final savedResponse =  await AppUserLocalStorageProvider.readAsJsonAsync();
+              savedResponse['isVerified'] = true;
+              await AppUserLocalStorageProvider.addAsJsonAsync(savedResponse);
 
-              appUserProvider.getAppUser.isVerified = true;
-              context.read<AppUserProvider>().updateAppUserProvider(appUserProvider.getAppUser);
               Navigator.of(context).pushNamed('/StudentHome');
             }
           },
@@ -93,14 +92,13 @@ class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
               children: [
                 FancyElevatedButton(
                   title: "تفعيل",
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      final appUser = context.read<AppUserProvider>();
-                      bool isMobile =
-                          appUser.getAppUser.mobileNumber.isNotEmpty;
+                      final savedResponse =  await AppUserLocalStorageProvider.readAsAppUserObjectAsync();
+                      bool isMobile = savedResponse.mobileNumber.isNotEmpty;
                       context
                           .read<ValidateOtpCubit>()
-                          .validateAsync(_otpController.text, isMobile, appUser.getAppUser.accessToken);
+                          .validateAsync(_otpController.text, isMobile);
                     }
                   },
                   backGroundColor:
@@ -111,12 +109,12 @@ class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
                 ),
                 FancyElevatedButton(
                   title: "إعادة الإرسال",
-                  onPressed: () {
-                    final appUser = context.read<AppUserProvider>();
-                    bool isMobile = appUser.getAppUser.mobileNumber.isNotEmpty;
+                  onPressed: () async {
+                    final savedResponse =  await AppUserLocalStorageProvider.readAsAppUserObjectAsync();
+                    bool isMobile = savedResponse.mobileNumber.isNotEmpty;
                     context
                         .read<ValidateOtpCubit>()
-                        .resendActivationCodeAsync(isMobile, appUser.getAppUser.accessToken);
+                        .resendActivationCodeAsync(isMobile);
                   },
                   backGroundColor:
                       CommonColors.fancyElevatedButtonBackGroundColor,

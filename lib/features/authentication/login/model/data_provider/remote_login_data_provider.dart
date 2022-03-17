@@ -1,12 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:selaheltelmeez/core/data_transfer_object/value_commit_result.dart';
 import 'package:selaheltelmeez/core/dio_client/dio_client.dart';
+import 'package:selaheltelmeez/features/authentication/login/model/data_provider/i_login_data_provider.dart';
 import 'package:selaheltelmeez/features/authentication/login/model/data_transfer_object/login_request.dart';
 import 'package:selaheltelmeez/features/authentication/login/model/data_transfer_object/login_response.dart';
 
-abstract class ILoginDataProvider {
-  Future<ValueCommitResult<LoginResponse>> loginAsync(LoginRequest request);
-}
 
 class RemoteLoginDataProvider implements ILoginDataProvider{
   final IDioClient dioClient;

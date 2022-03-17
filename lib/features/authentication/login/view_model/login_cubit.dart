@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:selaheltelmeez/core/data_transfer_object/value_commit_result.dart';
@@ -17,14 +15,13 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future<void> loginAsync(LoginRequest loginRequest) async {
     emit(LoginSubmit());
-    ValueCommitResult<LoginResponse> response =
-        await _repo.loginAsync(loginRequest);
+    ValueCommitResult<LoginResponse> response = await _repo.loginAsync(loginRequest);
     if (response.isSuccess) {
       await AppUserLocalStorageProvider.addAsJsonAsync(response.value!.toJson());
       if (response.value!.isVerified) {
-        emit(LoginVerifiedSuccess(response: response.value!));
+        emit(LoginVerifiedSuccess());
       } else {
-        emit(LoginNotVerifiedSuccess(response: response.value!));
+        emit(LoginNotVerifiedSuccess());
       }
     } else {
       emit(LoginFailed(errorMessage: response.errorMessage ?? "Error"));

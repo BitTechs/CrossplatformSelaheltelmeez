@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
-import 'package:selaheltelmeez/core/local_storage/AppUserProvider.dart';
+import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/features/student/home/model/entity/term_entity.dart';
 import 'package:selaheltelmeez/features/student/home/view_model/curriculum_cubit.dart';
@@ -14,7 +14,6 @@ class StudentHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appUserProvider = context.watch<AppUserProvider>();
     return FlatAppScaffold(
         child: ScrollColumnExpandable(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +42,7 @@ class StudentHomeScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(35.0),
                           child: Image(
                             image: NetworkImage(
-                                appUserProvider.getAppUser.avatarUrl),
+                                AppUserLocalStorageProvider.sharedAppUserEntity?.avatarUrl ?? "Url"),
                             height: 70,
                             width: 70,
                           ),
@@ -59,14 +58,14 @@ class StudentHomeScreen extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text(
-                                  appUserProvider.getAppUser.fullName,
+                                  AppUserLocalStorageProvider.sharedAppUserEntity?.fullName ?? "Name",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge
                                       ?.copyWith(color: Colors.white),
                                 ),
                                 Text(
-                                  appUserProvider.getAppUser.grade,
+                                  AppUserLocalStorageProvider.sharedAppUserEntity?.grade ?? "Grade",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge
@@ -232,7 +231,7 @@ class StudentHomeScreen extends StatelessWidget {
                     ),
                     onChanged: (value) => context
                         .read<CurriculumCubit>()
-                        .getSubjectsAsync(value?.id, appUserProvider.getAppUser.accessToken),
+                        .getSubjectsAsync(value?.id),
                   ),
                 ),
               ],

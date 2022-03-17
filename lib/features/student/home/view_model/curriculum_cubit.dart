@@ -12,12 +12,12 @@ class CurriculumCubit extends Cubit<CurriculumState> {
   final CurriculumRepository _repo;
   CurriculumCubit(this._repo) : super(CurriculumInitial());
 
-  Future<void> getSubjectsAsync(int? termId, String accessToken) async {
+  Future<void> getSubjectsAsync(int? termId) async {
     if(curriculumSubjects.isNotEmpty){
       emit(CurriculumLoaded(subjects: curriculumSubjects.where((element) => element.term == termId).toList()));
     }else{
       emit(CurriculumLoading());
-      final result = await _repo.getCurriculumsAsync(accessToken);
+      final result = await _repo.getCurriculumsAsync();
       if(result.isSuccess){
         if(result.value?.isNotEmpty ?? false){
           curriculumSubjects.addAll(result.value!);

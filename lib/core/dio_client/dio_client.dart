@@ -14,7 +14,8 @@ class AnonymousDioClient implements IDioClient {
         sendTimeout: const Duration(seconds: 60).inMilliseconds,
         receiveTimeout: const Duration(seconds: 60).inMilliseconds,
         validateStatus: (_) => true,
-        receiveDataWhenStatusError: true));
+        receiveDataWhenStatusError: true,
+        baseUrl: 'https://10.0.2.2:7228'));
 
     _dio.interceptors.add(
       LogInterceptor(
@@ -42,7 +43,8 @@ class AuthorizedDioClient implements IDioClient {
         sendTimeout: const Duration(seconds: 60).inMilliseconds,
         receiveTimeout: const Duration(seconds: 60).inMilliseconds,
         validateStatus: (_) => true,
-        receiveDataWhenStatusError: true));
+        receiveDataWhenStatusError: true,
+        baseUrl: 'https://10.0.2.2:7228'));
 
     dio.interceptors.add(
       LogInterceptor(

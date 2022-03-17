@@ -6,6 +6,14 @@ class AppUserLocalStorageProvider {
   static final Future<SharedPreferences> _sharedPreferenceInstance =
       SharedPreferences.getInstance();
 
+  static AppUserEntity? sharedAppUserEntity;
+
+  static Future<void> tryToLoadAppUserEntity() async {
+    if(await _sharedPreferenceInstance.then((value)=> value.getString(_keyName) != null)){
+      sharedAppUserEntity = await readAsAppUserObjectAsync();
+    }
+  }
+
   static const String _keyName = "App_User";
 
   static Future<void> addAsJsonAsync(Map<String, dynamic> toJson) async =>

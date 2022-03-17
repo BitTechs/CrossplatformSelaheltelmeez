@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/features/authentication/login/view/login_screen.dart';
 import 'package:selaheltelmeez/features/authentication/register/view/register_screen.dart';
 import 'package:selaheltelmeez/features/authentication/validate_otp/view/validate_otp_screen.dart';
@@ -19,6 +20,9 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
+    if(AppUserLocalStorageProvider.sharedAppUserEntity?.isVerified ?? false){
+      return PageTransition(child: const StudentLayoutScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+    }
     switch (settings.name) {
       case '/':
         return PageTransition(child: const LandingScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
@@ -31,7 +35,7 @@ class RouteGenerator {
       case '/StudentLayout':
         return PageTransition(child: const StudentLayoutScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/StudentHome':
-      return PageTransition(child: const StudentLayoutScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      return PageTransition(child: const StudentHomeScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       // Validation of correct data type
       case '/WebViewer':
         ListItem listItem = (args as ListItem);
