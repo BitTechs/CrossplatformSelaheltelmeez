@@ -106,8 +106,7 @@ class SelaheltelmeezLauncher extends StatelessWidget {
         supportedLocales: AppLocalizations.supportedLocales,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
-        //initialRoute: '/',
-        initialRoute: '/login',
+        initialRoute: '/',
         locale: const Locale("ar"),
         onGenerateRoute: RouteGenerator.generateRoute,
       );
