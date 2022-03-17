@@ -102,5 +102,5 @@ extension ValidationExtension on List<ValidationRule> {
       firstWhereOrNull((element) => !element.check(value))?.validationError;
 
   String? getValidationErrorMessages(String? value) =>
-      firstWhereOrNull((element) => !element.check(value))?.validationError;
+      where((element) => !element.check(value)).fold(null, (previousValue, element) => previousValue! + "\n" + element.validationError);
 }

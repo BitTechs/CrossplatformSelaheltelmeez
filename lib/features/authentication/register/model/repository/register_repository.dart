@@ -16,7 +16,6 @@ class RegisterRepository {
 
   Future<ValueCommitResult<List<GradeMenuItem>>> getGradeMenuItemsAsync() async {
     Response<dynamic> responseResult = await dataProvider.getGradesMenuItemAsync();
-    print(responseResult.data);
     return ValueCommitResult<List<GradeMenuItem>>.fromJson(responseResult.data,(data)=> (data as List).map((e) => GradeMenuItem.fromJson(e as Map<String,dynamic>)).toList());
   }
 

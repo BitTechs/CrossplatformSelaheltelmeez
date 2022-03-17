@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:selaheltelmeez/core/dio_client/dio_client.dart';
 import 'package:selaheltelmeez/core/local_storage/AppUserProvider.dart';
 import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/core/router/route_generator.dart';
@@ -28,8 +30,11 @@ void main()  {
   runApp(
     MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<LoginDataProvider>(create: (context)=> LoginDataProvider()),
-        RepositoryProvider<LoginRepository>(create: (context) => LoginRepository(dataProvider: context.read<LoginDataProvider>())),
+        RepositoryProvider<IDioClient>(create: (context)=> AnonymousDioClient()),
+        RepositoryProvider<IDioClient>(create: (context)=> AuthorizedDioClient()),
+
+        RepositoryProvider<ILoginDataProvider>(create: (context)=> RemoteLoginDataProvider(dioClient: context.read<AnonymousDioClient>())),
+        RepositoryProvider<LoginRepository>(create: (context) => LoginRepository(dataProvider: context.read<RemoteLoginDataProvider>())),
         RepositoryProvider<RegisterDataProvider>(create: (context)=> RegisterDataProvider()),
         RepositoryProvider<RegisterRepository>(create: (context) => RegisterRepository(dataProvider: context.read<RegisterDataProvider>())),
         RepositoryProvider<ValidateOTPDataProvider>(create: (context)=> ValidateOTPDataProvider()),

@@ -4,7 +4,7 @@ import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_
 
 class LandingRepository {
   Future<LandingSectionCommitResult> getLandingSectionsAsync() async {
-    Dio dioClient = await DioClient.getHttpClient();
+    Dio dioClient = await DioClient.getAnonymousHttpClient();
     Response<dynamic> responseResult =
         await dioClient.get("/Landing/GetSections");
     return LandingSectionCommitResult.fromJson(responseResult.data);

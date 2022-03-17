@@ -6,16 +6,13 @@ import 'package:selaheltelmeez/features/authentication/validate_otp/model/data_t
 class ValidateOTPRepository {
   final ValidateOTPDataProvider dataProvider;
   ValidateOTPRepository({required this.dataProvider});
-  Future<CommitResult> validateAsync(ValidateOTPRequest request, bool isMobile) async {
-    Response<dynamic> responseResult =  await dataProvider.validateAsync(request, isMobile);
-    print(responseResult.data);
-
+  Future<CommitResult> validateAsync(ValidateOTPRequest request, bool isMobile, String accessToken) async {
+    Response<dynamic> responseResult =  await dataProvider.validateAsync(request, isMobile,accessToken);
     return CommitResult.fromJson(responseResult.data);
   }
 
-  Future<CommitResult> resendActivationCodeAsync(bool isMobile) async {
-    Response<dynamic> responseResult =  await dataProvider.resendActivationCodeAsync(isMobile);
-    print(responseResult.data);
+  Future<CommitResult> resendActivationCodeAsync(bool isMobile, String accessToken) async {
+    Response<dynamic> responseResult =  await dataProvider.resendActivationCodeAsync(isMobile,accessToken);
     return CommitResult.fromJson(responseResult.data);
   }
 }

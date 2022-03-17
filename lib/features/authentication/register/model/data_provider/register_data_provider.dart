@@ -4,12 +4,12 @@ import 'package:selaheltelmeez/features/authentication/register/model/data_trans
 
 class RegisterDataProvider{
   Future<Response<dynamic>> registerAsync(RegisterRequest request) async {
-    Dio dioClient = await DioClient.getHttpClient();
+    Dio dioClient = await DioClient.getAnonymousHttpClient();
     return await dioClient.post("/Identity/Register", data: request);
   }
 
   Future<Response<dynamic>> getGradesMenuItemAsync() async {
-    Dio dioClient = await DioClient.getHttpClient();
+    Dio dioClient = await DioClient.getAnonymousHttpClient();
     return await dioClient.get("/Identity/GetGradesDropDownMenu");
   }
 }

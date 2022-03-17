@@ -100,7 +100,7 @@ class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
                           appUser.getAppUser.mobileNumber.isNotEmpty;
                       context
                           .read<ValidateOtpCubit>()
-                          .validateAsync(_otpController.text, isMobile);
+                          .validateAsync(_otpController.text, isMobile, appUser.getAppUser.accessToken);
                     }
                   },
                   backGroundColor:
@@ -116,7 +116,7 @@ class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
                     bool isMobile = appUser.getAppUser.mobileNumber.isNotEmpty;
                     context
                         .read<ValidateOtpCubit>()
-                        .resendActivationCodeAsync(isMobile);
+                        .resendActivationCodeAsync(isMobile, appUser.getAppUser.accessToken);
                   },
                   backGroundColor:
                       CommonColors.fancyElevatedButtonBackGroundColor,

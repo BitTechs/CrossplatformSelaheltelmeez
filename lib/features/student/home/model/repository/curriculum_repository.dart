@@ -14,8 +14,8 @@ class CurriculumRepository {
   }
 */
 
-  Future<ValueCommitResult<List<StudentCurriculum>>> getCurriculumsAsync() async {
-    Response<dynamic> responseResult = await dataProvider.getStudentCurriculumsAsync();
+  Future<ValueCommitResult<List<StudentCurriculum>>> getCurriculumsAsync(String accessToken) async {
+    Response<dynamic> responseResult = await dataProvider.getStudentCurriculumsAsync(accessToken);
     return ValueCommitResult<List<StudentCurriculum>>.fromJson(responseResult.data,(data)=> (data as List).map((e) => StudentCurriculum.fromJson(e as Map<String,dynamic>)).toList());
   }
 }

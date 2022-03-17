@@ -10,9 +10,9 @@ class ValidateOtpCubit extends Cubit<ValidateOtpState> {
   final ValidateOTPRepository _repo;
   ValidateOtpCubit(this._repo) : super(ValidateOtpInitial());
 
-  Future<void> validateAsync(String code, bool isMobile)async{
+  Future<void> validateAsync(String code, bool isMobile, String accessToken )async{
     emit(ValidateOtpSubmit());
-    CommitResult commitResult =  await _repo.validateAsync(ValidateOTPRequest(code: code), isMobile);
+    CommitResult commitResult =  await _repo.validateAsync(ValidateOTPRequest(code: code), isMobile,accessToken);
     if(commitResult.isSuccess){
       emit(ValidateOtpSuccess());
     }else{
@@ -20,9 +20,9 @@ class ValidateOtpCubit extends Cubit<ValidateOtpState> {
     }
   }
 
-  Future<void> resendActivationCodeAsync(bool isMobile)async{
+  Future<void> resendActivationCodeAsync(bool isMobile, String accessToken)async{
     emit(ValidateOtpSubmit());
-    CommitResult commitResult =  await _repo.resendActivationCodeAsync(isMobile);
+    CommitResult commitResult =  await _repo.resendActivationCodeAsync(isMobile,accessToken);
     if(commitResult.isSuccess){
       emit(ResendValidateOtpSuccess());
     }else{

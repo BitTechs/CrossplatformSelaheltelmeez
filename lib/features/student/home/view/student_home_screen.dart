@@ -232,7 +232,7 @@ class StudentHomeScreen extends StatelessWidget {
                     ),
                     onChanged: (value) => context
                         .read<CurriculumCubit>()
-                        .getSubjectsAsync(value?.id),
+                        .getSubjectsAsync(value?.id, appUserProvider.getAppUser.accessToken),
                   ),
                 ),
               ],
