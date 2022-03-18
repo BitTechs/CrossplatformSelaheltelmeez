@@ -46,7 +46,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
             if (state is RegisterSuccess) {
-              Navigator.of(context).pushNamed("/validate_otp");
+              Navigator.of(context).pushNamed("/update_profile");
             }
           },
           builder: (context, state) => OpacityLoading(
@@ -129,20 +129,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         await context.read<RegisterCubit>().registerAsync(
                             RegisterRequest(
                                 fullName: fullNameController.text,
-                                grade: 1,
-                                identityRoleId: context
-                                    .read<RegisterCubit>()
-                                    .getIdentityRoleId,
-                                countryId: 1,
-                                governorateId: 1,
-                                gender:
-                                    context.read<RegisterCubit>().getGradeId,
-                                isEmailSubscribed: false,
-                                email: Utilities.isEmail(
-                                        emailOrMobileController.text)
-                                    ,
-                                mobileNumber: Utilities.isMobile(emailOrMobileController.text)
-                                    ,
+                                grade: context.read<RegisterCubit>().getGradeId,
+                                identityRoleId: context.read<RegisterCubit>().getIdentityRoleId,
+                                email: Utilities.isEmail(emailOrMobileController.text),
+                                mobileNumber: Utilities.isMobile(emailOrMobileController.text),
                                 passwordHash: passwordController.text,
                                 facebookId: "",
                                 googleId: "",

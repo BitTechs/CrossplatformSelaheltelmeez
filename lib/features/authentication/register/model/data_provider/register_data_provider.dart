@@ -17,6 +17,7 @@ class RemoteRegisterDataProvider implements IRegisterDataProvider{
   @override
   Future<ValueCommitResult<RegisterResponse>> registerAsync(RegisterRequest request) async {
     Response<dynamic> response = await dioClient.getClient().post("/Identity/Register", data: request);
+    print(response);
     return ValueCommitResult<RegisterResponse>.fromJson(response.data,(data)=> RegisterResponse.fromJson(data as Map<String,dynamic>));
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
+import 'package:selaheltelmeez/core/helpers/utilities.dart';
 import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
@@ -18,7 +19,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final emailController = TextEditingController();
+  final emailOrMobileController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
@@ -102,12 +103,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (_formKey.currentState!.validate()) {
                           await context.read<LoginCubit>().loginAsync(
                               LoginRequest(
-                                  email: emailController.text,
+                                  email: Utilities.isEmail(emailOrMobileController.text),
                                   passwordHash: passwordController.text,
                                   officeId: "",
                                   googleId: "",
                                   facebookId: "",
-                                  mobileNumber: ""));
+                                  mobileNumber:  Utilities.isMobile(emailOrMobileController.text)));
                         }
                       }),
                 ),
@@ -170,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             FancyTextFormField(
               hintTitle: 'البريد الإلكتروني / رقم الموبايل',
-              controller: emailController,
+              controller: emailOrMobileController,
               width: inputWidth,
               validators: [
                 IsValidRequiredRule('هذا الحقل مطلوب'),

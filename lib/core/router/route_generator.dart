@@ -8,6 +8,7 @@ import 'package:selaheltelmeez/features/authentication/forget_password/view/vali
 import 'package:selaheltelmeez/features/authentication/forget_password/view_model/validate_forget_password_otp_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/login/view/login_screen.dart';
 import 'package:selaheltelmeez/features/authentication/register/view/register_screen.dart';
+import 'package:selaheltelmeez/features/authentication/update_profile/view/update_profile_screen.dart';
 import 'package:selaheltelmeez/features/authentication/validate_otp/view/validate_otp_screen.dart';
 import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_object/list_item.dart';
 import 'package:selaheltelmeez/features/landing/presentation_layer/landing_screen.dart';
@@ -38,6 +39,8 @@ class RouteGenerator {
         return PageTransition(child: const LoginScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/register':
         return PageTransition(child: const RegisterScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case '/update_profile':
+        return PageTransition(child: const UpdateProfileScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/validate_otp':
         return PageTransition(child: const ValidateOTPScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/change_email_or_mobile':

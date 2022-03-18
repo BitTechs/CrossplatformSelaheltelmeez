@@ -32,19 +32,19 @@ class AppUserLocalStorageProvider {
   static Future<AppUserEntity> readAsAppUserObjectAsync() async {
     final mappedJson = await readAsJsonAsync();
     return AppUserEntity(
-        isVerified: mappedJson["isVerified"] as bool,
-        fullName: mappedJson["fullName"] as String,
-        email: mappedJson["email"] as String,
-        mobileNumber: mappedJson["mobileNumber"] as String?,
-        grade: mappedJson["grade"] as String,
-        country: mappedJson["country"] as String,
-        dateOfBirth: mappedJson["dateOfBirth"] as String,
-        referralCode: mappedJson["referralCode"] as String,
-        role: mappedJson["role"] as String,
-        governorate: mappedJson["governorate"] as String,
-        avatarUrl: mappedJson["avatarUrl"] as String,
-        accessToken: mappedJson["accessToken"] as String,
-        refreshToken: mappedJson["refreshToken"] as String,
-        isPremium: mappedJson["isPremium"] as bool);
+        isVerified: mappedJson["isVerified"] ?? sharedAppUserEntity?.isVerified,
+        fullName: mappedJson["fullName"] ?? sharedAppUserEntity?.fullName,
+        email: mappedJson["email"] ?? sharedAppUserEntity?.email,
+        mobileNumber: mappedJson["mobileNumber"] ?? sharedAppUserEntity?.mobileNumber,
+        grade: mappedJson["grade"] ?? sharedAppUserEntity?.grade,
+        country: mappedJson["country"] ?? sharedAppUserEntity?.country,
+        dateOfBirth: mappedJson["dateOfBirth"] ?? sharedAppUserEntity?.dateOfBirth,
+        referralCode: mappedJson["referralCode"]?? sharedAppUserEntity?.referralCode,
+        role: mappedJson["role"] ?? sharedAppUserEntity?.role,
+        governorate: mappedJson["governorate"] ?? sharedAppUserEntity?.governorate,
+        avatarUrl: mappedJson["avatarUrl"] ?? sharedAppUserEntity?.avatarUrl,
+        accessToken: mappedJson["accessToken"] ?? sharedAppUserEntity?.accessToken,
+        refreshToken: mappedJson["refreshToken"] ?? sharedAppUserEntity?.refreshToken,
+        isPremium: mappedJson["isPremium"] ?? sharedAppUserEntity?.isPremium);
   }
 }

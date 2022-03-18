@@ -21,6 +21,8 @@ import 'package:selaheltelmeez/features/authentication/register/model/data_provi
 import 'package:selaheltelmeez/features/authentication/register/model/repository/register_repository.dart';
 import 'package:selaheltelmeez/features/authentication/register/view_model/grade_menu_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/register/view_model/register_cubit.dart';
+import 'package:selaheltelmeez/features/authentication/update_profile/model/repository/update_profile_repository.dart';
+import 'package:selaheltelmeez/features/authentication/update_profile/view_model/update_profile_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/validate_otp/model/data_provider/validate_otp_data_provider.dart';
 import 'package:selaheltelmeez/features/authentication/validate_otp/model/repository/validate_otp_repository.dart';
 import 'package:selaheltelmeez/features/student/classes/class_search/view_model/class_search_cubit.dart';
@@ -28,6 +30,7 @@ import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/data_p
 import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/repository/curriculum_repository.dart';
 import 'package:selaheltelmeez/features/student/dashboard/dashboard/view_model/curriculum_cubit.dart';
 import 'package:selaheltelmeez/features/student/student_navigation_bar/view_model/navigation_bar_cubit.dart';
+import 'features/authentication/update_profile/model/data_provider/remote_update_profile_provider.dart';
 import 'features/authentication/validate_otp/view_model/validate_otp_cubit.dart';
 
 
@@ -70,7 +73,9 @@ class SelaheltelmeezLauncher extends StatelessWidget {
         RepositoryProvider<RegisterRepository>(
             create: (context) => RegisterRepository(
                 dataProvider: context.read<RemoteRegisterDataProvider>())),
-
+        // Update Profile
+        RepositoryProvider<RemoteUpdateProfileProvider>(create: (context) => RemoteUpdateProfileProvider(dioClient: context.read<AuthorizedDioClient>())),
+        RepositoryProvider<UpdateProfileRepository>(create: (context) => UpdateProfileRepository(dataProvider: context.read<RemoteUpdateProfileProvider>())),
         //Change Email Or Mobile
         RepositoryProvider<RemoteChangeEmailOrMobileDataProvider>(create: (context) => RemoteChangeEmailOrMobileDataProvider(dioClient: context.read<AuthorizedDioClient>())),
         RepositoryProvider<ChangeEmailOrMobileRepository>(create: (context) => ChangeEmailOrMobileRepository(dataProvider: context.read<RemoteChangeEmailOrMobileDataProvider>())),
@@ -105,6 +110,7 @@ class SelaheltelmeezLauncher extends StatelessWidget {
           BlocProvider(create: (BuildContext context) => ForgetPasswordCubit(context.read<ForgetPasswordRepository>())),
           BlocProvider(create: (BuildContext context) => ValidateForgetPasswordOtpCubit(context.read<ForgetPasswordRepository>())),
           BlocProvider(create: (BuildContext context) => ResetPasswordCubit(context.read<ForgetPasswordRepository>())),
+          BlocProvider(create: (BuildContext context) => UpdateProfileCubit(context.read<UpdateProfileRepository>())),
           BlocProvider(create: (BuildContext context) => StudentNavBarCubit()),
           BlocProvider(create: (BuildContext context) => ClassSearchCubit()),
         ],
