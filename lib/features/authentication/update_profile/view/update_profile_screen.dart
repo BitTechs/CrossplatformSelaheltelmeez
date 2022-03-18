@@ -8,6 +8,7 @@ import 'package:selaheltelmeez/features/authentication/login/model/data_transfer
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/update_profile/model/data_transfer_object/governorate_response.dart';
 import 'package:selaheltelmeez/features/authentication/update_profile/view_model/update_profile_cubit.dart';
+import 'package:selaheltelmeez/widgets/buttons/scaled_button_image.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
@@ -83,22 +84,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => Transform.scale(
-                        scale: (cubit.avatars[index].isSelected ?? false)
-                            ? 1.5
-                            : 1.0,
-                        child: GestureDetector(
-                          onTap: () => cubit.changeAvatar(index),
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 30.0,
-                            child: Image(
-                              image:
-                                  NetworkImage(cubit.avatars[index].imageUrl),
-                            ),
+                      itemBuilder: (context, index) =>
+                          ScaledButtonNetworkImage(
+                              scale: (cubit.avatars[index].isSelected ?? false)
+                                  ? 1.5
+                                  : 1.0,
+                            onTap: () => cubit.changeAvatar(index),
+                            imageUrl: cubit.avatars[index].imageUrl,
                           ),
-                        ),
-                      ),
                       separatorBuilder: (context, index) => const SizedBox(
                         width: 20.0,
                       ),
@@ -169,32 +162,16 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           const Text('اختر النوع'),
-                          Transform.scale(
+                          ScaledButtonAssetImage(
                             scale: cubit.gender == "female" ? 1.5 : 1.0,
-                            child: GestureDetector(
-                              onTap: () => cubit.changeGender('female'),
-                              child: const CircleAvatar(
-                                backgroundColor: Colors.white,
-                                radius: 28.0,
-                                child: Image(
-                                  image: AssetImage(AssetsImage.female),
-                                ),
-                              ),
-                            ),
+                            onTap: () => cubit.changeGender('female'),
+                            imageUrl: AssetsImage.female,
                           ),
-                          Transform.scale(
-                            scale: cubit.gender == "male" ? 1.5 : 1.0,
-                            child: GestureDetector(
-                              onTap: () => cubit.changeGender('male'),
-                              child: const CircleAvatar(
-                                backgroundColor: Colors.white,
-                                radius: 28.0,
-                                child: Image(
-                                  image: AssetImage(AssetsImage.male),
-                                ),
-                              ),
-                            ),
-                          )
+                          ScaledButtonAssetImage(
+                            scale: cubit.gender == "female" ? 1.5 : 1.0,
+                            onTap: () => cubit.changeGender('male'),
+                            imageUrl: AssetsImage.male,
+                          ),
                         ],
                       )
                     ],
