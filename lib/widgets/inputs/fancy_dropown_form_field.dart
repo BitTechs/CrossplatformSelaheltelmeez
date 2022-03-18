@@ -36,13 +36,12 @@ class FancyDropDownFormField<T> extends StatelessWidget {
               alignment: Alignment.center,
               decoration:  InputDecoration(
               hintText: hintTitle,
-
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
               errorBorder: InputBorder.none,
               disabledBorder: InputBorder.none,
-              contentPadding: const EdgeInsets.only(left: 35, bottom: 0, top: 0, right: 35),
+              contentPadding: const EdgeInsets.only(left: 25, bottom: 0, top: 0, right: 25),
               errorStyle:Theme.of(context).textTheme.bodySmall?.copyWith(color: CommonColors.errorTextColor, height: 0.3, fontSize: 12),),
               validator: validators,
               onChanged: onChanged,

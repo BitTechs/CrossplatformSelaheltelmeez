@@ -8,13 +8,9 @@ part of 'register_request.dart';
 
 RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
     RegisterRequest(
+      identityRoleId: json['identityRoleId'] as int?,
       fullName: json['fullName'] as String,
       grade: json['grade'] as int,
-      identityRoleId: json['identityRoleId'] as int,
-      countryId: json['countryId'] as int,
-      governorateId: json['governorateId'] as int,
-      gender: json['gender'] as int,
-      isEmailSubscribed: json['isEmailSubscribed'] as bool,
       email: json['email'] as String?,
       mobileNumber: json['mobileNumber'] as String?,
       passwordHash: json['passwordHash'] as String,
@@ -34,8 +30,4 @@ Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
       'officeId': instance.officeId,
       'grade': instance.grade,
       'identityRoleId': instance.identityRoleId,
-      'countryId': instance.countryId,
-      'governorateId': instance.governorateId,
-      'gender': instance.gender,
-      'isEmailSubscribed': instance.isEmailSubscribed,
     };

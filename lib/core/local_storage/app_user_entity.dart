@@ -3,11 +3,11 @@ class AppUserEntity{
   final String? email;
   final String? mobileNumber;
   final String grade;
-  final String country;
-  final String dateOfBirth;
+  final String? country;
+  final String? dateOfBirth;
   final String referralCode;
   final String role;
-  final String governorate;
+  final String? governorate;
   final String avatarUrl;
   final String accessToken;
   final String refreshToken;

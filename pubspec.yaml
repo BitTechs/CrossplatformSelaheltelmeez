@@ -83,6 +83,7 @@ flutter:
     - assets/images/shared/users/
     - assets/images/authentication/login/
     - assets/images/authentication/external/
+    - assets/images/authentication/shared/
     - assets/config/app_config.json
     - assets/config/app_config.development.json
 

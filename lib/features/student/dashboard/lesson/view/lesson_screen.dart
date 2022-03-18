@@ -32,7 +32,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 ),
                 IconButton(
                   onPressed: (){},
-                  icon: Icon(Icons.arrow_forward_outlined,
+                  icon: const Icon(Icons.arrow_forward_outlined,
                     color: Colors.white,
                   ),
                 ),
@@ -45,9 +45,9 @@ class _LessonScreenState extends State<LessonScreen> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         radius: 40.0,
-                        child: const Image(
+                        child: Image(
                           image: AssetImage(AssetsImage.studentUser),
                       ),
                       ),
@@ -57,7 +57,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        children: const [
                           Text(
                             'اللغة العربية',
                             style: TextStyle(
@@ -143,7 +143,7 @@ class _LessonScreenState extends State<LessonScreen> {
 
     },
     child: Column(
-      children: [
+      children: const [
         CircleAvatar(
           radius: 24.0,
           child: Image(
@@ -158,7 +158,7 @@ class _LessonScreenState extends State<LessonScreen> {
   );
 
   Widget selectedItemFilterList() => Column(
-    children: [
+    children: const [
       CircleAvatar(
         radius: 28.0,
         child: Image(
@@ -180,8 +180,8 @@ class _LessonScreenState extends State<LessonScreen> {
           decoration: BoxDecoration(
             color: CommonColors.studentHomeTopBar,
             borderRadius: BorderRadius.circular(16.0),
-            image: DecorationImage(
-              image: AssetImage(AssetsImage.gameLand),
+            image: const DecorationImage(
+              image: const AssetImage(AssetsImage.gameLand),
               fit: BoxFit.cover,
             ),
           ),
@@ -199,7 +199,7 @@ class _LessonScreenState extends State<LessonScreen> {
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: const [
                   Expanded(
                     child: Text('نشاط 1 علي الفصل الاول ',
                       maxLines: 2,
@@ -215,7 +215,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 ],
               ),
 
-              Spacer(),
+              const Spacer(),
               Text('الدرجة : 10',
               style: TextStyle(
                 color: CommonColors.studentHomeTopBar
