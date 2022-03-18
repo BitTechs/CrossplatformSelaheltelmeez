@@ -94,6 +94,9 @@ class IsValidConfirmPasswordRule extends ValidationRule{
     if (value == null) {
       return false;
     }
+    print(value);
+    print(password);
+
     return value == password;
   }
 }

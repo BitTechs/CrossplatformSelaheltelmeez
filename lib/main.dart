@@ -8,6 +8,11 @@ import 'package:selaheltelmeez/core/theme/app_theme.dart';
 import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/model/data_provider/remote_change_email_or_mobile_data_provider.dart';
 import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/model/repository/change_email_or_mobile_repository.dart';
 import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/view_model/change_email_or_mobile_cubit.dart';
+import 'package:selaheltelmeez/features/authentication/forget_password/model/data_provider/remote_forget_password_data_provider.dart';
+import 'package:selaheltelmeez/features/authentication/forget_password/model/repository/forget_password_repository.dart';
+import 'package:selaheltelmeez/features/authentication/forget_password/view_model/forget_password_cubit.dart';
+import 'package:selaheltelmeez/features/authentication/forget_password/view_model/reset_password_cubit.dart';
+import 'package:selaheltelmeez/features/authentication/forget_password/view_model/validate_forget_password_otp_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/login/model/data_provider/remote_login_data_provider.dart';
 import 'package:selaheltelmeez/features/authentication/login/model/repository/login_repository.dart';
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
@@ -69,6 +74,10 @@ class SelaheltelmeezLauncher extends StatelessWidget {
         RepositoryProvider<RemoteChangeEmailOrMobileDataProvider>(create: (context) => RemoteChangeEmailOrMobileDataProvider(dioClient: context.read<AuthorizedDioClient>())),
         RepositoryProvider<ChangeEmailOrMobileRepository>(create: (context) => ChangeEmailOrMobileRepository(dataProvider: context.read<RemoteChangeEmailOrMobileDataProvider>())),
 
+        // Forget Password
+        RepositoryProvider<RemoteForgetPasswordDataProvider>(create: (context) => RemoteForgetPasswordDataProvider(dioClient: context.read<AnonymousDioClient>())),
+        RepositoryProvider<ForgetPasswordRepository>(create: (context) => ForgetPasswordRepository(dataProvider: context.read<RemoteForgetPasswordDataProvider>())),
+
         //Validate OTP
         RepositoryProvider<ValidateOTPDataProvider>(
             create: (context) => ValidateOTPDataProvider(
@@ -86,26 +95,15 @@ class SelaheltelmeezLauncher extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(
-              create: (BuildContext context) =>
-                  LoginCubit(context.read<LoginRepository>())),
-
-          BlocProvider(
-              create: (BuildContext context) =>
-                  ChangeEmailOrMobileCubit(context.read<ChangeEmailOrMobileRepository>())),
-
-          BlocProvider(
-              create: (BuildContext context) =>
-                  RegisterCubit(context.read<RegisterRepository>())),
-          BlocProvider(
-              create: (BuildContext context) =>
-                  GradeMenuCubit(context.read<RegisterRepository>())),
-          BlocProvider(
-              create: (BuildContext context) =>
-                  CurriculumCubit(context.read<CurriculumRepository>())),
-          BlocProvider(
-              create: (BuildContext context) =>
-                  ValidateOtpCubit(context.read<ValidateOTPRepository>())),
+          BlocProvider(create: (BuildContext context) => LoginCubit(context.read<LoginRepository>())),
+          BlocProvider(create: (BuildContext context) => ChangeEmailOrMobileCubit(context.read<ChangeEmailOrMobileRepository>())),
+          BlocProvider(create: (BuildContext context) => RegisterCubit(context.read<RegisterRepository>())),
+          BlocProvider(create: (BuildContext context) => GradeMenuCubit(context.read<RegisterRepository>())),
+          BlocProvider(create: (BuildContext context) => CurriculumCubit(context.read<CurriculumRepository>())),
+          BlocProvider(create: (BuildContext context) => ValidateOtpCubit(context.read<ValidateOTPRepository>())),
+          BlocProvider(create: (BuildContext context) => ForgetPasswordCubit(context.read<ForgetPasswordRepository>())),
+          BlocProvider(create: (BuildContext context) => ValidateForgetPasswordOtpCubit(context.read<ForgetPasswordRepository>())),
+          BlocProvider(create: (BuildContext context) => ResetPasswordCubit(context.read<ForgetPasswordRepository>())),
           BlocProvider(create: (BuildContext context) => StudentNavBarCubit()),
         ],
         child: _materialApp(),

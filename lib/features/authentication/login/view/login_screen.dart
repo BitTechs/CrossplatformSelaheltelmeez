@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: CustomTextButton(
                     text: 'هل نسيت كلمة المرور؟',
                     color: CommonColors.errorTextColor,
-                    onPressed: ()=> Navigator.of(context).pushNamed('/change_email_or_mobile'),
+                    onPressed: ()=> Navigator.of(context).pushNamed('/forget_password'),
                   ),
                 ),
                 const SizedBox(

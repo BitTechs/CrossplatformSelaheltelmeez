@@ -9,7 +9,8 @@ class FancyPasswordFormField extends StatelessWidget {
   final double width;
   final List<ValidationRule>? validators;
   final TextEditingController controller;
-  const FancyPasswordFormField({Key? key, required this.hintTitle, required this.width,  this.validators, required this.controller}) : super(key: key);
+  final ValueChanged<String>? onChanged;
+  const FancyPasswordFormField({Key? key, required this.hintTitle, required this.width,  this.validators, required this.controller, this.onChanged}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class FancyPasswordFormField extends StatelessWidget {
             obscureText: true,
             enableSuggestions: false,
             autocorrect: false,
+            onChanged: onChanged,
             decoration:  InputDecoration(
               hintText: hintTitle,
               border: InputBorder.none,
