@@ -5,6 +5,9 @@ import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provide
 import 'package:selaheltelmeez/core/router/route_generator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:selaheltelmeez/core/theme/app_theme.dart';
+import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/model/data_provider/remote_change_email_or_mobile_data_provider.dart';
+import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/model/repository/change_email_or_mobile_repository.dart';
+import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/view_model/change_email_or_mobile_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/login/model/data_provider/remote_login_data_provider.dart';
 import 'package:selaheltelmeez/features/authentication/login/model/repository/login_repository.dart';
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
@@ -62,6 +65,10 @@ class SelaheltelmeezLauncher extends StatelessWidget {
             create: (context) => RegisterRepository(
                 dataProvider: context.read<RemoteRegisterDataProvider>())),
 
+        //Change Email Or Mobile
+        RepositoryProvider<RemoteChangeEmailOrMobileDataProvider>(create: (context) => RemoteChangeEmailOrMobileDataProvider(dioClient: context.read<AuthorizedDioClient>())),
+        RepositoryProvider<ChangeEmailOrMobileRepository>(create: (context) => ChangeEmailOrMobileRepository(dataProvider: context.read<RemoteChangeEmailOrMobileDataProvider>())),
+
         //Validate OTP
         RepositoryProvider<ValidateOTPDataProvider>(
             create: (context) => ValidateOTPDataProvider(
@@ -82,6 +89,11 @@ class SelaheltelmeezLauncher extends StatelessWidget {
           BlocProvider(
               create: (BuildContext context) =>
                   LoginCubit(context.read<LoginRepository>())),
+
+          BlocProvider(
+              create: (BuildContext context) =>
+                  ChangeEmailOrMobileCubit(context.read<ChangeEmailOrMobileRepository>())),
+
           BlocProvider(
               create: (BuildContext context) =>
                   RegisterCubit(context.read<RegisterRepository>())),

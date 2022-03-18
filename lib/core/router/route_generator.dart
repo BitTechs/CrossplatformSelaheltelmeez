@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
+import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/view/change_email_or_mobile_screen.dart';
 import 'package:selaheltelmeez/features/authentication/login/view/login_screen.dart';
 import 'package:selaheltelmeez/features/authentication/register/view/register_screen.dart';
 import 'package:selaheltelmeez/features/authentication/validate_otp/view/validate_otp_screen.dart';
@@ -22,9 +23,7 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
-    if(AppUserLocalStorageProvider.sharedAppUserEntity?.isVerified ?? false){
-      return PageTransition(child: const StudentNavBarScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-    }
+
     switch (settings.name) {
       case '/':
         return PageTransition(child: const LandingScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
@@ -34,6 +33,8 @@ class RouteGenerator {
         return PageTransition(child: const RegisterScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/validate_otp':
         return PageTransition(child: const ValidateOTPScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case '/change_email_or_mobile':
+        return PageTransition(child: const ChangeEmailOrMobileScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/StudentDashboard':
         return PageTransition(child: const StudentNavBarScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/StudentSubject':

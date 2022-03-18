@@ -140,12 +140,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 isEmailSubscribed: false,
                                 email: Utilities.isEmail(
                                         emailOrMobileController.text)
-                                    ? emailOrMobileController.text
-                                    : "",
-                                mobileNumber: Utilities.isMobile(
-                                        emailOrMobileController.text)
-                                    ? emailOrMobileController.text
-                                    : "",
+                                    ,
+                                mobileNumber: Utilities.isMobile(emailOrMobileController.text)
+                                    ,
                                 passwordHash: passwordController.text,
                                 facebookId: "",
                                 googleId: "",

@@ -16,9 +16,11 @@ class AppUserLocalStorageProvider {
 
   static const String _keyName = "App_User";
 
-  static Future<void> addAsJsonAsync(Map<String, dynamic> toJson) async =>
-      await _sharedPreferenceInstance
-          .then((value) => value.setString(_keyName, jsonEncode(toJson)));
+  static Future<void> addAsJsonAsync(Map<String, dynamic> toJson) async {
+    await _sharedPreferenceInstance.then((value) => value.setString(_keyName, jsonEncode(toJson)));
+    await tryToLoadAppUserEntity();
+  }
+
 
   static Future<bool> removeAsync() async =>
       await _sharedPreferenceInstance.then((value) => value.remove(_keyName));
@@ -33,7 +35,7 @@ class AppUserLocalStorageProvider {
         isVerified: mappedJson["isVerified"] as bool,
         fullName: mappedJson["fullName"] as String,
         email: mappedJson["email"] as String,
-        mobileNumber: mappedJson["mobileNumber"] as String,
+        mobileNumber: mappedJson["mobileNumber"] as String?,
         grade: mappedJson["grade"] as String,
         country: mappedJson["country"] as String,
         dateOfBirth: mappedJson["dateOfBirth"] as String,

@@ -95,7 +95,7 @@ class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       final savedResponse =  await AppUserLocalStorageProvider.readAsAppUserObjectAsync();
-                      bool isMobile = savedResponse.mobileNumber.isNotEmpty;
+                      bool isMobile = savedResponse.mobileNumber?.isNotEmpty ?? false;
                       context
                           .read<ValidateOtpCubit>()
                           .validateAsync(_otpController.text, isMobile);
@@ -111,7 +111,7 @@ class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
                   title: "إعادة الإرسال",
                   onPressed: () async {
                     final savedResponse =  await AppUserLocalStorageProvider.readAsAppUserObjectAsync();
-                    bool isMobile = savedResponse.mobileNumber.isNotEmpty;
+                    bool isMobile = savedResponse.mobileNumber?.isNotEmpty ?? false;
                     context
                         .read<ValidateOtpCubit>()
                         .resendActivationCodeAsync(isMobile);
