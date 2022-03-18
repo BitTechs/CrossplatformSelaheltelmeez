@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
+import 'package:selaheltelmeez/core/theme/app_theme.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 
 import '../model/list_item_model.dart';
@@ -40,10 +41,7 @@ class SubjectScreen extends StatelessWidget {
         elevation: 0.0,
         title: Text(
             'اللغة العربية',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.normal,
-          ),
+          style: AppTheme.screenTitle,
           textAlign: TextAlign.center,
         ),
         backgroundColor: CommonColors.studentHomeTopBar,

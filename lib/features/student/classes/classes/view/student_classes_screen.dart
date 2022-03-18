@@ -33,7 +33,9 @@ class StudentClassesScreen extends StatelessWidget {
               titleColor: CommonColors.fancyElevatedTitleColor,
               shadowColor:
               CommonColors.fancyElevatedShadowTitleColor,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed('/ClassSearch');
+              },
             ),
             SizedBox(
               height: 40.0,

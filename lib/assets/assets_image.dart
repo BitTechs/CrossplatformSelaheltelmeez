@@ -12,6 +12,11 @@ class AssetsImage {
 
   static const String studentPrize = "assets/images/student/prizeTab.png";
   static const String gameLand = "assets/images/student/gameLand.png";
+  static const String search = "assets/images/student/search.png";
+  static const String calender = "assets/images/student/calender.png";
+  static const String clock = "assets/images/student/clock.png";
+  static const String paper = "assets/images/student/paper.png";
+  static const String paperTxt = "assets/images/student/papertxt.png";
 
 
 

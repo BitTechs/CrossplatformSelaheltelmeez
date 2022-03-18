@@ -11,9 +11,12 @@ import 'package:selaheltelmeez/features/authentication/register/view/register_sc
 import 'package:selaheltelmeez/features/authentication/validate_otp/view/validate_otp_screen.dart';
 import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_object/list_item.dart';
 import 'package:selaheltelmeez/features/landing/presentation_layer/landing_screen.dart';
+import 'package:selaheltelmeez/features/student/classes/class_search/view/class_search_screen.dart';
 import 'package:selaheltelmeez/features/student/dashboard/dashboard/view/student_dashboard_screen.dart';
 import 'package:selaheltelmeez/features/student/dashboard/lesson/view/lesson_screen.dart';
+import 'package:selaheltelmeez/features/student/dashboard/recent_activity/view/recent_activity_screen.dart';
 import 'package:selaheltelmeez/features/student/dashboard/subject/view/subject_screen.dart';
+import 'package:selaheltelmeez/features/student/dashboard/usage_report/view/usage_report_screen.dart';
 import 'package:selaheltelmeez/features/student/student_navigation_bar/view/student%20_navigation_bar_screen.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
@@ -52,7 +55,13 @@ class RouteGenerator {
         return PageTransition(child: const SubjectScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/StudentLesson':
         return PageTransition(child: LessonScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-        case '/StudentHome':
+      case '/ClassSearch':
+        return PageTransition(child: ClassSearchScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case '/UsageReport':
+        return PageTransition(child: const UsageReportScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case '/RecentActivity':
+        return PageTransition(child: const RecentActivityScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case '/StudentHome':
       return PageTransition(child: const StudentDashboardScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       // Validation of correct data type
       case '/WebViewer':

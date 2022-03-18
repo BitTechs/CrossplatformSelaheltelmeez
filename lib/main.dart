@@ -23,6 +23,7 @@ import 'package:selaheltelmeez/features/authentication/register/view_model/grade
 import 'package:selaheltelmeez/features/authentication/register/view_model/register_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/validate_otp/model/data_provider/validate_otp_data_provider.dart';
 import 'package:selaheltelmeez/features/authentication/validate_otp/model/repository/validate_otp_repository.dart';
+import 'package:selaheltelmeez/features/student/classes/class_search/view_model/class_search_cubit.dart';
 import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/data_provider/curriculum_data_provider.dart';
 import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/repository/curriculum_repository.dart';
 import 'package:selaheltelmeez/features/student/dashboard/dashboard/view_model/curriculum_cubit.dart';
@@ -105,6 +106,7 @@ class SelaheltelmeezLauncher extends StatelessWidget {
           BlocProvider(create: (BuildContext context) => ValidateForgetPasswordOtpCubit(context.read<ForgetPasswordRepository>())),
           BlocProvider(create: (BuildContext context) => ResetPasswordCubit(context.read<ForgetPasswordRepository>())),
           BlocProvider(create: (BuildContext context) => StudentNavBarCubit()),
+          BlocProvider(create: (BuildContext context) => ClassSearchCubit()),
         ],
         child: _materialApp(),
       ),
