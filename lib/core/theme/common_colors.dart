@@ -26,6 +26,7 @@ class CommonColors{
   /// OTP Colors
   static get otpInputColor => const Color(0xff000000);
 
-
+  /// TextButtons Colors
+  static get forgetPasswordColor => Colors.blue;
 
 }

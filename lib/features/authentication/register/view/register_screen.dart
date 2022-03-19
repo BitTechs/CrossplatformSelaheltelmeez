@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/helpers/utilities.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
@@ -18,13 +19,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  final emailOrMobileController = TextEditingController();
-  final fullNameController = TextEditingController();
-  final gradeController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
+  final  _formKey = GlobalKey<FormBuilderState>();
 
   @override
   void initState() {
@@ -131,12 +126,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (_formKey.currentState!.validate()) {
                         await context.read<RegisterCubit>().registerAsync(
                             RegisterRequest(
-                                fullName: fullNameController.text,
+                                fullName: _formKey.currentState?.value['fullName'],
                                 grade: context.read<RegisterCubit>().getGradeId,
                                 identityRoleId: context.read<RegisterCubit>().getIdentityRoleId,
-                                email: Utilities.isEmail(emailOrMobileController.text),
-                                mobileNumber: Utilities.isMobile(emailOrMobileController.text),
-                                passwordHash: passwordController.text,
+                                email: Utilities.isEmail(_formKey.currentState?.value['emailOrMobile']),
+                                mobileNumber: Utilities.isMobile(_formKey.currentState?.value['emailOrMobile']),
+                                passwordHash: _formKey.currentState?.value['password'],
                                 facebookId: "",
                                 googleId: "",
                                 officeId: ""));
@@ -189,13 +184,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _registerForm(double inputWidth) => Form(
+  Widget _registerForm(double inputWidth) => FormBuilder(
         key: _formKey,
         child: Column(
           children: [
             FancyTextFormField(
-              hintTitle: 'البريد الإلكتروني / رقم الموبايل',
-              controller: emailOrMobileController,
+              placeholderText: 'البريد الإلكتروني / رقم الموبايل',
+              name: 'emailOrMobile',
               width: inputWidth,
               validators: [
                 IsValidRequiredRule('هذا الحقل مطلوب'),
@@ -207,8 +202,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               height: 8.0,
             ),
             FancyTextFormField(
-              hintTitle: 'الاسم بالكامل',
-              controller: fullNameController,
+              placeholderText: 'الاسم بالكامل',
+              name: 'fullName',
               width: inputWidth,
               validators: [IsValidRequiredRule('هذا الحقل مطلوب')],
             ),
@@ -254,8 +249,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               height: 8.0,
             ),
             FancyPasswordFormField(
-              hintTitle: 'كلمة المرور',
-              controller: passwordController,
+              placeholderText: 'كلمة المرور',
+              name: 'password',
               width: inputWidth,
               validators: [
                 IsValidRequiredRule('هذا الحقل مطلوب'),
@@ -265,14 +260,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
               height: 8.0,
             ),
             FancyPasswordFormField(
-              hintTitle: 'تأكيد كلمة المرور',
-              controller: confirmPasswordController,
+              placeholderText: 'تأكيد كلمة المرور',
+              name: 'ConfirmPassword',
               width: inputWidth,
               validators: [
                 IsValidRequiredRule('هذا الحقل مطلوب'),
                 IsValidConfirmPasswordRule(
                     'كلمة المرور وتأكيد كلمة المرور غير متطابقين',
-                    password: passwordController.text)
+                    password: _formKey.currentState?.value['password'] ?? "")
               ],
             ),
           ],

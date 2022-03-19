@@ -48,13 +48,13 @@ class ClassSearchScreen extends StatelessWidget {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: cubit.selectedTab == 1 ? Colors.amber : CommonColors.inputBackgroundColor,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topRight: Radius.circular(32.0),
                             bottomRight: Radius.circular(32.0),
 
                           ),
                         ),
-                        child: Text('سلاح التلميذ'
+                        child: const Text('سلاح التلميذ'
                         ),
                       ),
                     ),
@@ -74,7 +74,7 @@ class ClassSearchScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: cubit.selectedTab == 2 ? Colors.amber : CommonColors.inputBackgroundColor,
                         ),
-                        child: Text('إسم / رقم'),
+                        child: const Text('إسم / رقم'),
                       ),
                     ),
                   ),
@@ -91,13 +91,13 @@ class ClassSearchScreen extends StatelessWidget {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: cubit.selectedTab == 3 ? Colors.amber : CommonColors.inputBackgroundColor,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(32.0),
                             bottomLeft: Radius.circular(32.0),
 
                           ),
                         ),
-                        child: Text('كود الفصل'),
+                        child: const Text('كود الفصل'),
                       ),
                     ),
                   ),
@@ -110,7 +110,7 @@ class ClassSearchScreen extends StatelessWidget {
               Expanded(
                 child: ListView.separated(
                     itemBuilder: (context, index) => index == 0 ? itemWaitingClassesList() : itemClassesList(),
-                    separatorBuilder: (context, index) => SizedBox(height: 10.0,),
+                    separatorBuilder: (context, index) => const SizedBox(height: 10.0,),
                     itemCount: 10
                 ),
               ),
@@ -138,7 +138,7 @@ class ClassSearchScreen extends StatelessWidget {
               child: FancyDropDownFormField<String>(
                 width: MediaQuery.of(context).size.width,
                 hintTitle: 'اختر المادة الدراسية',
-                items: [
+                items: const [
                   'اللغة العربية',
                   'اللغة الانجليزية',
                   'الرياضيات',
@@ -156,7 +156,7 @@ class ClassSearchScreen extends StatelessWidget {
             const SizedBox(width: 10.0,),
             InkWell(
               onTap: (){},
-              child: Image(
+              child: const Image(
                 image: AssetImage(AssetsImage.search),
                 height: 56.0,
                 width: 56.0,
@@ -170,8 +170,8 @@ class ClassSearchScreen extends StatelessWidget {
 
             Expanded(
               child: FancyTextFormField(
-                hintTitle: 'اسم المعلم او رقم الموبايل',
-                controller: subjectController,
+                placeholderText: 'اسم المعلم او رقم الموبايل',
+                name: 'teacherNameOrMobile',
                 width:  MediaQuery.of(context).size.width,
                 validators: [
                   IsValidRequiredRule('هذا الحقل مطلوب'),
@@ -181,7 +181,7 @@ class ClassSearchScreen extends StatelessWidget {
             const SizedBox(width: 10.0,),
             InkWell(
               onTap: (){},
-              child: Image(
+              child: const Image(
                 image: AssetImage(AssetsImage.search),
                 height: 56.0,
                 width: 56.0,
@@ -195,8 +195,8 @@ class ClassSearchScreen extends StatelessWidget {
 
             Expanded(
               child: FancyTextFormField(
-                hintTitle: 'ادخل كود الفصل',
-                controller: subjectController,
+                placeholderText: 'ادخل كود الفصل',
+                name: 'classCode',
                 width:  MediaQuery.of(context).size.width,
                 validators: [
                   IsValidRequiredRule('هذا الحقل مطلوب'),
@@ -206,7 +206,7 @@ class ClassSearchScreen extends StatelessWidget {
             const SizedBox(width: 10.0,),
             InkWell(
               onTap: (){},
-              child: Image(
+              child: const Image(
                 image: AssetImage(AssetsImage.search),
                 height: 56.0,
                 width: 56.0,
@@ -227,7 +227,7 @@ class ClassSearchScreen extends StatelessWidget {
     ),
     child: Row(
       children: [
-        CircleAvatar(
+        const CircleAvatar(
           radius: 50.0,
           child: Image(
             image: AssetImage(AssetsImage.microsoftAuth),
@@ -239,17 +239,17 @@ class ClassSearchScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('عماد احمد'),
+              const Text('عماد احمد'),
               Row(
-                children: [
+                children: const [
                   Text('فصل'),
-                  const SizedBox(width: 5.0,),
+                  SizedBox(width: 5.0,),
                   Text('الزهور'),
                 ],
               ),
               Row(
                 children: [
-                  Text('الكود'),
+                  const Text('الكود'),
                   const SizedBox(width: 5.0,),
                   Text('1049',
                     style: TextStyle(
@@ -284,7 +284,7 @@ class ClassSearchScreen extends StatelessWidget {
      ),
      child: Row(
        children: [
-         CircleAvatar(
+         const CircleAvatar(
            radius: 50.0,
            child: Image(
              image: AssetImage(AssetsImage.microsoftAuth),
@@ -296,17 +296,17 @@ class ClassSearchScreen extends StatelessWidget {
              mainAxisAlignment: MainAxisAlignment.center,
              crossAxisAlignment: CrossAxisAlignment.start,
              children: [
-               Text('عماد احمد'),
+               const Text('عماد احمد'),
                Row(
-                 children: [
+                 children: const [
                    Text('فصل'),
-                   const SizedBox(width: 5.0,),
+                   SizedBox(width: 5.0,),
                    Text('الزهور'),
                  ],
                ),
                Row(
                  children: [
-                   Text('الكود'),
+                   const Text('الكود'),
                    const SizedBox(width: 5.0,),
                    Text('1049',
                      style: TextStyle(

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
+import 'package:sizer/sizer.dart';
 
 class FancyPasswordFormField extends StatelessWidget {
-  final String hintTitle;
-  final double width;
+  final String placeholderText;
+  final String? helperText;
+  final double? width;
+  final double? height;
   final List<ValidationRule>? validators;
-  final TextEditingController controller;
-  final ValueChanged<String>? onChanged;
-  const FancyPasswordFormField({Key? key, required this.hintTitle, required this.width,  this.validators, required this.controller, this.onChanged}) : super(key: key);
+  final String name;
+  const FancyPasswordFormField({Key? key, required this.placeholderText,  this.width,  this.validators, required this.name, this.helperText, this.height}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +23,18 @@ class FancyPasswordFormField extends StatelessWidget {
         SvgPicture.asset(
           AssetsImage.inputBackground,
           color: CommonColors.inputBackgroundColor,
-          width: width,
+          width: width ?? 90.h,
+          height: height ?? 10.h,
         ),
-        TextFormField(
-            controller: controller,
+        FormBuilderTextField(
+            name: name,
+            textAlign: TextAlign.center,
             obscureText: true,
             enableSuggestions: false,
             autocorrect: false,
-            onChanged: onChanged,
             decoration:  InputDecoration(
-              hintText: hintTitle,
+              hintText: placeholderText,
+              helperText: helperText,
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
               enabledBorder: InputBorder.none,

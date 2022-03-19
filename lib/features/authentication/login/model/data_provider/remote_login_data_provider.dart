@@ -12,6 +12,7 @@ class RemoteLoginDataProvider implements ILoginDataProvider{
   @override
   Future<ValueCommitResult<LoginResponse>> loginAsync(LoginRequest request) async {
     Response<dynamic> responseResult = await dioClient.getClient().post("/Identity/Login", data: request);
+    print(responseResult);
     return ValueCommitResult<LoginResponse>.fromJson(responseResult.data,(data)=> LoginResponse.fromJson(data as Map<String,dynamic>));
   }
 }

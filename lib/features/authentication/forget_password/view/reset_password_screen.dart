@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/helpers/utilities.dart';
 import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
@@ -26,15 +27,11 @@ class ResetPasswordScreen extends StatefulWidget {
 }
 
 class _ResetPasswordState extends State<ResetPasswordScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
-
+  final _formKey = GlobalKey<FormBuilderState>();
   @override
   void initState() {
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     final inputWidth = (MediaQuery.of(context).size.width) - 24.0;
@@ -79,13 +76,13 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
                 const SizedBox(
                   height: 16.0,
                 ),
-                Form(
+                FormBuilder(
                   key: _formKey,
                   child: Column(
                     children: [
                       FancyPasswordFormField(
-                        hintTitle: 'كلمة المرور',
-                        controller: passwordController,
+                        placeholderText: 'كلمة المرور',
+                        name: 'password',
                         width: inputWidth,
                         validators: [
                           IsValidRequiredRule('هذا الحقل مطلوب'),
@@ -95,14 +92,14 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
                         height: 8.0,
                       ),
                       FancyPasswordFormField(
-                        hintTitle: 'تأكيد كلمة المرور',
-                        controller: confirmPasswordController,
+                        placeholderText: 'تأكيد كلمة المرور',
+                        name: 'confirmPassword',
                         width: inputWidth,
                         validators: [
                           IsValidRequiredRule('هذا الحقل مطلوب'),
                           IsValidConfirmPasswordRule(
                               'كلمة المرور وتأكيد كلمة المرور غير متطابقين',
-                              password: passwordController.text)
+                              password: _formKey.currentState?.value['password'] ?? "")
                         ],
                       ),
                     ],
@@ -120,12 +117,12 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
                       titleColor: CommonColors.fancyElevatedTitleColor,
                       shadowColor: CommonColors.fancyElevatedShadowTitleColor,
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
+                        if (_formKey.currentState!.saveAndValidate()) {
                           await context
                               .read<ResetPasswordCubit>()
                               .resetAsync(ResetPasswordRequest(
                                 identityUserId: widget.identityUserId,
-                                newPassword: passwordController.text,
+                                newPassword: _formKey.currentState?.value['password'],
                               ));
                         }
                       }),

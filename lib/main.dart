@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:selaheltelmeez/core/dio_client/dio_client.dart';
 import 'package:selaheltelmeez/core/language_change_provider.dart';
-import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
+import 'package:sizer/sizer.dart';
 import 'package:selaheltelmeez/core/router/route_generator.dart';
 import 'package:selaheltelmeez/core/theme/app_theme.dart';
 import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/model/data_provider/remote_change_email_or_mobile_data_provider.dart';
@@ -125,22 +125,24 @@ class SelaheltelmeezLauncher extends StatelessWidget {
     create: (context)=> LanguageChangeProvider(),
     child: Builder(
       builder: (context) {
-        return MaterialApp(
-              onGenerateTitle: (context) => S.of(context).appTitle,
-              localizationsDelegates: const [
-                S.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate
-              ],
-              supportedLocales: S.delegate.supportedLocales,
-              debugShowCheckedModeBanner: false,
-              theme: AppTheme.lightTheme,
-              initialRoute: '/',
-              //initialRoute: '/UsageReport',
-              locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocal,
-              onGenerateRoute: RouteGenerator.generateRoute,
-            );
+        return Sizer(
+            builder: (context, orientation, deviceType)=>
+                MaterialApp(
+                onGenerateTitle: (context) => S.of(context).appTitle,
+                localizationsDelegates: const [
+                  S.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate
+                ],
+                supportedLocales: S.delegate.supportedLocales,
+                debugShowCheckedModeBanner: false,
+                theme: AppTheme.lightTheme,
+                initialRoute: '/',
+                locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocal,
+                onGenerateRoute: RouteGenerator.generateRoute,
+              ),
+        );
       }
     ),
   );

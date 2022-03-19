@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/helpers/utilities.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
@@ -17,9 +18,7 @@ class ChangeEmailOrMobileScreen extends StatefulWidget {
 }
 
 class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final emailOrMobileController = TextEditingController();
-  final passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormBuilderState>();
   @override
   void initState() {
     super.initState();
@@ -95,9 +94,9 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
                         if (_formKey.currentState!.validate()) {
                           await context.read<ChangeEmailOrMobileCubit>().updateAsync(
                               ChangeEmailOrMobileRequest(
-                                  newEmail: Utilities.isEmail(emailOrMobileController.text),
-                                  password: passwordController.text,
-                                  newMobileNumber: Utilities.isMobile(emailOrMobileController.text)));
+                                  newEmail: Utilities.isEmail(_formKey.currentState?.value['emailOrMobile']),
+                                  password: _formKey.currentState?.value['password'],
+                                  newMobileNumber: Utilities.isMobile(_formKey.currentState?.value['emailOrMobile'])));
                         }
                       }),
                 ),
@@ -109,13 +108,13 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
     );
   }
 
-  Widget _changeEmailOrMobileForm(double inputWidth) => Form(
+  Widget _changeEmailOrMobileForm(double inputWidth) => FormBuilder(
         key: _formKey,
         child: Column(
           children: [
             FancyTextFormField(
-              hintTitle: 'البريد الإلكتروني / رقم الموبايل',
-              controller: emailOrMobileController,
+              placeholderText: 'البريد الإلكتروني / رقم الموبايل',
+              name: 'emailOrMobile',
               width: inputWidth,
               validators: [
                 IsValidRequiredRule('هذا الحقل مطلوب'),
@@ -126,8 +125,8 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
               height: 8.0,
             ),
             FancyPasswordFormField(
-              hintTitle: 'كلمة المرور',
-              controller: passwordController,
+              placeholderText: 'كلمة المرور',
+              name: 'password',
               width: inputWidth,
               validators: [
                 IsValidRequiredRule('هذا الحقل مطلوب'),

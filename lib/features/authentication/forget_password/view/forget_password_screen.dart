@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/helpers/utilities.dart';
 import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
@@ -21,9 +22,7 @@ class ForgetPasswordScreen extends StatefulWidget {
 }
 
 class _ForgetPasswordState extends State<ForgetPasswordScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final emailOrMobileController = TextEditingController();
-  final passwordController = TextEditingController();
+  final  _formKey = GlobalKey<FormBuilderState>();
   @override
   void initState() {
     super.initState();
@@ -104,8 +103,8 @@ class _ForgetPasswordState extends State<ForgetPasswordScreen> {
                         if (_formKey.currentState!.validate()) {
                           await context.read<ForgetPasswordCubit>().sendForgetPasswordAsync(
                               ForgetPasswordRequest(
-                                  email: Utilities.isEmail(emailOrMobileController.text),
-                                  mobileNumber: Utilities.isMobile(emailOrMobileController.text)));
+                                  email: Utilities.isEmail(_formKey.currentState?.value['emailOrMobile']),
+                                  mobileNumber: Utilities.isMobile(_formKey.currentState?.value['emailOrMobile'])));
                         }
                       }),
                 ),
@@ -117,13 +116,13 @@ class _ForgetPasswordState extends State<ForgetPasswordScreen> {
     );
   }
 
-  Widget _forgetPasswordForm(double inputWidth) => Form(
+  Widget _forgetPasswordForm(double inputWidth) => FormBuilder(
         key: _formKey,
         child: Column(
           children: [
             FancyTextFormField(
-              hintTitle: 'البريد الإلكتروني / رقم الموبايل',
-              controller: emailOrMobileController,
+              placeholderText: 'البريد الإلكتروني / رقم الموبايل',
+              name: 'emailOrMobile',
               width: inputWidth,
               validators: [
                 IsValidRequiredRule('هذا الحقل مطلوب'),
