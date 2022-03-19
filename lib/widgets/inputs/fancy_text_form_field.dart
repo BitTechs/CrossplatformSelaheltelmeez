@@ -50,7 +50,7 @@ class FancyTextFormField extends StatelessWidget {
               errorStyle: Theme.of(context)
                   .textTheme
                   .bodySmall
-                  ?.copyWith(color: CommonColors.errorTextColor, height: 0.3),
+                  ?.copyWith(color: CommonColors.errorTextColor, fontSize: 9.sp , height: 0.3),
             ),
             validator: (value) => validators?.getValidationErrorMessage(value)),
       ],
