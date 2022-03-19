@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
+import 'package:selaheltelmeez/core/language_change_provider.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
+import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class LandingScreen extends StatelessWidget {
@@ -30,7 +33,7 @@ class LandingScreen extends StatelessWidget {
                         width: 95.0,
                         height: 40.0,
                         child: FancyElevatedButton(
-                          title: 'دخول',
+                          title: S.of(context).login,
                           backGroundColor:
                           CommonColors.fancyElevatedButtonBackGroundColor,
                           titleColor: CommonColors.fancyElevatedTitleColor,
@@ -40,7 +43,30 @@ class LandingScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 8.0,
+                      top: 32.0,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: SizedBox(
+                        width: 95.0,
+                        height: 40.0,
+                        child: FancyElevatedButton(
+                          title: 'تغير',
+                          backGroundColor:
+                          CommonColors.fancyElevatedButtonBackGroundColor,
+                          titleColor: CommonColors.fancyElevatedTitleColor,
+                          shadowColor: CommonColors
+                              .fancyElevatedShadowTitleColor,
+                          onPressed: () => context.read<LanguageChangeProvider>().changeLocale(),
+                        ),
+                      ),
+                    ),
                   )
+
                 ],
               ),
               const SizedBox(

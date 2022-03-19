@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:selaheltelmeez/core/dio_client/dio_client.dart';
+import 'package:selaheltelmeez/core/language_change_provider.dart';
 import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/core/router/route_generator.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:selaheltelmeez/core/theme/app_theme.dart';
 import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/model/data_provider/remote_change_email_or_mobile_data_provider.dart';
 import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/model/repository/change_email_or_mobile_repository.dart';
@@ -16,7 +18,6 @@ import 'package:selaheltelmeez/features/authentication/forget_password/view_mode
 import 'package:selaheltelmeez/features/authentication/login/model/data_provider/remote_login_data_provider.dart';
 import 'package:selaheltelmeez/features/authentication/login/model/repository/login_repository.dart';
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
-import 'package:selaheltelmeez/features/authentication/register/model/data_provider/i_register_data_provider.dart';
 import 'package:selaheltelmeez/features/authentication/register/model/data_provider/register_data_provider.dart';
 import 'package:selaheltelmeez/features/authentication/register/model/repository/register_repository.dart';
 import 'package:selaheltelmeez/features/authentication/register/view_model/grade_menu_cubit.dart';
@@ -30,6 +31,7 @@ import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/data_p
 import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/repository/curriculum_repository.dart';
 import 'package:selaheltelmeez/features/student/dashboard/dashboard/view_model/curriculum_cubit.dart';
 import 'package:selaheltelmeez/features/student/student_navigation_bar/view_model/navigation_bar_cubit.dart';
+import 'package:selaheltelmeez/generated/l10n.dart';
 import 'features/authentication/update_profile/model/data_provider/remote_update_profile_provider.dart';
 import 'features/authentication/validate_otp/view_model/validate_otp_cubit.dart';
 
@@ -38,7 +40,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Trying to loading App User Entity Values
-  await AppUserLocalStorageProvider.tryToLoadAppUserEntity();
+ // await AppUserLocalStorageProvider.tryToLoadAppUserEntity();
 
   runApp(
     const SelaheltelmeezLauncher(),
@@ -114,19 +116,31 @@ class SelaheltelmeezLauncher extends StatelessWidget {
           BlocProvider(create: (BuildContext context) => StudentNavBarCubit()),
           BlocProvider(create: (BuildContext context) => ClassSearchCubit()),
         ],
-        child: _materialApp(),
+        child: _materialApp(context),
       ),
     );
   }
 
-  Widget _materialApp() => MaterialApp(
-        onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme,
-        initialRoute: '/',
-        locale: const Locale("ar"),
-        onGenerateRoute: RouteGenerator.generateRoute,
-      );
+  Widget _materialApp(BuildContext context) => ChangeNotifierProvider<LanguageChangeProvider>(
+    create: (context)=> LanguageChangeProvider(),
+    child: Builder(
+      builder: (context) {
+        return MaterialApp(
+              onGenerateTitle: (context) => S.of(context).appTitle,
+              localizationsDelegates: const [
+                S.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate
+              ],
+              supportedLocales: S.delegate.supportedLocales,
+              debugShowCheckedModeBanner: false,
+              theme: AppTheme.lightTheme,
+              initialRoute: '/',
+              locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocal,
+              onGenerateRoute: RouteGenerator.generateRoute,
+            );
+      }
+    ),
+  );
 }
