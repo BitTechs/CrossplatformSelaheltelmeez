@@ -19,6 +19,7 @@ class AssetsImage {
   static const String clock = "assets/images/student/clock.png";
   static const String paper = "assets/images/student/paper.png";
   static const String paperTxt = "assets/images/student/papertxt.png";
+  static const String all = "assets/images/student/all.png";
 
 
 

@@ -14,6 +14,7 @@ import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_
 import 'package:selaheltelmeez/features/landing/presentation_layer/landing_screen.dart';
 import 'package:selaheltelmeez/features/student/classes/class_search/view/class_search_screen.dart';
 import 'package:selaheltelmeez/features/student/dashboard/dashboard/view/student_dashboard_screen.dart';
+import 'package:selaheltelmeez/features/student/dashboard/detailed_subject_report/detailed_subject_report_screen.dart';
 import 'package:selaheltelmeez/features/student/dashboard/lesson/view/lesson_screen.dart';
 import 'package:selaheltelmeez/features/student/dashboard/recent_activity/view/recent_activity_screen.dart';
 import 'package:selaheltelmeez/features/student/dashboard/subject/view/subject_screen.dart';
@@ -23,10 +24,10 @@ import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class RouteGenerator {
 
-  static PageTransitionType pageTransitionType = PageTransitionType.scale;
+  static PageTransitionType pageTransitionType = PageTransitionType.rightToLeft;
   static Alignment pageAlignment = Alignment.bottomCenter;
-  static  Duration pushDuration = const Duration(milliseconds: 1000);
-  static Duration popDuration = const Duration(milliseconds: 1000);
+  static  Duration pushDuration = const Duration(milliseconds: 300);
+  static Duration popDuration = const Duration(milliseconds: 300);
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
@@ -64,6 +65,9 @@ class RouteGenerator {
         return PageTransition(child: const UsageReportScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/RecentActivity':
         return PageTransition(child: const RecentActivityScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case '/detailed_subject_report':
+        return PageTransition(child: const DetailedSubjectReportScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+
       case '/StudentHome':
       return PageTransition(child: const StudentDashboardScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       // Validation of correct data type

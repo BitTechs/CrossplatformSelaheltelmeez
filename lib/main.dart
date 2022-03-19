@@ -137,6 +137,7 @@ class SelaheltelmeezLauncher extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: AppTheme.lightTheme,
               initialRoute: '/',
+              //initialRoute: '/UsageReport',
               locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocal,
               onGenerateRoute: RouteGenerator.generateRoute,
             );

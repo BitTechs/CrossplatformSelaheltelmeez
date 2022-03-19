@@ -46,7 +46,7 @@ class LandingScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
-                      left: 8.0,
+                      right: 8.0,
                       top: 32.0,
                     ),
                     child: Align(

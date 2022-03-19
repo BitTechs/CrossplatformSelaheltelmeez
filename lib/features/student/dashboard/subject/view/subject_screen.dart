@@ -53,7 +53,7 @@ class SubjectScreen extends StatelessWidget {
           child: Column(
             children: [
               Stack(
-                alignment: Alignment.topLeft,
+                alignment: AlignmentDirectional.topEnd,
                 children: [
                   Image(
                       image: AssetImage(AssetsImage.gameLand),

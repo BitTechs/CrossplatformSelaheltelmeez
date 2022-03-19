@@ -23,3 +23,9 @@ class  RegisterFailed extends RegisterState {
   @override
   List<Object> get props => [];
 }
+
+
+class  ChangeRoleColor extends RegisterState {
+  @override
+  List<Object> get props => [];
+}

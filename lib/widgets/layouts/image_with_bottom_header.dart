@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:selaheltelmeez/core/theme/common_colors.dart';
 
 class ImageWithBottomHeader extends StatelessWidget {
   final String image;
@@ -39,7 +40,7 @@ class ImageWithBottomHeader extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge
-                      ?.copyWith(color: Colors.white),
+                      ?.copyWith(color: Colors.grey),
                 ),
               ),
             ),

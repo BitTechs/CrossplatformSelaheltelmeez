@@ -78,34 +78,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: [
                     InkWell(
                         onTap: () async {
+                          RegisterCubit.get(context).changeRoleColor(1);
                           context.read<RegisterCubit>().setIdentityRoleId(1);
                           await context
                               .read<GradeMenuCubit>()
                               .getGradeMenuItemsAsync();
                         },
-                        child: const ImageWithBottomHeader(
+                        child: ImageWithBottomHeader(
                           width: 100.0,
                           image: AssetsImage.studentUser,
                           header: 'طالب',
-                          headerBackgroundColor: Colors.red,
+                          headerBackgroundColor: RegisterCubit.get(context).selectedRole == 1 ? Colors.red : CommonColors.inputBackgroundColor,
                         )),
                     InkWell(
-                        onTap: () =>
-                            context.read<RegisterCubit>().setIdentityRoleId(2),
-                        child: const ImageWithBottomHeader(
+                        onTap: () {
+                            RegisterCubit.get(context).changeRoleColor(2);
+                            context.read<RegisterCubit>()..setIdentityRoleId(2);},
+                        child: ImageWithBottomHeader(
                           width: 100.0,
                           image: AssetsImage.parentUser,
                           header: 'ولي أمر',
-                          headerBackgroundColor: Colors.green,
+                          headerBackgroundColor: RegisterCubit.get(context).selectedRole == 2 ? Colors.green : CommonColors.inputBackgroundColor,
                         )),
                     InkWell(
-                        onTap: () =>
-                            context.read<RegisterCubit>().setIdentityRoleId(3),
-                        child: const ImageWithBottomHeader(
+                        onTap: () {
+                          RegisterCubit.get(context).changeRoleColor(3);
+                          context.read<RegisterCubit>()..setIdentityRoleId(3);},
+                        child: ImageWithBottomHeader(
                           width: 100.0,
                           image: AssetsImage.teacherUser,
                           header: 'مدرس',
-                          headerBackgroundColor: Colors.blue,
+                          headerBackgroundColor: RegisterCubit.get(context).selectedRole == 3 ? Colors.blue : CommonColors.inputBackgroundColor,
                         )),
                   ],
                 ),

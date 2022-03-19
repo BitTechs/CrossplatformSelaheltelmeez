@@ -19,13 +19,6 @@ class RecentActivityScreen extends StatelessWidget {
              textAlign : TextAlign.center,
         ),
         centerTitle: true,
-
-        actions: [
-          IconButton(
-            onPressed: () {  },
-            icon: Icon(Icons.menu),
-          ),
-        ],
       ),
 
       body: Padding(
