@@ -34,6 +34,7 @@ class UsageReportScreen extends StatelessWidget {
       ),
 
               const SizedBox(height: 40.0,),
+
               Stack(
               children: [
                 SizedBox(
@@ -133,33 +134,38 @@ class UsageReportScreen extends StatelessWidget {
 
               const SizedBox(height: 24.0),
 
-              Stack(
-                children: [
-                  SizedBox(
-                    height: 80,
-                    width: MediaQuery.of(context).size.width,
-                    child: SvgPicture.asset(
-                      AssetsImage.inputBackground,
-                      color: CommonColors.inputBackgroundColor,
-                      fit: BoxFit.fill,
+              InkWell(
+                onTap: () {
+                    Navigator.of(context).pushNamed('/detailed_lesson_report');
+                },
+                child: Stack(
+                  children: [
+                    SizedBox(
+                      height: 80,
+                      width: MediaQuery.of(context).size.width,
+                      child: SvgPicture.asset(
+                        AssetsImage.inputBackground,
+                        color: CommonColors.inputBackgroundColor,
+                        fit: BoxFit.fill,
+                      ),
                     ),
-                  ),
-                  Row(
-                    children: const [
-                      CircleAvatar(
-                        radius: 40.0,
-                        backgroundColor: Colors.transparent,
-                        backgroundImage: AssetImage(AssetsImage.paper),
-                      ),
-                      SizedBox(width: 10,),
-                      Expanded(
-                        child: Text(
-                          'تقرير تفصيلي عن مستوي تقدمي في دروسي',
+                    Row(
+                      children: const [
+                        CircleAvatar(
+                          radius: 40.0,
+                          backgroundColor: Colors.transparent,
+                          backgroundImage: AssetImage(AssetsImage.paper),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        SizedBox(width: 10,),
+                        Expanded(
+                          child: Text(
+                            'تقرير تفصيلي عن مستوي تقدمي في دروسي',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
 
 

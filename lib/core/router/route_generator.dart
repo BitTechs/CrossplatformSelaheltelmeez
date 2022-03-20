@@ -13,7 +13,9 @@ import 'package:selaheltelmeez/features/authentication/validate_otp/view/validat
 import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_object/list_item.dart';
 import 'package:selaheltelmeez/features/landing/presentation_layer/landing_screen.dart';
 import 'package:selaheltelmeez/features/student/classes/class_search/view/class_search_screen.dart';
+import 'package:selaheltelmeez/features/student/dashboard/achievements/view/achievements.dart';
 import 'package:selaheltelmeez/features/student/dashboard/dashboard/view/student_dashboard_screen.dart';
+import 'package:selaheltelmeez/features/student/dashboard/detailed_lesson_report/detailed_lesson_report_screen.dart';
 import 'package:selaheltelmeez/features/student/dashboard/detailed_subject_report/detailed_subject_report_screen.dart';
 import 'package:selaheltelmeez/features/student/dashboard/lesson/view/lesson_screen.dart';
 import 'package:selaheltelmeez/features/student/dashboard/recent_activity/view/recent_activity_screen.dart';
@@ -67,7 +69,10 @@ class RouteGenerator {
         return PageTransition(child: const RecentActivityScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/detailed_subject_report':
         return PageTransition(child: const DetailedSubjectReportScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-
+      case '/detailed_lesson_report':
+        return PageTransition(child: const DetailedLessonReportScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case '/achievements':
+        return PageTransition(child: const Achievements(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/StudentHome':
       return PageTransition(child: const StudentDashboardScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       // Validation of correct data type

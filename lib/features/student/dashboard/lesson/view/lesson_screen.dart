@@ -159,32 +159,22 @@ class _LessonScreenState extends State<LessonScreen> {
 
   Widget itemFilterList(index) => Padding(
     padding: const EdgeInsets.all(16.0),
-    child: Transform.scale(
-      scale: selectedItem == index ? 1.2 : 1.0,
+    child: ScaledWidget(
+      scale: (selectedItem == index) ? 1.2 : 1.0,
+      opacity: (selectedItem == index)? 1.0: 0.6,
+      onTap: () {
+        setState(() {
+          selectedItem = index;
+        });
+      },
       child: Column(
             children: [
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    selectedItem = index;
-                  });
-                },
-                child: selectedItem == index
-                    ? Image.asset(
-                        AssetsImage.all,
-                        height: 50,
-                        width: 50,
-                        fit: BoxFit.fill,
-                      )
-                    : Image.asset(
-                        AssetsImage.all,
-                        height: 50,
-                        width: 50,
-                  fit: BoxFit.fill,
-                        color: Colors.white.withOpacity(0.6),
-                        colorBlendMode: BlendMode.modulate,
-                      ),
-              ),
+              Image.asset(
+                      AssetsImage.all,
+                      height: 50,
+                      width: 50,
+                      fit: BoxFit.fill,
+                    ),
               Text('فيديو'),
             ],
           ),

@@ -24,4 +24,9 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
   }
 
+  void showInputForm()
+  {
+    emit(ShowInputForm());
+  }
+
 }
