@@ -17,7 +17,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     emit(RegisterSubmit());
     ValueCommitResult<RegisterResponse> response = await _repo.registerAsync(registerRequest);
     if(response.isSuccess){
-      await AppUserLocalStorageProvider.addAsJsonAsync(response.value!.toJson());
+      await AppUserLocalStorageProvider.addRegisterResponseAsync(response.value!);
       emit(RegisterSuccess());
     }else{
       emit(RegisterFailed(errorMessage: response.errorMessage ?? "Error"));

@@ -17,7 +17,7 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginSubmit());
     ValueCommitResult<LoginResponse> response = await _repo.loginAsync(loginRequest);
     if (response.isSuccess) {
-      await AppUserLocalStorageProvider.addAsJsonAsync(response.value!.toJson());
+      await AppUserLocalStorageProvider.addLoginResponseAsync(response.value!);
       if (response.value!.isVerified) {
         emit(LoginVerifiedSuccess());
       } else {

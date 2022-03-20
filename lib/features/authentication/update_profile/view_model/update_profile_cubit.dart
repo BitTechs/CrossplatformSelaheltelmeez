@@ -36,7 +36,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
         gender: gender == "male" ? 1 : 0,
         isEmailSubscribed: false));
     if(response.isSuccess){
-      await AppUserLocalStorageProvider.addAsJsonAsync(response.value!.toJson());
+      await AppUserLocalStorageProvider.addUpdateProfileResponseAsync(response.value!);
       emit(UpdateProfileSuccess());
     }else{
       emit(UpdateProfileFailed(errorMessage: response.errorMessage ?? "Error"));

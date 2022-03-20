@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:selaheltelmeez/core/dio_client/dio_client.dart';
 import 'package:selaheltelmeez/core/language_change_provider.dart';
+import 'package:selaheltelmeez/core/local_storage/app_user_entity.dart';
 import 'package:selaheltelmeez/features/authentication/register/view_model/identity_role_cubit.dart';
 import 'package:sizer/sizer.dart';
 import 'package:selaheltelmeez/core/router/route_generator.dart';
@@ -33,6 +34,7 @@ import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/reposi
 import 'package:selaheltelmeez/features/student/dashboard/dashboard/view_model/curriculum_cubit.dart';
 import 'package:selaheltelmeez/features/student/student_navigation_bar/view_model/navigation_bar_cubit.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
+import 'core/local_storage/app_user_local_storage_provider.dart';
 import 'features/authentication/update_profile/model/data_provider/remote_update_profile_provider.dart';
 import 'features/authentication/validate_otp/view_model/validate_otp_cubit.dart';
 
@@ -41,9 +43,13 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Trying to loading App User Entity Values
- // await AppUserLocalStorageProvider.tryToLoadAppUserEntity();
+  await AppUserLocalStorageProvider.tryToLoadAppUserEntity();
 
+  if(AppUserLocalStorageProvider.sharedAppUserEntity == null){
 
+  }else{
+
+  }
 
   runApp(
     const SelaheltelmeezLauncher(),

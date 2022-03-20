@@ -9,16 +9,17 @@ part of 'update_profile_response.dart';
 UpdateProfileResponse _$UpdateProfileResponseFromJson(
         Map<String, dynamic> json) =>
     UpdateProfileResponse(
+      gender: json['gender'] as String?,
       isVerified: json['isVerified'] as bool,
       fullName: json['fullName'] as String,
       email: json['email'] as String?,
       mobileNumber: json['mobileNumber'] as String?,
-      grade: json['grade'] as String,
-      country: json['country'] as String,
-      dateOfBirth: json['dateOfBirth'] as String,
+      grade: json['grade'] as String?,
+      country: json['country'] as String?,
+      dateOfBirth: json['dateOfBirth'] as String?,
       referralCode: json['referralCode'] as String,
       role: json['role'] as String,
-      governorate: json['governorate'] as String,
+      governorate: json['governorate'] as String?,
       avatarUrl: json['avatarUrl'] as String,
       isPremium: json['isPremium'] as bool,
     );
@@ -31,6 +32,7 @@ Map<String, dynamic> _$UpdateProfileResponseToJson(
       'mobileNumber': instance.mobileNumber,
       'grade': instance.grade,
       'country': instance.country,
+      'gender': instance.gender,
       'dateOfBirth': instance.dateOfBirth,
       'referralCode': instance.referralCode,
       'role': instance.role,
