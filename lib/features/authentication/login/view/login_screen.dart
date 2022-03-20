@@ -170,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
               name: 'emailOrMobile',
               validators: [
                 IsValidRequiredRule(S.of(context).field_required),
-                IsValidEmailOrMobileRule(S.of(context).incorrect_email)
+                IsValidEmailOrMobileRule(S.of(context).incorrect_email_or_mobile)
               ],
             ),
             const SizedBox(
