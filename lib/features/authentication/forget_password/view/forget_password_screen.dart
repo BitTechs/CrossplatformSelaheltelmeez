@@ -90,13 +90,13 @@ class _ForgetPasswordState extends State<ForgetPasswordScreen> {
                 Center(
                   child: FancyElevatedButton(
                       width: 140.0,
-                      title: 'إرسال',
+                      title: S.of(context).send,
                       backGroundColor:
                           CommonColors.fancyElevatedButtonBackGroundColor,
                       titleColor: CommonColors.fancyElevatedTitleColor,
                       shadowColor: CommonColors.fancyElevatedShadowTitleColor,
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
+                        if (_formKey.currentState!.saveAndValidate()) {
                           await context.read<ForgetPasswordCubit>().sendForgetPasswordAsync(
                               ForgetPasswordRequest(
                                   email: Utilities.isEmail(_formKey.currentState?.value['emailOrMobile']),
@@ -121,7 +121,7 @@ class _ForgetPasswordState extends State<ForgetPasswordScreen> {
               name: 'emailOrMobile',
               validators: [
                 IsValidRequiredRule(S.of(context).field_required),
-                IsValidEmailOrMobileRule(S.of(context).incorrect_email)
+                IsValidEmailOrMobileRule(S.of(context).incorrect_email_or_mobile)
               ],
             ),
           ],

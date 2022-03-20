@@ -50,8 +50,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "gender": MessageLookupByLibrary.simpleMessage("اختر النوع"),
         "get_continue": MessageLookupByLibrary.simpleMessage("استكمال"),
         "governorate": MessageLookupByLibrary.simpleMessage("محافظتي"),
-        "incorrect_email": MessageLookupByLibrary.simpleMessage(
-            "البريد الإلكتروني مكتوب بشكل غير صحيح"),
         "incorrect_email_or_mobile": MessageLookupByLibrary.simpleMessage(
             "البريد الإلكتروني او الموبايل مكتوب بشكل غير صحيح"),
         "later": MessageLookupByLibrary.simpleMessage("لاحقاً"),

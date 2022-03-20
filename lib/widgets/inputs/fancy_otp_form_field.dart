@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:sizer/sizer.dart';
 
 class FancyOTPFormField extends StatelessWidget {
   final TextEditingController? controller;
@@ -13,8 +14,6 @@ class FancyOTPFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormField(
       builder: (field) {
-        var fieldWidth =
-            (MediaQuery.of(context).size.width) / ((length ?? 4) * 1.4);
         return Directionality(
           textDirection: TextDirection.ltr,
           child: Padding(
@@ -29,8 +28,8 @@ class FancyOTPFormField extends StatelessWidget {
               ),
               child: PinCodeTextField(
                 pinTheme: PinTheme(
-                  fieldWidth: fieldWidth,
-                  fieldHeight: fieldWidth,
+                  fieldWidth: 16.w,
+                  fieldHeight: 16.w,
                   borderWidth: 2.0,
                   errorBorderColor: Theme.of(context).errorColor,
                   activeColor: Theme.of(context).primaryColor,

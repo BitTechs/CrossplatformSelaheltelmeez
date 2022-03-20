@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/view_model/validate_forget_password_otp_cubit.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
-class ValidateForgetPasswordOTPScreen extends StatefulWidget {
-  const ValidateForgetPasswordOTPScreen({Key? key}) : super(key: key);
+class ValidateForgetPasswordOTPScreen extends StatelessWidget {
+  ValidateForgetPasswordOTPScreen({Key? key}) : super(key: key);
 
-  @override
-  State<ValidateForgetPasswordOTPScreen> createState() => _ValidateOTPScreenState();
-}
-
-class _ValidateOTPScreenState extends State<ValidateForgetPasswordOTPScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final  _formKey = GlobalKey<FormBuilderState>();
 
   final _otpController = TextEditingController();
 
@@ -63,7 +59,37 @@ class _ValidateOTPScreenState extends State<ValidateForgetPasswordOTPScreen> {
                 ),
                 Text(S.of(context).enter_activation_code),
                 const SizedBox(height: 16.0),
-                _otpForm(),
+                FormBuilder(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FancyOTPFormField(
+                        length: 4,
+                        controller: _otpController,
+                        inputColor: CommonColors.otpInputColor,
+                      ),
+                      const SizedBox(height: 64.0),
+                      Center(
+                        child: FancyElevatedButton(
+                          title: S.of(context).activate,
+                          onPressed: () async {
+                            if (_formKey.currentState!.saveAndValidate()) {
+                              context
+                                  .read<ValidateForgetPasswordOtpCubit>()
+                                  .validateAsync(_otpController.text);
+                            }
+                          },
+                          backGroundColor:
+                          CommonColors.fancyElevatedButtonBackGroundColor,
+                          shadowColor: CommonColors.fancyElevatedShadowTitleColor,
+                          titleColor: CommonColors.fancyElevatedTitleColor,
+                          width: 150,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             );
           },
@@ -71,36 +97,4 @@ class _ValidateOTPScreenState extends State<ValidateForgetPasswordOTPScreen> {
       ),
     );
   }
-
-  Widget _otpForm() => Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FancyOTPFormField(
-              length: 4,
-              controller: _otpController,
-              inputColor: CommonColors.otpInputColor,
-            ),
-            const SizedBox(height: 64.0),
-            Center(
-              child: FancyElevatedButton(
-                title: S.of(context).activate,
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    context
-                        .read<ValidateForgetPasswordOtpCubit>()
-                        .validateAsync(_otpController.text);
-                  }
-                },
-                backGroundColor:
-                    CommonColors.fancyElevatedButtonBackGroundColor,
-                shadowColor: CommonColors.fancyElevatedShadowTitleColor,
-                titleColor: CommonColors.fancyElevatedTitleColor,
-                width: 150,
-              ),
-            ),
-          ],
-        ),
-      );
 }

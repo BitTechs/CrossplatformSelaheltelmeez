@@ -10,22 +10,15 @@ import 'package:selaheltelmeez/features/authentication/login/view_model/login_cu
 import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
-class ResetPasswordScreen extends StatefulWidget {
+class ResetPasswordScreen extends StatelessWidget {
   final String identityUserId;
 
-  const ResetPasswordScreen({Key? key, required this.identityUserId})
+  ResetPasswordScreen({Key? key, required this.identityUserId})
       : super(key: key);
 
-  @override
-  _ResetPasswordState createState() => _ResetPasswordState();
-}
-
-class _ResetPasswordState extends State<ResetPasswordScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
-  @override
-  void initState() {
-    super.initState();
-  }
+  final _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return NavigatedAppScaffold(
@@ -76,6 +69,7 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
                       FancyPasswordFormField(
                         placeholderText: S.of(context).password,
                         name: 'password',
+                        controller: _controller,
                         validators: [
                           IsValidRequiredRule(S.of(context).field_required),
                         ],
@@ -83,16 +77,10 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
                       const SizedBox(
                         height: 8.0,
                       ),
-                      FancyPasswordFormField(
-                        placeholderText: S.of(context).confirm_password,
-                        name: 'confirmPassword',
-                        validators: [
-                          IsValidRequiredRule(S.of(context).field_required),
-                          IsValidConfirmPasswordRule(
-                              S.of(context).password_not_matched,
-                              password: _formKey.currentState?.value['password'] ?? "")
-                        ],
-                      ),
+                      FancyConfirmPasswordFormField(
+                          placeholderText: S.of(context).confirm_password,
+                          name: 'confirmPassword',
+                          passwordController: _controller),
                     ],
                   ),
                 ),
@@ -112,7 +100,7 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
                           await context
                               .read<ResetPasswordCubit>()
                               .resetAsync(ResetPasswordRequest(
-                                identityUserId: widget.identityUserId,
+                                identityUserId: identityUserId,
                                 newPassword: _formKey.currentState?.value['password'],
                               ));
                         }

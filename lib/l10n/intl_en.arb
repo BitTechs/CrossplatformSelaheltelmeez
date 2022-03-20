@@ -12,7 +12,6 @@
   "update" : "Update",
   "email_or_mobile" : "Email or Mobile ",
   "field_required": "Field Required",
-  "incorrect_email" : "Incorrect Email",
   "password" : "Password",
   "restore_information" : "Restore Information",
   "send_confirmation_message" : "Send Confirmation Message",

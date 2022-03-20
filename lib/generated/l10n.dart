@@ -170,16 +170,6 @@ class S {
     );
   }
 
-  /// `Incorrect Email`
-  String get incorrect_email {
-    return Intl.message(
-      'Incorrect Email',
-      name: 'incorrect_email',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Password`
   String get password {
     return Intl.message(
