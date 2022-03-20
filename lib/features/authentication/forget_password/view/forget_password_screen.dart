@@ -3,15 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/helpers/utilities.dart';
-import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
-import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/model/data_transfer_object/change_email_or_mobile_request.dart';
-import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/view_model/change_email_or_mobile_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/model/data_transfer_object/forget_password_request.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/view_model/forget_password_cubit.dart';
-import 'package:selaheltelmeez/features/authentication/login/model/data_transfer_object/login_request.dart';
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
+import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
@@ -31,7 +28,7 @@ class _ForgetPasswordState extends State<ForgetPasswordScreen> {
   Widget build(BuildContext context) {
     final inputWidth = (MediaQuery.of(context).size.width) - 24.0;
     return NavigatedAppScaffold(
-      title: 'نسيت كلمة المرور',
+      title: S.of(context).forget_my_password,
       child: SingleChildScrollView(
         child: BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
           listener: (context, state) async {
@@ -61,7 +58,7 @@ class _ForgetPasswordState extends State<ForgetPasswordScreen> {
                     Align(
                         alignment: Alignment.bottomCenter,
                         child: Text(
-                          'إسترجاع بيانات',
+                          S.of(context).restore_information,
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge
@@ -75,7 +72,7 @@ class _ForgetPasswordState extends State<ForgetPasswordScreen> {
                 Align(
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      'سوف يتم إرسال رسالة تأكيد على البريد الإلكتروني أو الموبايل المسجل',
+                      S.of(context).send_confirmation_message,
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1?.copyWith(
@@ -121,12 +118,12 @@ class _ForgetPasswordState extends State<ForgetPasswordScreen> {
         child: Column(
           children: [
             FancyTextFormField(
-              placeholderText: 'البريد الإلكتروني / رقم الموبايل',
+              placeholderText: S.of(context).email_or_mobile,
               name: 'emailOrMobile',
               width: inputWidth,
               validators: [
-                IsValidRequiredRule('هذا الحقل مطلوب'),
-                IsValidEmailOrMobileRule('البريد الإلكتروني مكتوب بشكل غير صحيح')
+                IsValidRequiredRule(S.of(context).field_required),
+                IsValidEmailOrMobileRule(S.of(context).incorrect_email)
               ],
             ),
           ],

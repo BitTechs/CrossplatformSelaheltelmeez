@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
-import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/view_model/validate_forget_password_otp_cubit.dart';
-import 'package:selaheltelmeez/features/authentication/validate_otp/view_model/validate_otp_cubit.dart';
+import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class ValidateForgetPasswordOTPScreen extends StatefulWidget {
@@ -22,7 +21,7 @@ class _ValidateOTPScreenState extends State<ValidateForgetPasswordOTPScreen> {
   @override
   Widget build(BuildContext context) {
     return NavigatedAppScaffold(
-      title: "رمز التفعيل",
+      title: S.of(context).activation_code,
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: BlocConsumer<ValidateForgetPasswordOtpCubit, ValidateForgetPasswordOtpState>(
@@ -51,7 +50,7 @@ class _ValidateOTPScreenState extends State<ValidateForgetPasswordOTPScreen> {
                     Align(
                         alignment: Alignment.bottomCenter,
                         child: Text(
-                          'تفعيل الحساب',
+                          S.of(context).activate_account,
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge
@@ -62,7 +61,7 @@ class _ValidateOTPScreenState extends State<ValidateForgetPasswordOTPScreen> {
                 const SizedBox(
                   height: 16.0,
                 ),
-                const Text('إدخل رمز التفعيل المرسل إليك'),
+                Text(S.of(context).enter_activation_code),
                 const SizedBox(height: 16.0),
                 _otpForm(),
               ],
@@ -86,7 +85,7 @@ class _ValidateOTPScreenState extends State<ValidateForgetPasswordOTPScreen> {
             const SizedBox(height: 64.0),
             Center(
               child: FancyElevatedButton(
-                title: "تفعيل",
+                title: S.of(context).activate,
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     context

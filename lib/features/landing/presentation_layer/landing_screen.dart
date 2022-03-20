@@ -33,7 +33,7 @@ class LandingScreen extends StatelessWidget {
                         width: 95.0,
                         height: 40.0,
                         child: FancyElevatedButton(
-                          title: S.of(context).login,
+                          title: S.of(context).login_btn,
                           backGroundColor:
                           CommonColors.fancyElevatedButtonBackGroundColor,
                           titleColor: CommonColors.fancyElevatedTitleColor,

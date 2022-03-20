@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/helpers/utilities.dart';
-import 'package:sizer/sizer.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:selaheltelmeez/features/authentication/login/model/data_transfer_object/login_request.dart';
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
+import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return NavigatedAppScaffold(
-      title: 'تسجيل الدخول',
+      title: S.of(context).login,
       child: SingleChildScrollView(
         child: BlocConsumer<LoginCubit, LoginState>(
           listener: (context, state) async {
@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Align(
                         alignment: Alignment.bottomCenter,
                         child: Text(
-                          'تسجيل الدخول',
+                          S.of(context).login,
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge
@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                   child: CustomTextButton(
-                    text: 'هل نسيت كلمة المرور؟',
+                    text: S.of(context).forget_my_password,
                     color: CommonColors.forgetPasswordColor,
                     onPressed: ()=> Navigator.of(context).pushNamed('/forget_password'),
                   ),
@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Center(
                   child: FancyElevatedButton(
                       width: 140.0,
-                      title: 'دخول',
+                      title: S.of(context).login_btn,
                       backGroundColor:
                           CommonColors.fancyElevatedButtonBackGroundColor,
                       titleColor: CommonColors.fancyElevatedTitleColor,
@@ -112,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 8.0,
                 ),
                 Center(
-                  child: Text('أو يمكنك الدخول باستخدام',
+                  child: Text(S.of(context).login_with_social,
                       style: Theme.of(context).textTheme.bodyMedium),
                 ),
                 const SizedBox(
@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Center(
                   child: CustomTextButton(
-                    text: 'تسجيل حساب جديد',
+                    text: S.of(context).create_new_account,
                     color: Colors.blue,
                     onPressed: () =>
                         Navigator.of(context).pushNamed('/register'),
@@ -166,21 +166,21 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           children: [
             FancyTextFormField(
-              placeholderText: 'البريد الإلكتروني / رقم الموبايل',
+              placeholderText:S.of(context).email_or_mobile,
               name: 'emailOrMobile',
               validators: [
-                IsValidRequiredRule('هذا الحقل مطلوب'),
-                IsValidEmailOrMobileRule('البريد الإلكتروني مكتوب بشكل غير صحيح')
+                IsValidRequiredRule(S.of(context).field_required),
+                IsValidEmailOrMobileRule(S.of(context).incorrect_email)
               ],
             ),
             const SizedBox(
               height: 8.0,
             ),
             FancyPasswordFormField(
-              placeholderText: 'كلمة المرور',
+              placeholderText: S.of(context).password,
               name: 'password',
               validators: [
-                IsValidRequiredRule('هذا الحقل مطلوب'),
+                IsValidRequiredRule(S.of(context).field_required),
               ],
             ),
           ],

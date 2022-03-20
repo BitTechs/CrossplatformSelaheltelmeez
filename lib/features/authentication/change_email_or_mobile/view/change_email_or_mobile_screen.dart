@@ -10,6 +10,8 @@ import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/vi
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
+import '../../../../generated/l10n.dart';
+
 class ChangeEmailOrMobileScreen extends StatefulWidget {
   const ChangeEmailOrMobileScreen({Key? key}) : super(key: key);
 
@@ -27,7 +29,7 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
   Widget build(BuildContext context) {
     final inputWidth = (MediaQuery.of(context).size.width) - 24.0;
     return NavigatedAppScaffold(
-      title: 'تحديث البريد الإلكتروني أو الموبايل',
+      title: S.of(context).update_email_or_mobile,
       child: SingleChildScrollView(
         child: BlocConsumer<ChangeEmailOrMobileCubit, ChangeEmailOrMobileState>(
           listener: (context, state) async {
@@ -56,8 +58,7 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
                     )),
                     Align(
                         alignment: Alignment.bottomCenter,
-                        child: Text(
-                          'تحديث بيانات',
+                        child: Text(S.of(context).update_information,
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge
@@ -70,8 +71,7 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
                 ),
                 Align(
                     alignment: Alignment.bottomCenter,
-                    child: Text(
-                      'سوف يتم إرسال رسالة تفعيل جديدة في حالة تحديث البيانات',
+                    child: Text(S.of(context).send_activation_message,
                       style: Theme.of(context)
                           .textTheme
                           .bodyLarge
@@ -85,7 +85,7 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
                 Center(
                   child: FancyElevatedButton(
                       width: 140.0,
-                      title: 'تحديث',
+                      title: S.of(context).update,
                       backGroundColor:
                           CommonColors.fancyElevatedButtonBackGroundColor,
                       titleColor: CommonColors.fancyElevatedTitleColor,
@@ -113,23 +113,23 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
         child: Column(
           children: [
             FancyTextFormField(
-              placeholderText: 'البريد الإلكتروني / رقم الموبايل',
+              placeholderText: S.of(context).email_or_mobile,
               name: 'emailOrMobile',
               width: inputWidth,
               validators: [
-                IsValidRequiredRule('هذا الحقل مطلوب'),
-                IsValidEmailOrMobileRule('البريد الإلكتروني مكتوب بشكل غير صحيح')
+                IsValidRequiredRule(S.of(context).field_required),
+                IsValidEmailOrMobileRule(S.of(context).incorrect_email)
               ],
             ),
             const SizedBox(
               height: 8.0,
             ),
             FancyPasswordFormField(
-              placeholderText: 'كلمة المرور',
+              placeholderText: S.of(context).password,
               name: 'password',
               width: inputWidth,
               validators: [
-                IsValidRequiredRule('هذا الحقل مطلوب'),
+                IsValidRequiredRule(S.of(context).field_required),
               ],
             ),
           ],

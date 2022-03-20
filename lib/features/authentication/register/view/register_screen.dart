@@ -9,6 +9,7 @@ import 'package:selaheltelmeez/features/authentication/register/model/data_trans
 import 'package:selaheltelmeez/features/authentication/register/model/data_transfer_object/register_request.dart';
 import 'package:selaheltelmeez/features/authentication/register/view_model/grade_menu_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/register/view_model/register_cubit.dart';
+import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -30,7 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final inputWidth = (MediaQuery.of(context).size.width) - 24.0;
     return NavigatedAppScaffold(
-      title: 'تسجيل مستخدم جديد',
+      title: S.of(context).sign_up,
       child: SingleChildScrollView(
         child: BlocConsumer<RegisterCubit, RegisterState>(
           listener: (context, state) {
@@ -58,8 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     )),
                     Align(
                         alignment: Alignment.bottomCenter,
-                        child: Text(
-                          'تسجيل مستخدم جديد',
+                        child: Text(S.of(context).sign_up,
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge
@@ -82,7 +82,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: ImageWithBottomHeader(
                           width: 100.0,
                           image: AssetsImage.studentUser,
-                          header: 'طالب',
+                          header: S.of(context).student,
                           headerBackgroundColor: RegisterCubit.get(context).selectedRole == 1 ? Colors.red : CommonColors.inputBackgroundColor,
                         )),
                     InkWell(
@@ -92,7 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: ImageWithBottomHeader(
                           width: 100.0,
                           image: AssetsImage.parentUser,
-                          header: 'ولي أمر',
+                          header: S.of(context).parent,
                           headerBackgroundColor: RegisterCubit.get(context).selectedRole == 2 ? Colors.green : CommonColors.inputBackgroundColor,
                         )),
                     InkWell(
@@ -102,7 +102,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: ImageWithBottomHeader(
                           width: 100.0,
                           image: AssetsImage.teacherUser,
-                          header: 'مدرس',
+                          header: S.of(context).teacher,
                           headerBackgroundColor: RegisterCubit.get(context).selectedRole == 3 ? Colors.blue : CommonColors.inputBackgroundColor,
                         )),
                   ],
@@ -117,7 +117,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Center(
                   child: FancyElevatedButton(
                     width: 140.0,
-                    title: 'تسجيل',
+                    title: S.of(context).register,
                     backGroundColor:
                         CommonColors.fancyElevatedButtonBackGroundColor,
                     titleColor: CommonColors.fancyElevatedTitleColor,
@@ -143,7 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   height: 8.0,
                 ),
                 Center(
-                  child: Text('أو يمكنك الدخول باستخدام',
+                  child: Text(S.of(context).login_with_social,
                       style: Theme.of(context).textTheme.bodyMedium),
                 ),
                 const SizedBox(
@@ -189,23 +189,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Column(
           children: [
             FancyTextFormField(
-              placeholderText: 'البريد الإلكتروني / رقم الموبايل',
+              placeholderText:S.of(context).email_or_mobile,
               name: 'emailOrMobile',
               width: inputWidth,
               validators: [
-                IsValidRequiredRule('هذا الحقل مطلوب'),
-                IsValidEmailOrMobileRule(
-                    'البريد الإلكتروني او الموبايل مكتوب بشكل غير صحيح')
+                IsValidRequiredRule(S.of(context).field_required),
+                IsValidEmailOrMobileRule(S.of(context).incorrect_email_or_mobile
+                    )
               ],
             ),
             const SizedBox(
               height: 8.0,
             ),
             FancyTextFormField(
-              placeholderText: 'الاسم بالكامل',
+              placeholderText: S.of(context).full_name,
               name: 'fullName',
               width: inputWidth,
-              validators: [IsValidRequiredRule('هذا الحقل مطلوب')],
+              validators: [IsValidRequiredRule(S.of(context).field_required)],
             ),
             const SizedBox(
               height: 8.0,
@@ -227,8 +227,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 if (state is GradeMenuLoaded) {
                   return FancyDropDownFormField<GradeMenuItem>(
                     width: inputWidth,
-                    hintTitle: 'اختر الصف الدراسي',
-                    validators: (value)=> [IsValidRequiredRule('هذا الحقل مطلوب')].getValidationErrorMessage(value?.name),
+                    hintTitle: S.of(context).choose_year,
+                    validators: (value)=> [IsValidRequiredRule(S.of(context).field_required)].getValidationErrorMessage(value?.name),
                     items: state.items ?? [],
                     itemBuilder: (context, item) => Text(
                       item.name,
@@ -249,24 +249,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
               height: 8.0,
             ),
             FancyPasswordFormField(
-              placeholderText: 'كلمة المرور',
+              placeholderText: S.of(context).password,
               name: 'password',
               width: inputWidth,
               validators: [
-                IsValidRequiredRule('هذا الحقل مطلوب'),
+                IsValidRequiredRule(S.of(context).field_required),
               ],
             ),
             const SizedBox(
               height: 8.0,
             ),
             FancyPasswordFormField(
-              placeholderText: 'تأكيد كلمة المرور',
+              placeholderText: S.of(context).confirm_password,
               name: 'ConfirmPassword',
               width: inputWidth,
               validators: [
-                IsValidRequiredRule('هذا الحقل مطلوب'),
+                IsValidRequiredRule(S.of(context).field_required),
                 IsValidConfirmPasswordRule(
-                    'كلمة المرور وتأكيد كلمة المرور غير متطابقين',
+                    S.of(context).password_not_matched,
                     password: _formKey.currentState?.value['password'] ?? "")
               ],
             ),

@@ -4,6 +4,7 @@ import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/features/authentication/validate_otp/view_model/validate_otp_cubit.dart';
+import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class ValidateOTPScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
   @override
   Widget build(BuildContext context) {
     return NavigatedAppScaffold(
-      title: "رمز التفعيل",
+      title: S.of(context).activation_code,
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: BlocConsumer<ValidateOtpCubit, ValidateOtpState>(
@@ -54,7 +55,7 @@ class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
                     Align(
                         alignment: Alignment.bottomCenter,
                         child: Text(
-                          'تفعيل الحساب',
+                          S.of(context).activate_account,
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge
@@ -65,7 +66,7 @@ class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
                 const SizedBox(
                   height: 16.0,
                 ),
-                const Text('إدخل رمز التفعيل المرسل إليك'),
+                Text(S.of(context).enter_activation_code),
                 const SizedBox(height: 16.0),
                 _otpForm(),
               ],
@@ -91,7 +92,7 @@ class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 FancyElevatedButton(
-                  title: "تفعيل",
+                  title: S.of(context).activate,
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       final savedResponse =  await AppUserLocalStorageProvider.readAsAppUserObjectAsync();
@@ -108,7 +109,7 @@ class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
                   width: 150,
                 ),
                 FancyElevatedButton(
-                  title: "إعادة الإرسال",
+                  title: S.of(context).resend,
                   onPressed: () async {
                     final savedResponse =  await AppUserLocalStorageProvider.readAsAppUserObjectAsync();
                     bool isMobile = savedResponse.mobileNumber?.isNotEmpty ?? false;

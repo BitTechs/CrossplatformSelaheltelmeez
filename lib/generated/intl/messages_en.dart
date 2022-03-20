@@ -22,7 +22,67 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "activate": MessageLookupByLibrary.simpleMessage("activate"),
+        "activate_account":
+            MessageLookupByLibrary.simpleMessage("Activate Account"),
+        "activation_code":
+            MessageLookupByLibrary.simpleMessage("Activation Code"),
         "appTitle": MessageLookupByLibrary.simpleMessage("Selaheltelmeez"),
-        "login": MessageLookupByLibrary.simpleMessage("login")
+        "birth_year": MessageLookupByLibrary.simpleMessage("Birth Year"),
+        "choose_year": MessageLookupByLibrary.simpleMessage("Choose Year"),
+        "confirm_password":
+            MessageLookupByLibrary.simpleMessage("Confirm Password"),
+        "continue_information":
+            MessageLookupByLibrary.simpleMessage("Continue Information"),
+        "continue_signup_information": MessageLookupByLibrary.simpleMessage(
+            "Continue Sign Up Information"),
+        "create_new_account":
+            MessageLookupByLibrary.simpleMessage("Register a new account"),
+        "email_or_mobile":
+            MessageLookupByLibrary.simpleMessage("Email / Mobile "),
+        "enter_activation_code":
+            MessageLookupByLibrary.simpleMessage("Enter Activation Code"),
+        "field_required":
+            MessageLookupByLibrary.simpleMessage("Field Required"),
+        "forget_my_password":
+            MessageLookupByLibrary.simpleMessage("Forgot your password?"),
+        "full_name": MessageLookupByLibrary.simpleMessage("Full Name"),
+        "gender": MessageLookupByLibrary.simpleMessage("Gender"),
+        "get_continue": MessageLookupByLibrary.simpleMessage("Continue"),
+        "governorate": MessageLookupByLibrary.simpleMessage("Governorate"),
+        "incorrect_email":
+            MessageLookupByLibrary.simpleMessage("Incorrect Email"),
+        "incorrect_email_or_mobile":
+            MessageLookupByLibrary.simpleMessage("Incorrect Email or Mobile"),
+        "later": MessageLookupByLibrary.simpleMessage("Later"),
+        "login": MessageLookupByLibrary.simpleMessage("Login"),
+        "login_btn": MessageLookupByLibrary.simpleMessage("Login"),
+        "login_with_social":
+            MessageLookupByLibrary.simpleMessage("You can login with"),
+        "my_country":
+            MessageLookupByLibrary.simpleMessage("My Country is Egypt"),
+        "parent": MessageLookupByLibrary.simpleMessage("Parent"),
+        "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "password_not_matched":
+            MessageLookupByLibrary.simpleMessage("Password Not the Same"),
+        "register": MessageLookupByLibrary.simpleMessage("Register"),
+        "resend": MessageLookupByLibrary.simpleMessage("Resend"),
+        "restore_information":
+            MessageLookupByLibrary.simpleMessage("Restore Information"),
+        "send": MessageLookupByLibrary.simpleMessage("Send"),
+        "send_activation_message":
+            MessageLookupByLibrary.simpleMessage("Send Activation Message"),
+        "send_confirmation_message":
+            MessageLookupByLibrary.simpleMessage("Send Confirmation Message"),
+        "sign_up": MessageLookupByLibrary.simpleMessage("Sign Up"),
+        "student": MessageLookupByLibrary.simpleMessage("Student"),
+        "teacher": MessageLookupByLibrary.simpleMessage("Teacher"),
+        "update": MessageLookupByLibrary.simpleMessage("Update"),
+        "update_email_or_mobile":
+            MessageLookupByLibrary.simpleMessage("Update Your Email or mobile"),
+        "update_information":
+            MessageLookupByLibrary.simpleMessage("Update Information"),
+        "update_password":
+            MessageLookupByLibrary.simpleMessage("Update Password")
       };
 }
