@@ -28,7 +28,6 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    final inputWidth = (MediaQuery.of(context).size.width) - 24.0;
     return NavigatedAppScaffold(
       title: S.of(context).update_password,
       child: SingleChildScrollView(
@@ -77,7 +76,6 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
                       FancyPasswordFormField(
                         placeholderText: S.of(context).password,
                         name: 'password',
-                        width: inputWidth,
                         validators: [
                           IsValidRequiredRule(S.of(context).field_required),
                         ],
@@ -88,7 +86,6 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
                       FancyPasswordFormField(
                         placeholderText: S.of(context).confirm_password,
                         name: 'confirmPassword',
-                        width: inputWidth,
                         validators: [
                           IsValidRequiredRule(S.of(context).field_required),
                           IsValidConfirmPasswordRule(

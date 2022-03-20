@@ -87,13 +87,14 @@ class IsValidEmailOrMobileRule extends ValidationRule{
   }
 }
 class IsValidConfirmPasswordRule extends ValidationRule{
-  final String? password;
+  final String password;
   IsValidConfirmPasswordRule(String validationError,{required this.password}) : super(validationError);
   @override
   bool check(String? value) {
     if (value == null) {
       return false;
     }
+    print(password);
     return value == password;
   }
 }

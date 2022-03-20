@@ -9,28 +9,17 @@ import 'package:selaheltelmeez/features/authentication/update_profile/view_model
 import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/buttons/scaled_button_image.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
+import 'package:sizer/sizer.dart';
 
-class UpdateProfileScreen extends StatefulWidget {
-  const UpdateProfileScreen({Key? key}) : super(key: key);
+class UpdateProfileScreen extends StatelessWidget {
+   UpdateProfileScreen({Key? key}) : super(key: key);
 
-  @override
-  _UpdateProfileScreenState createState() => _UpdateProfileScreenState();
-}
-
-class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  int selectedItem = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    UpdateProfileCubit.get(context).loadAvatars();
-  }
+  final  _formKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
-    final inputWidth = (MediaQuery.of(context).size.width) - 24.0;
     final cubit = UpdateProfileCubit.get(context);
+    cubit.loadAvatars();
     return NavigatedAppScaffold(
       title: S.of(context).continue_signup_information,
       child: SingleChildScrollView(
@@ -104,9 +93,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       FancyDropDownFormField<String>(
-                          name: 'gradeMenu',
+                          name: 'birthDate',
                           hintTitle: S.of(context).birth_year,
-                          width: inputWidth,
                           items: const ['1990', '1999', '2000'],
                           itemBuilder: (context, item) => Text(item),
                           onChanged: (value) =>
@@ -114,45 +102,27 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       const SizedBox(
                         height: 8.0,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: SizedBox(
-                          height: 65.0,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: CheckboxListTile(
-                                    activeColor: Colors.blue,
-                                    checkColor: Colors.white,
-                                    value: cubit.liveInEgypt,
-                                    onChanged: (bool? value) =>
-                                        cubit.changeCountry(),
-                                    title: Text(S.of(context).my_country),
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Visibility(
-                                  visible: cubit.liveInEgypt,
-                                  child: FancyDropDownFormField<
-                                          GovernorateResponse>(
-                                      name: 'gradeMenu',
-                                      hintTitle: S.of(context).governorate,
-                                      width: inputWidth,
-                                      items: cubit.governorates,
-                                      itemBuilder: (context, item) =>
-                                          Text(item.name),
-                                      onChanged: (value) =>
-                                          cubit.selectGovernorate(value)),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      FormBuilderCheckbox(
+                          name: 'liveInEgypt',
+                          activeColor: Colors.blue,
+                          checkColor: Colors.white,
+                          initialValue: cubit.liveInEgypt,
+                          onChanged: (bool? value) => cubit.changeCountry(),
+                          title: Text(S.of(context).my_country, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black),),
+                          controlAffinity:
+                          ListTileControlAffinity.leading),
+                      const SizedBox(
+                        height: 16.0,
                       ),
+                      FancyDropDownFormField<GovernorateResponse>(
+                          name: 'governorate',
+                          isEnabled : cubit.liveInEgypt,
+                          hintTitle: S.of(context).governorate,
+                          items: cubit.governorates,
+                          itemBuilder: (context, item) =>
+                              Text(item.name),
+                          onChanged: (value) =>
+                              cubit.selectGovernorate(value)),
                       const SizedBox(
                         height: 16.0,
                       ),
@@ -166,7 +136,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             imageUrl: AssetsImage.female,
                           ),
                           ScaledButtonAssetImage(
-                            scale: cubit.gender == "female" ? 1.5 : 1.0,
+                            scale: cubit.gender == "male" ? 1.5 : 1.0,
                             onTap: () => cubit.changeGender('male'),
                             imageUrl: AssetsImage.male,
                           ),
@@ -189,7 +159,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         titleColor: CommonColors.fancyElevatedTitleColor,
                         shadowColor: CommonColors.fancyElevatedShadowTitleColor,
                         onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
+                          if (_formKey.currentState!.saveAndValidate()) {
                             await context
                                 .read<UpdateProfileCubit>()
                                 .updateProfileAsync();

@@ -6,16 +6,15 @@ import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:sizer/sizer.dart';
 
-class FancyPasswordFormField extends StatelessWidget {
+class FancyConfirmPasswordFormField extends StatelessWidget {
   final String placeholderText;
   final String? helperText;
   final double? width;
   final double? height;
   final List<ValidationRule>? validators;
   final String name;
-  final ValueChanged<String?>? onChanged;
-  final TextEditingController? controller;
-  const FancyPasswordFormField({Key? key, required this.placeholderText,  this.width,  this.validators, required this.name, this.helperText, this.height, this.onChanged,  this.controller, }) : super(key: key);
+  final TextEditingController passwordController;
+  const FancyConfirmPasswordFormField({Key? key, required this.placeholderText,  this.width,  this.validators, required this.name, this.helperText, this.height, required this.passwordController, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +30,8 @@ class FancyPasswordFormField extends StatelessWidget {
         FormBuilderTextField(
             name: name,
             obscureText: true,
-            controller: controller,
             enableSuggestions: false,
             autocorrect: false,
-            onChanged: onChanged,
             decoration:  InputDecoration(
               hintText: placeholderText,
               helperText: helperText,
@@ -45,7 +42,7 @@ class FancyPasswordFormField extends StatelessWidget {
               disabledBorder: InputBorder.none,
               contentPadding: const EdgeInsets.only(left: 35, bottom: 0, top: 0, right: 35),
               errorStyle:Theme.of(context).textTheme.bodySmall?.copyWith(color: CommonColors.errorTextColor, height: 0.3, fontSize: 9.sp),),
-              validator: (value) => validators?.getValidationErrorMessage(value)
+              validator: (value) => passwordController.text != value ? "Passwords are not matching, please re-enter the password" : validators?.getValidationErrorMessage(value)
         ),
       ],
     );

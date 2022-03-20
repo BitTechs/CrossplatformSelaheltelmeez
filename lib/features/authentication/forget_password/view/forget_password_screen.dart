@@ -26,7 +26,6 @@ class _ForgetPasswordState extends State<ForgetPasswordScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    final inputWidth = (MediaQuery.of(context).size.width) - 24.0;
     return NavigatedAppScaffold(
       title: S.of(context).forget_my_password,
       child: SingleChildScrollView(
@@ -84,7 +83,7 @@ class _ForgetPasswordState extends State<ForgetPasswordScreen> {
                 const SizedBox(
                   height: 16.0,
                 ),
-                _forgetPasswordForm(inputWidth),
+                _forgetPasswordForm(),
                 const SizedBox(
                   height: 8.0,
                 ),
@@ -113,14 +112,13 @@ class _ForgetPasswordState extends State<ForgetPasswordScreen> {
     );
   }
 
-  Widget _forgetPasswordForm(double inputWidth) => FormBuilder(
+  Widget _forgetPasswordForm() => FormBuilder(
         key: _formKey,
         child: Column(
           children: [
             FancyTextFormField(
               placeholderText: S.of(context).email_or_mobile,
               name: 'emailOrMobile',
-              width: inputWidth,
               validators: [
                 IsValidRequiredRule(S.of(context).field_required),
                 IsValidEmailOrMobileRule(S.of(context).incorrect_email)

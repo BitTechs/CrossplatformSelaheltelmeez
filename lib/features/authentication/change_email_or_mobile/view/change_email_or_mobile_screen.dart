@@ -27,7 +27,6 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    final inputWidth = (MediaQuery.of(context).size.width) - 24.0;
     return NavigatedAppScaffold(
       title: S.of(context).update_email_or_mobile,
       child: SingleChildScrollView(
@@ -78,7 +77,7 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
                           ?.copyWith(color: Colors.white),
                     ),
                 ),
-                _changeEmailOrMobileForm(inputWidth),
+                _changeEmailOrMobileForm(),
                 const SizedBox(
                   height: 8.0,
                 ),
@@ -108,14 +107,13 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
     );
   }
 
-  Widget _changeEmailOrMobileForm(double inputWidth) => FormBuilder(
+  Widget _changeEmailOrMobileForm() => FormBuilder(
         key: _formKey,
         child: Column(
           children: [
             FancyTextFormField(
               placeholderText: S.of(context).email_or_mobile,
               name: 'emailOrMobile',
-              width: inputWidth,
               validators: [
                 IsValidRequiredRule(S.of(context).field_required),
                 IsValidEmailOrMobileRule(S.of(context).incorrect_email)
@@ -127,7 +125,6 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
             FancyPasswordFormField(
               placeholderText: S.of(context).password,
               name: 'password',
-              width: inputWidth,
               validators: [
                 IsValidRequiredRule(S.of(context).field_required),
               ],

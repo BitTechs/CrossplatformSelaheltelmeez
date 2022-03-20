@@ -14,24 +14,12 @@ import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/buttons/scaled_button_image.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
-
-  @override
-  _RegisterScreenState createState() => _RegisterScreenState();
-}
-
-class _RegisterScreenState extends State<RegisterScreen> {
+class RegisterScreen extends StatelessWidget {
+  RegisterScreen({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormBuilderState>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  final _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final inputWidth = (MediaQuery.of(context).size.width) - 24.0;
     return NavigatedAppScaffold(
       title: S.of(context).sign_up,
       child: SingleChildScrollView(
@@ -144,7 +132,89 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(
                   height: 24.0,
                 ),
-                _registerForm(inputWidth),
+                FormBuilder(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      FancyTextFormField(
+                        placeholderText: S.of(context).email_or_mobile,
+                        name: 'emailOrMobile',
+                        validators: [
+                          IsValidRequiredRule(S.of(context).field_required),
+                          IsValidEmailOrMobileRule(S.of(context).incorrect_email_or_mobile)
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      FancyTextFormField(
+                        placeholderText: S.of(context).full_name,
+                        name: 'fullName',
+                        validators: [IsValidRequiredRule(S.of(context).field_required)],
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      BlocConsumer<GradeMenuCubit, GradeMenuState>(
+                        listener: (context, state) async {
+                          if (state is GradeMenuError) {
+                            final snackBar = SnackBar(
+                              content: Text(state.errorMessage ?? "Error"),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state is GradeMenuLoading) {
+                            const Center(child: DoubleBounce());
+                          }
+                          if (state is GradeMenuLoaded) {
+                            return FancyDropDownFormField<GradeMenuItem>(
+                              name: 'gradeMenu',
+                              hintTitle: S.of(context).choose_year,
+                              validators: (value) => [
+                                IsValidRequiredRule(S.of(context).field_required)
+                              ].getValidationErrorMessage(value?.name),
+                              items: state.items ?? [],
+                              itemBuilder: (context, item) => Text(
+                                item.name,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    ?.copyWith(fontSize: 14),
+                              ),
+                              onChanged: (value) => context.read<GradeMenuCubit>().selectGradeMenuItem(value!.id),
+                            );
+                          } else {
+                            return const SizedBox();
+                          }
+                        },
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      FancyPasswordFormField(
+                        placeholderText: S.of(context).password,
+                        name: 'password',
+                        controller:_controller,
+                        validators: [
+                          IsValidRequiredRule(S.of(context).field_required),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      FancyConfirmPasswordFormField(
+                        placeholderText: S.of(context).confirm_password,
+                        name: 'confirmPassword',
+                        passwordController: _controller,
+                        validators: [
+                          IsValidRequiredRule(S.of(context).field_required),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
                 const SizedBox(
                   height: 16.0,
                 ),
@@ -157,11 +227,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     titleColor: CommonColors.fancyElevatedTitleColor,
                     shadowColor: CommonColors.fancyElevatedShadowTitleColor,
                     onPressed: () async {
-                      if (_formKey.currentState!.saveAndValidate()) {
+                      _formKey.currentState?.save();
+                      if (_formKey.currentState?.validate() ?? false) {
                         await context.read<RegisterCubit>().registerAsync(
                             RegisterRequest(
                                 fullName: _formKey.currentState?.value['fullName'],
-                                grade: context.read<GradeMenuCubit>().getGradeId,
+                                gradeId: context.read<GradeMenuCubit>().getGradeId,
                                 identityRoleId: context.read<IdentityRoleCubit>().getIdentityRoleId,
                                 email: Utilities.isEmail(_formKey.currentState?.value['emailOrMobile']),
                                 mobileNumber: Utilities.isMobile(_formKey.currentState?.value['emailOrMobile']),
@@ -217,93 +288,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
-
-  Widget _registerForm(double inputWidth) => FormBuilder(
-        key: _formKey,
-        child: Column(
-          children: [
-            FancyTextFormField(
-              placeholderText: S.of(context).email_or_mobile,
-              name: 'emailOrMobile',
-              width: inputWidth,
-              validators: [
-                IsValidRequiredRule(S.of(context).field_required),
-                IsValidEmailOrMobileRule(S.of(context).incorrect_email_or_mobile)
-              ],
-            ),
-            const SizedBox(
-              height: 8.0,
-            ),
-            FancyTextFormField(
-              placeholderText: S.of(context).full_name,
-              name: 'fullName',
-              width: inputWidth,
-              validators: [IsValidRequiredRule(S.of(context).field_required)],
-            ),
-            const SizedBox(
-              height: 8.0,
-            ),
-            BlocConsumer<GradeMenuCubit, GradeMenuState>(
-              listener: (context, state) async {
-                if (state is GradeMenuError) {
-                  final snackBar = SnackBar(
-                    content: Text(state.errorMessage ?? "Error"),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
-              },
-              builder: (context, state) {
-                if (state is GradeMenuLoading) {
-                  const Center(child: DoubleBounce());
-                }
-                if (state is GradeMenuLoaded) {
-                  return FancyDropDownFormField<GradeMenuItem>(
-                    name: 'gradeMenu',
-                    width: inputWidth,
-                    hintTitle: S.of(context).choose_year,
-                    validators: (value) => [
-                      IsValidRequiredRule(S.of(context).field_required)
-                    ].getValidationErrorMessage(value?.name),
-                    items: state.items ?? [],
-                    itemBuilder: (context, item) => Text(
-                      item.name,
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1
-                          ?.copyWith(fontSize: 14),
-                    ),
-                    onChanged: (value) => context.read<GradeMenuCubit>().selectGradeMenuItem(value!.id),
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              },
-            ),
-            const SizedBox(
-              height: 8.0,
-            ),
-            FancyPasswordFormField(
-              placeholderText: S.of(context).password,
-              name: 'password',
-              width: inputWidth,
-              validators: [
-                IsValidRequiredRule(S.of(context).field_required),
-              ],
-            ),
-            const SizedBox(
-              height: 8.0,
-            ),
-            FancyPasswordFormField(
-              placeholderText: S.of(context).confirm_password,
-              name: 'ConfirmPassword',
-              width: inputWidth,
-              validators: [
-                IsValidRequiredRule(S.of(context).field_required),
-                IsValidConfirmPasswordRule(S.of(context).password_not_matched,
-                    password: _formKey.currentState?.getRawValue('password'))
-              ],
-            ),
-          ],
-        ),
-      );
 }

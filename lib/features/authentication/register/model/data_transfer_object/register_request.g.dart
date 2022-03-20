@@ -10,7 +10,7 @@ RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
     RegisterRequest(
       identityRoleId: json['identityRoleId'] as int,
       fullName: json['fullName'] as String,
-      grade: json['grade'] as int?,
+      gradeId: json['gradeId'] as int?,
       email: json['email'] as String?,
       mobileNumber: json['mobileNumber'] as String?,
       passwordHash: json['passwordHash'] as String,
@@ -28,6 +28,6 @@ Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
       'googleId': instance.googleId,
       'facebookId': instance.facebookId,
       'officeId': instance.officeId,
-      'grade': instance.grade,
+      'gradeId': instance.gradeId,
       'identityRoleId': instance.identityRoleId,
     };

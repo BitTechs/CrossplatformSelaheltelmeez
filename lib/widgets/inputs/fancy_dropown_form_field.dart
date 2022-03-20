@@ -3,17 +3,20 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
+import 'package:sizer/sizer.dart';
 
 class FancyDropDownFormField<T> extends StatelessWidget {
   final String hintTitle;
   final String name;
-  final double width;
+  final double? width;
+  final double? height;
   final List<T> items;
   final T? initialValue;
   final FormFieldValidator<T>? validators;
   final Widget Function(BuildContext, T) itemBuilder;
   final ValueChanged<T?>? onChanged;
-  const FancyDropDownFormField({Key? key, required this.hintTitle, required this.width,  this.validators, required this.items, required this.itemBuilder, this.onChanged, this.initialValue, required this.name}) : super(key: key);
+  final bool? isEnabled;
+  const FancyDropDownFormField({Key? key, required this.hintTitle,  this.width,  this.validators, required this.items, required this.itemBuilder, this.onChanged, this.initialValue, required this.name, this.height, this.isEnabled}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +26,13 @@ class FancyDropDownFormField<T> extends StatelessWidget {
         SvgPicture.asset(
           AssetsImage.inputBackground,
           color: CommonColors.inputBackgroundColor,
-          width: width,
+          width: width ?? 90.w,
+          height:  height ?? 10.h,
         ),
         FormBuilderDropdown<T>(
             name: name,
             initialValue: initialValue,
-
+            enabled: isEnabled ?? true,
             items: <DropdownMenuItem<T>>[
               for (var item in items)
                 DropdownMenuItem(
