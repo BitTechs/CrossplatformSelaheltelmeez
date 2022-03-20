@@ -8,15 +8,19 @@ part 'grade_menu_state.dart';
 
 class GradeMenuCubit extends Cubit<GradeMenuState> {
   final RegisterRepository _repo;
+  final List<GradeMenuItem> menuItems = [];
   GradeMenuCubit(this._repo) : super(GradeMenuInitial());
 
   Future<void> getGradeMenuItemsAsync()async{
-    emit(GradeMenuLoading());
-    ValueCommitResult<List<GradeMenuItem>> response = await _repo.getGradeMenuItemsAsync();
-    if(response.isSuccess){
-      emit(GradeMenuLoaded(items: response.value));
-    }else{
-      emit(GradeMenuError(errorMessage: response.errorMessage ?? "Error"));
+    if(menuItems.isEmpty){
+      emit(GradeMenuLoading());
+      ValueCommitResult<List<GradeMenuItem>> response = await _repo.getGradeMenuItemsAsync();
+      if(response.isSuccess){
+        menuItems.addAll(response.value!);
+        emit(GradeMenuLoaded(items: menuItems));
+      }else{
+        emit(GradeMenuError(errorMessage: response.errorMessage ?? "Error"));
+      }
     }
   }
 }

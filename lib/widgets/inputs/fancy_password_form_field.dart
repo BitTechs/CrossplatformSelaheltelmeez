@@ -28,7 +28,6 @@ class FancyPasswordFormField extends StatelessWidget {
         ),
         FormBuilderTextField(
             name: name,
-            textAlign: TextAlign.center,
             obscureText: true,
             enableSuggestions: false,
             autocorrect: false,

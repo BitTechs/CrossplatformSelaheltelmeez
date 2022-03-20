@@ -7,6 +7,7 @@ import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:selaheltelmeez/features/authentication/register/model/data_transfer_object/grade_menu_item.dart';
 import 'package:selaheltelmeez/features/authentication/register/model/data_transfer_object/register_request.dart';
+import 'package:selaheltelmeez/features/authentication/register/view_model/grade_dropdown_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/register/view_model/grade_menu_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/register/view_model/identity_role_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/register/view_model/register_cubit.dart';
@@ -22,7 +23,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final  _formKey = GlobalKey<FormBuilderState>();
+  final _formKey = GlobalKey<FormBuilderState>();
 
   @override
   void initState() {
@@ -61,7 +62,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     )),
                     Align(
                         alignment: Alignment.bottomCenter,
-                        child: Text(S.of(context).sign_up,
+                        child: Text(
+                          S.of(context).sign_up,
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge
@@ -81,9 +83,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ScaledWidget(
                           scale:
                               (state is IdentityRoleStudentState) ? 1.2 : 1.0,
-                          onTap: () => context
-                              .read<IdentityRoleCubit>()
-                              .selectIdentityRole(1),
+                          onTap: () {
+                            context
+                                .read<IdentityRoleCubit>()
+                                .selectIdentityRole(1);
+                            context
+                                .read<GradeDropdownCubit>()
+                                .selectIdentityRole(1);
+                            context.read<GradeMenuCubit>().getGradeMenuItemsAsync();
+
+                          },
                           child: ImageWithBottomHeader(
                             width: 100.0,
                             image: AssetsImage.studentUser,
@@ -94,23 +103,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         ScaledWidget(
                           scale: (state is IdentityRoleParentState) ? 1.2 : 1.0,
-                          onTap: () => context
-                              .read<IdentityRoleCubit>()
-                              .selectIdentityRole(2),
+                          onTap: () {
+                            context
+                                .read<IdentityRoleCubit>()
+                                .selectIdentityRole(2);
+                            context
+                                .read<GradeDropdownCubit>()
+                                .selectIdentityRole(2);
+                          },
                           child: ImageWithBottomHeader(
                             width: 100.0,
                             image: AssetsImage.parentUser,
                             header: 'ولي أمر',
-                            headerBackgroundColor: CommonColors.parentIdentityRoleColor,
-
+                            headerBackgroundColor:
+                                CommonColors.parentIdentityRoleColor,
                           ),
                         ),
                         ScaledWidget(
                           scale:
                               (state is IdentityRoleTeacherState) ? 1.2 : 1.0,
-                          onTap: () => context
-                              .read<IdentityRoleCubit>()
-                              .selectIdentityRole(3),
+                          onTap: () {
+                            context
+                                .read<IdentityRoleCubit>()
+                                .selectIdentityRole(3);
+                            context
+                                .read<GradeDropdownCubit>()
+                                .selectIdentityRole(3);
+                          },
                           child: ImageWithBottomHeader(
                             width: 100.0,
                             image: AssetsImage.teacherUser,
@@ -142,12 +161,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (_formKey.currentState!.saveAndValidate()) {
                         await context.read<RegisterCubit>().registerAsync(
                             RegisterRequest(
-                                fullName: _formKey.currentState?.value['fullName'],
+                                fullName:
+                                    _formKey.currentState?.value['fullName'],
                                 grade: context.read<RegisterCubit>().getGradeId,
-                                identityRoleId: context.read<IdentityRoleCubit>().getIdentityRoleId,
-                                email: Utilities.isEmail(_formKey.currentState?.value['emailOrMobile']),
-                                mobileNumber: Utilities.isMobile(_formKey.currentState?.value['emailOrMobile']),
-                                passwordHash:_formKey.currentState?.value['password'],
+                                identityRoleId: context
+                                    .read<IdentityRoleCubit>()
+                                    .getIdentityRoleId,
+                                email: Utilities.isEmail(_formKey
+                                    .currentState?.value['emailOrMobile']),
+                                mobileNumber: Utilities.isMobile(_formKey
+                                    .currentState?.value['emailOrMobile']),
+                                passwordHash:
+                                    _formKey.currentState?.value['password'],
                                 facebookId: "",
                                 googleId: "",
                                 officeId: ""));
@@ -205,13 +230,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Column(
           children: [
             FancyTextFormField(
-              placeholderText:S.of(context).email_or_mobile,
+              placeholderText: S.of(context).email_or_mobile,
               name: 'emailOrMobile',
               width: inputWidth,
               validators: [
                 IsValidRequiredRule(S.of(context).field_required),
-                IsValidEmailOrMobileRule(S.of(context).incorrect_email_or_mobile
-                    )
+                IsValidEmailOrMobileRule(
+                    S.of(context).incorrect_email_or_mobile)
               ],
             ),
             const SizedBox(
@@ -226,37 +251,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const SizedBox(
               height: 8.0,
             ),
-            BlocConsumer<GradeMenuCubit, GradeMenuState>(
-              listener: (context, state) async {
-                if (state is GradeMenuInitial) {}
-                if (state is GradeMenuError) {
-                  final snackBar = SnackBar(
-                    content: Text(state.errorMessage ?? "Error"),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                }
-              },
+            BlocBuilder<GradeDropdownCubit, GradeDropdownState>(
               builder: (context, state) {
-                if (state is GradeMenuLoading) {
-                  const Center(child: DoubleBounce());
-                }
-                if (state is GradeMenuLoaded) {
-                  return FancyDropDownFormField<GradeMenuItem>(
-                    width: inputWidth,
-                    hintTitle: S.of(context).choose_year,
-                    validators: (value)=> [IsValidRequiredRule(S.of(context).field_required)].getValidationErrorMessage(value?.name),
-                    items: state.items ?? [],
-                    itemBuilder: (context, item) => Text(
-                      item.name,
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1
-                          ?.copyWith(fontSize: 14),
-                    ),
-                    onChanged: (value) =>
-                        context.read<RegisterCubit>().setGradeId(value!.id),
+                if(state is GradeDropdownStudentSelectedState){
+                  return BlocConsumer<GradeMenuCubit, GradeMenuState>(
+                    listener: (context, state) async {
+                      if (state is GradeMenuError) {
+                        final snackBar = SnackBar(
+                          content: Text(state.errorMessage ?? "Error"),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is GradeMenuLoading) {
+                        const Center(child: DoubleBounce());
+                      }
+                      if (state is GradeMenuLoaded) {
+                        return FancyDropDownFormField<GradeMenuItem>(
+                          name: 'gradeMenu',
+                          width: inputWidth,
+                          hintTitle: S.of(context).choose_year,
+                          validators: (value) => [
+                            IsValidRequiredRule(S.of(context).field_required)
+                          ].getValidationErrorMessage(value?.name),
+                          items: state.items ?? [],
+                          itemBuilder: (context, item) => Text(
+                            item.name,
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                ?.copyWith(fontSize: 14),
+                          ),
+                          onChanged: (value) =>
+                              context.read<RegisterCubit>().setGradeId(value!.id),
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
                   );
-                } else {
+                }else{
                   return const SizedBox();
                 }
               },
@@ -281,8 +316,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               width: inputWidth,
               validators: [
                 IsValidRequiredRule(S.of(context).field_required),
-                IsValidConfirmPasswordRule(
-                    S.of(context).password_not_matched,
+                IsValidConfirmPasswordRule(S.of(context).password_not_matched,
                     password: _formKey.currentState?.getRawValue('password'))
               ],
             ),

@@ -136,6 +136,7 @@ class ClassSearchScreen extends StatelessWidget {
 
             Expanded(
               child: FancyDropDownFormField<String>(
+                name: 'gradeMenu',
                 width: MediaQuery.of(context).size.width,
                 hintTitle: 'اختر المادة الدراسية',
                 items: const [

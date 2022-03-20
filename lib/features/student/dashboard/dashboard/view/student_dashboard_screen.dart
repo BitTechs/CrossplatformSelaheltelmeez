@@ -216,6 +216,7 @@ class StudentDashboardScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: FancyDropDownFormField<TermEntity>(
+                    name: 'term',
                     width: MediaQuery.of(context).size.width - 170,
                     hintTitle: 'اختر الفصل الدراسي',
                     items: [

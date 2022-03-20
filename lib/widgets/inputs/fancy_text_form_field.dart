@@ -36,7 +36,6 @@ class FancyTextFormField extends StatelessWidget {
         ),
         FormBuilderTextField(
             name: name,
-            textAlign: TextAlign.center,
             decoration: InputDecoration(
               hintText: placeholderText,
               border: InputBorder.none,

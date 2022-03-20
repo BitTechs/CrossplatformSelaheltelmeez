@@ -104,6 +104,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       FancyDropDownFormField<String>(
+                          name: 'gradeMenu',
                           hintTitle: S.of(context).birth_year,
                           width: inputWidth,
                           items: const ['1990', '1999', '2000'],
@@ -138,6 +139,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                   visible: cubit.liveInEgypt,
                                   child: FancyDropDownFormField<
                                           GovernorateResponse>(
+                                      name: 'gradeMenu',
                                       hintTitle: S.of(context).governorate,
                                       width: inputWidth,
                                       items: cubit.governorates,

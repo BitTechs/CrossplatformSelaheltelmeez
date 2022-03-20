@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 
 class FancyDropDownFormField<T> extends StatelessWidget {
   final String hintTitle;
+  final String name;
   final double width;
   final List<T> items;
   final T? initialValue;
   final FormFieldValidator<T>? validators;
   final Widget Function(BuildContext, T) itemBuilder;
   final ValueChanged<T?>? onChanged;
-  const FancyDropDownFormField({Key? key, required this.hintTitle, required this.width,  this.validators, required this.items, required this.itemBuilder, this.onChanged, this.initialValue}) : super(key: key);
+  const FancyDropDownFormField({Key? key, required this.hintTitle, required this.width,  this.validators, required this.items, required this.itemBuilder, this.onChanged, this.initialValue, required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,10 @@ class FancyDropDownFormField<T> extends StatelessWidget {
           color: CommonColors.inputBackgroundColor,
           width: width,
         ),
-        DropdownButtonFormField<T>(
-            value: initialValue,
+        FormBuilderDropdown<T>(
+            name: name,
+            initialValue: initialValue,
+
             items: <DropdownMenuItem<T>>[
               for (var item in items)
                 DropdownMenuItem(
@@ -33,7 +37,6 @@ class FancyDropDownFormField<T> extends StatelessWidget {
                 ),
             ],
               isExpanded: true,
-              alignment: Alignment.center,
               decoration:  InputDecoration(
               hintText: hintTitle,
               border: InputBorder.none,
@@ -41,7 +44,7 @@ class FancyDropDownFormField<T> extends StatelessWidget {
               enabledBorder: InputBorder.none,
               errorBorder: InputBorder.none,
               disabledBorder: InputBorder.none,
-              contentPadding: const EdgeInsets.only(left: 25, bottom: 0, top: 0, right: 25),
+              contentPadding: const EdgeInsets.only(left: 35, bottom: 0, top: 0, right: 35),
               errorStyle:Theme.of(context).textTheme.bodySmall?.copyWith(color: CommonColors.errorTextColor, height: 0.3, fontSize: 12),),
               validator: validators,
               onChanged: onChanged,
