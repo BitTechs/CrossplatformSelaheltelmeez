@@ -13,11 +13,6 @@ class RegisterCubit extends Cubit<RegisterState> {
   final RegisterRepository _repo;
   RegisterCubit(this._repo) : super(RegisterInitial());
 
-
-  late int _gradeId = 1;
-  void setGradeId(int gradeId)=> _gradeId = gradeId;
-  int get getGradeId => _gradeId;
-
   Future<void> registerAsync(RegisterRequest registerRequest)async{
     emit(RegisterSubmit());
     ValueCommitResult<RegisterResponse> response = await _repo.registerAsync(registerRequest);

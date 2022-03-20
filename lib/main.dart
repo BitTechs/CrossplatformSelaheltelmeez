@@ -4,7 +4,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:selaheltelmeez/core/dio_client/dio_client.dart';
 import 'package:selaheltelmeez/core/language_change_provider.dart';
-import 'package:selaheltelmeez/features/authentication/register/view_model/grade_dropdown_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/register/view_model/identity_role_cubit.dart';
 import 'package:sizer/sizer.dart';
 import 'package:selaheltelmeez/core/router/route_generator.dart';
@@ -122,7 +121,6 @@ class SelaheltelmeezLauncher extends StatelessWidget {
           BlocProvider(create: (BuildContext context) => StudentNavBarCubit()),
           BlocProvider(create: (BuildContext context) => ClassSearchCubit()),
           BlocProvider(create: (BuildContext context) => IdentityRoleCubit()),
-          BlocProvider(create: (BuildContext context) => GradeDropdownCubit()),
         ],
         child: _materialApp(context),
       ),
