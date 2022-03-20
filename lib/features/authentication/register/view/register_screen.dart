@@ -8,8 +8,10 @@ import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:selaheltelmeez/features/authentication/register/model/data_transfer_object/grade_menu_item.dart';
 import 'package:selaheltelmeez/features/authentication/register/model/data_transfer_object/register_request.dart';
 import 'package:selaheltelmeez/features/authentication/register/view_model/grade_menu_cubit.dart';
+import 'package:selaheltelmeez/features/authentication/register/view_model/identity_role_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/register/view_model/register_cubit.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
+import 'package:selaheltelmeez/widgets/buttons/scaled_button_image.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -67,52 +69,66 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         )),
                   ]),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    InkWell(
-                        onTap: () async {
-                          RegisterCubit.get(context).changeRoleColor(1);
-                          context.read<RegisterCubit>().setIdentityRoleId(1);
-                          await context
-                              .read<GradeMenuCubit>()
-                              .getGradeMenuItemsAsync();
-                        },
-                        child: ImageWithBottomHeader(
-                          width: 100.0,
-                          image: AssetsImage.studentUser,
-                          header: S.of(context).student,
-                          headerBackgroundColor: RegisterCubit.get(context).selectedRole == 1 ? Colors.red : CommonColors.inputBackgroundColor,
-                        )),
-                    InkWell(
-                        onTap: () {
-                            RegisterCubit.get(context).changeRoleColor(2);
-                            context.read<RegisterCubit>()..setIdentityRoleId(2);},
-                        child: ImageWithBottomHeader(
-                          width: 100.0,
-                          image: AssetsImage.parentUser,
-                          header: S.of(context).parent,
-                          headerBackgroundColor: RegisterCubit.get(context).selectedRole == 2 ? Colors.green : CommonColors.inputBackgroundColor,
-                        )),
-                    InkWell(
-                        onTap: () {
-                          RegisterCubit.get(context).changeRoleColor(3);
-                          context.read<RegisterCubit>()..setIdentityRoleId(3);},
-                        child: ImageWithBottomHeader(
-                          width: 100.0,
-                          image: AssetsImage.teacherUser,
-                          header: S.of(context).teacher,
-                          headerBackgroundColor: RegisterCubit.get(context).selectedRole == 3 ? Colors.blue : CommonColors.inputBackgroundColor,
-                        )),
-                  ],
+                const SizedBox(
+                  height: 24.0,
+                ),
+                BlocBuilder<IdentityRoleCubit, IdentityRoleState>(
+                  builder: (context, state) {
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ScaledWidget(
+                          scale:
+                              (state is IdentityRoleStudentState) ? 1.2 : 1.0,
+                          onTap: () => context
+                              .read<IdentityRoleCubit>()
+                              .selectIdentityRole(1),
+                          child: ImageWithBottomHeader(
+                            width: 100.0,
+                            image: AssetsImage.studentUser,
+                            header: 'طالب',
+                            headerBackgroundColor:
+                                CommonColors.studentIdentityRoleColor,
+                          ),
+                        ),
+                        ScaledWidget(
+                          scale: (state is IdentityRoleParentState) ? 1.2 : 1.0,
+                          onTap: () => context
+                              .read<IdentityRoleCubit>()
+                              .selectIdentityRole(2),
+                          child: ImageWithBottomHeader(
+                            width: 100.0,
+                            image: AssetsImage.parentUser,
+                            header: 'ولي أمر',
+                            headerBackgroundColor: CommonColors.parentIdentityRoleColor,
+
+                          ),
+                        ),
+                        ScaledWidget(
+                          scale:
+                              (state is IdentityRoleTeacherState) ? 1.2 : 1.0,
+                          onTap: () => context
+                              .read<IdentityRoleCubit>()
+                              .selectIdentityRole(3),
+                          child: ImageWithBottomHeader(
+                            width: 100.0,
+                            image: AssetsImage.teacherUser,
+                            header: 'مدرس',
+                            headerBackgroundColor:
+                                CommonColors.teacherIdentityRoleColor,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
                 const SizedBox(
-                  height: 16.0,
+                  height: 24.0,
                 ),
                 _registerForm(inputWidth),
                 const SizedBox(
-                  height: 8.0,
+                  height: 16.0,
                 ),
                 Center(
                   child: FancyElevatedButton(
@@ -123,15 +139,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     titleColor: CommonColors.fancyElevatedTitleColor,
                     shadowColor: CommonColors.fancyElevatedShadowTitleColor,
                     onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
+                      if (_formKey.currentState!.saveAndValidate()) {
                         await context.read<RegisterCubit>().registerAsync(
                             RegisterRequest(
                                 fullName: _formKey.currentState?.value['fullName'],
                                 grade: context.read<RegisterCubit>().getGradeId,
-                                identityRoleId: context.read<RegisterCubit>().getIdentityRoleId,
+                                identityRoleId: context.read<IdentityRoleCubit>().getIdentityRoleId,
                                 email: Utilities.isEmail(_formKey.currentState?.value['emailOrMobile']),
                                 mobileNumber: Utilities.isMobile(_formKey.currentState?.value['emailOrMobile']),
-                                passwordHash: _formKey.currentState?.value['password'],
+                                passwordHash:_formKey.currentState?.value['password'],
                                 facebookId: "",
                                 googleId: "",
                                 officeId: ""));
@@ -267,7 +283,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 IsValidRequiredRule(S.of(context).field_required),
                 IsValidConfirmPasswordRule(
                     S.of(context).password_not_matched,
-                    password: _formKey.currentState?.value['password'] ?? "")
+                    password: _formKey.currentState?.getRawValue('password'))
               ],
             ),
           ],

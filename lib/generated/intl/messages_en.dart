@@ -39,7 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "create_new_account":
             MessageLookupByLibrary.simpleMessage("Register a new account"),
         "email_or_mobile":
-            MessageLookupByLibrary.simpleMessage("Email / Mobile "),
+            MessageLookupByLibrary.simpleMessage("Email or Mobile "),
         "enter_activation_code":
             MessageLookupByLibrary.simpleMessage("Enter Activation Code"),
         "field_required":

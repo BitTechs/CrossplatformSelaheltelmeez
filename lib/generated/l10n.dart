@@ -150,10 +150,10 @@ class S {
     );
   }
 
-  /// `Email / Mobile `
+  /// `Email or Mobile `
   String get email_or_mobile {
     return Intl.message(
-      'Email / Mobile ',
+      'Email or Mobile ',
       name: 'email_or_mobile',
       desc: '',
       args: [],

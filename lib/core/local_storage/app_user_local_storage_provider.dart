@@ -18,7 +18,6 @@ class AppUserLocalStorageProvider {
 
   static Future<void> addAsJsonAsync(Map<String, dynamic> toJson) async {
     await _sharedPreferenceInstance.then((value) => value.setString(_keyName, jsonEncode(toJson)));
-    await tryToLoadAppUserEntity();
   }
 
 

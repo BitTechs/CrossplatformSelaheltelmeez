@@ -29,4 +29,10 @@ class CommonColors{
   /// TextButtons Colors
   static get forgetPasswordColor => Colors.blue;
 
+
+  /// Identity Role Colors
+  static get studentIdentityRoleColor => Colors.red;
+  static get parentIdentityRoleColor => Colors.green;
+  static get teacherIdentityRoleColor => Colors.blue;
+
 }

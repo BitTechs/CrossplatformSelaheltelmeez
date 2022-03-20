@@ -40,7 +40,7 @@ class ImageWithBottomHeader extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge
-                      ?.copyWith(color: Colors.grey),
+                      ?.copyWith(color: Colors.white),
                 ),
               ),
             ),

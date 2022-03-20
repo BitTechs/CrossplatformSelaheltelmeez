@@ -6,7 +6,7 @@ class LoginResponse{
   final String fullName;
   final String? email;
   final String? mobileNumber;
-  final String grade;
+  final String? grade;
   final String? country;
   final String? dateOfBirth;
   final String referralCode;

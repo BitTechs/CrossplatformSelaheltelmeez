@@ -44,3 +44,21 @@ class ScaledButtonNetworkImage extends StatelessWidget{
     );
   }
 }
+
+class ScaledWidget extends StatelessWidget{
+  final double? scale;
+  final VoidCallback? onTap;
+  final Widget child;
+  const ScaledWidget({Key? key, required this.scale, required this.onTap, required this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.scale(
+      scale: scale,
+      child: GestureDetector(
+        onTap: onTap,
+        child: child,
+      ),
+    );
+  }
+}

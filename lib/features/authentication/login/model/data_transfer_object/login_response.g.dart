@@ -12,7 +12,7 @@ LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
       fullName: json['fullName'] as String,
       email: json['email'] as String?,
       mobileNumber: json['mobileNumber'] as String?,
-      grade: json['grade'] as String,
+      grade: json['grade'] as String?,
       country: json['country'] as String?,
       dateOfBirth: json['dateOfBirth'] as String?,
       referralCode: json['referralCode'] as String,

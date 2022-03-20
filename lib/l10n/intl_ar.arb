@@ -1,4 +1,5 @@
 {
+  "@@locale" : "ar",
   "appTitle": "سلاح التلميذ",
   "login_btn": "دخول",
   "login": "تسجيل الدخول",
@@ -15,8 +16,6 @@
   "password": "كلمة المرور",
   "restore_information": "إسترجاع بيانات",
   "send_confirmation_message": "سوف يتم إرسال رسالة تأكيد على البريد الإلكتروني أو الموبايل المسجل",
-  "email_or_mobile": "البريد الإلكتروني / رقم الموبايل",
-  "incorrect_email": "البريد الإلكتروني مكتوب بشكل غير صحيح",
   "update_password" : "تحديث كلمة المرور",
   "confirm_password" : "تأكيد كلمة المرور",
   "password_not_matched" : "كلمة المرور وتأكيد كلمة المرور غير متطابقين",
