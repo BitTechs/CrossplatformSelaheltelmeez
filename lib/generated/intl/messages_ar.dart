@@ -22,7 +22,66 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "activate": MessageLookupByLibrary.simpleMessage("تفعيل"),
+        "activate_account":
+            MessageLookupByLibrary.simpleMessage("تفعيل الحساب"),
+        "activation_code": MessageLookupByLibrary.simpleMessage("رمز التفعيل"),
         "appTitle": MessageLookupByLibrary.simpleMessage("سلاح التلميذ"),
-        "login": MessageLookupByLibrary.simpleMessage("دخول")
+        "birth_year": MessageLookupByLibrary.simpleMessage("سنة الميلاد"),
+        "choose_year":
+            MessageLookupByLibrary.simpleMessage("اختر الصف الدراسي"),
+        "confirm_password":
+            MessageLookupByLibrary.simpleMessage("تأكيد كلمة المرور"),
+        "continue_information":
+            MessageLookupByLibrary.simpleMessage("استكمال بيانات"),
+        "continue_signup_information":
+            MessageLookupByLibrary.simpleMessage("استكمال بيانات تسجيل"),
+        "create_new_account":
+            MessageLookupByLibrary.simpleMessage("تسجيل حساب جديد"),
+        "email_or_mobile": MessageLookupByLibrary.simpleMessage(
+            "البريد الإلكتروني / رقم الموبايل"),
+        "enter_activation_code": MessageLookupByLibrary.simpleMessage(
+            "إدخل رمز التفعيل المرسل إليك"),
+        "field_required":
+            MessageLookupByLibrary.simpleMessage("هذا الحقل مطلوب"),
+        "forget_my_password":
+            MessageLookupByLibrary.simpleMessage("هل نسيت كلمة المرور؟"),
+        "full_name": MessageLookupByLibrary.simpleMessage("الاسم بالكامل"),
+        "gender": MessageLookupByLibrary.simpleMessage("اختر النوع"),
+        "get_continue": MessageLookupByLibrary.simpleMessage("استكمال"),
+        "governorate": MessageLookupByLibrary.simpleMessage("محافظتي"),
+        "incorrect_email": MessageLookupByLibrary.simpleMessage(
+            "البريد الإلكتروني مكتوب بشكل غير صحيح"),
+        "incorrect_email_or_mobile": MessageLookupByLibrary.simpleMessage(
+            "البريد الإلكتروني او الموبايل مكتوب بشكل غير صحيح"),
+        "later": MessageLookupByLibrary.simpleMessage("لاحقاً"),
+        "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
+        "login_btn": MessageLookupByLibrary.simpleMessage("دخول"),
+        "login_with_social":
+            MessageLookupByLibrary.simpleMessage("أو يمكنك الدخول باستخدام"),
+        "my_country": MessageLookupByLibrary.simpleMessage("بلدي مصر"),
+        "parent": MessageLookupByLibrary.simpleMessage("ولي أمر"),
+        "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
+        "password_not_matched": MessageLookupByLibrary.simpleMessage(
+            "كلمة المرور وتأكيد كلمة المرور غير متطابقين"),
+        "register": MessageLookupByLibrary.simpleMessage("تسجيل"),
+        "resend": MessageLookupByLibrary.simpleMessage("إعاده إرسال"),
+        "restore_information":
+            MessageLookupByLibrary.simpleMessage("إسترجاع بيانات"),
+        "send": MessageLookupByLibrary.simpleMessage("إرسال"),
+        "send_activation_message": MessageLookupByLibrary.simpleMessage(
+            "سوف يتم إرسال رسالة تفعيل جديدة في حالة تحديث البيانات"),
+        "send_confirmation_message": MessageLookupByLibrary.simpleMessage(
+            "سوف يتم إرسال رسالة تأكيد على البريد الإلكتروني أو الموبايل المسجل"),
+        "sign_up": MessageLookupByLibrary.simpleMessage("تسجيل مستخدم جديد"),
+        "student": MessageLookupByLibrary.simpleMessage("طالب"),
+        "teacher": MessageLookupByLibrary.simpleMessage("مدرس"),
+        "update": MessageLookupByLibrary.simpleMessage("تحديث"),
+        "update_email_or_mobile": MessageLookupByLibrary.simpleMessage(
+            "تحديث البريد الإلكتروني أو الموبايل"),
+        "update_information":
+            MessageLookupByLibrary.simpleMessage("تحديث بيانات"),
+        "update_password":
+            MessageLookupByLibrary.simpleMessage("تحديث كلمة المرور")
       };
 }

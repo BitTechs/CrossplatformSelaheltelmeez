@@ -2,18 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
-import 'package:selaheltelmeez/core/helpers/utilities.dart';
-import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
-import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/model/data_transfer_object/change_email_or_mobile_request.dart';
-import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/view_model/change_email_or_mobile_cubit.dart';
-import 'package:selaheltelmeez/features/authentication/forget_password/model/data_transfer_object/forget_password_request.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/model/data_transfer_object/reset_password_request.dart';
-import 'package:selaheltelmeez/features/authentication/forget_password/view_model/forget_password_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/view_model/reset_password_cubit.dart';
-import 'package:selaheltelmeez/features/authentication/login/model/data_transfer_object/login_request.dart';
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
+import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
@@ -36,7 +30,7 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
   Widget build(BuildContext context) {
     final inputWidth = (MediaQuery.of(context).size.width) - 24.0;
     return NavigatedAppScaffold(
-      title: 'تحديث كلمة المرور',
+      title: S.of(context).update_password,
       child: SingleChildScrollView(
         child: BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
           listener: (context, state) async {
@@ -65,7 +59,7 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
                     Align(
                         alignment: Alignment.bottomCenter,
                         child: Text(
-                          'تحديث بيانات',
+                          S.of(context).update_information,
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge
@@ -81,24 +75,24 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
                   child: Column(
                     children: [
                       FancyPasswordFormField(
-                        placeholderText: 'كلمة المرور',
+                        placeholderText: S.of(context).password,
                         name: 'password',
                         width: inputWidth,
                         validators: [
-                          IsValidRequiredRule('هذا الحقل مطلوب'),
+                          IsValidRequiredRule(S.of(context).field_required),
                         ],
                       ),
                       const SizedBox(
                         height: 8.0,
                       ),
                       FancyPasswordFormField(
-                        placeholderText: 'تأكيد كلمة المرور',
+                        placeholderText: S.of(context).confirm_password,
                         name: 'confirmPassword',
                         width: inputWidth,
                         validators: [
-                          IsValidRequiredRule('هذا الحقل مطلوب'),
+                          IsValidRequiredRule(S.of(context).field_required),
                           IsValidConfirmPasswordRule(
-                              'كلمة المرور وتأكيد كلمة المرور غير متطابقين',
+                              S.of(context).password_not_matched,
                               password: _formKey.currentState?.value['password'] ?? "")
                         ],
                       ),
@@ -111,7 +105,7 @@ class _ResetPasswordState extends State<ResetPasswordScreen> {
                 Center(
                   child: FancyElevatedButton(
                       width: 140.0,
-                      title: 'إرسال',
+                      title: S.of(context).send,
                       backGroundColor:
                           CommonColors.fancyElevatedButtonBackGroundColor,
                       titleColor: CommonColors.fancyElevatedTitleColor,

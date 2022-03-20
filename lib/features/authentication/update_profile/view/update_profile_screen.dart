@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
-import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
-import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
-import 'package:selaheltelmeez/features/authentication/login/model/data_transfer_object/login_request.dart';
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/update_profile/model/data_transfer_object/governorate_response.dart';
 import 'package:selaheltelmeez/features/authentication/update_profile/view_model/update_profile_cubit.dart';
+import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/buttons/scaled_button_image.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
@@ -34,7 +32,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     final inputWidth = (MediaQuery.of(context).size.width) - 24.0;
     final cubit = UpdateProfileCubit.get(context);
     return NavigatedAppScaffold(
-      title: 'استكمال بيانات تسجيل',
+      title: S.of(context).continue_signup_information,
       child: SingleChildScrollView(
         child: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
           listener: (context, state) async {
@@ -63,7 +61,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     Align(
                         alignment: Alignment.bottomCenter,
                         child: Text(
-                          'استكمال بيانات',
+                          S.of(context).continue_information,
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge
@@ -106,7 +104,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       FancyDropDownFormField<String>(
-                          hintTitle: 'سنة الميلاد',
+                          hintTitle: S.of(context).birth_year,
                           width: inputWidth,
                           items: const ['1990', '1999', '2000'],
                           itemBuilder: (context, item) => Text(item),
@@ -130,7 +128,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                     value: cubit.liveInEgypt,
                                     onChanged: (bool? value) =>
                                         cubit.changeCountry(),
-                                    title: const Text('بلدي مصر'),
+                                    title: Text(S.of(context).my_country),
                                     controlAffinity:
                                         ListTileControlAffinity.leading),
                               ),
@@ -140,7 +138,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                   visible: cubit.liveInEgypt,
                                   child: FancyDropDownFormField<
                                           GovernorateResponse>(
-                                      hintTitle: 'محافظتي',
+                                      hintTitle: S.of(context).governorate,
                                       width: inputWidth,
                                       items: cubit.governorates,
                                       itemBuilder: (context, item) =>
@@ -159,7 +157,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const Text('اختر النوع'),
+                          Text(S.of(context).gender),
                           ScaledButtonAssetImage(
                             scale: cubit.gender == "female" ? 1.5 : 1.0,
                             onTap: () => cubit.changeGender('female'),
@@ -183,7 +181,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   children: [
                     FancyElevatedButton(
                         width: 140.0,
-                        title: 'استكمال',
+                        title: S.of(context).get_continue,
                         backGroundColor:
                             CommonColors.fancyElevatedButtonBackGroundColor,
                         titleColor: CommonColors.fancyElevatedTitleColor,
@@ -197,7 +195,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         }),
                     FancyElevatedButton(
                         width: 140.0,
-                        title: 'لاحقاً',
+                        title: S.of(context).later,
                         backGroundColor:
                             CommonColors.fancyElevatedButtonBackGroundColor,
                         titleColor: CommonColors.fancyElevatedTitleColor,
