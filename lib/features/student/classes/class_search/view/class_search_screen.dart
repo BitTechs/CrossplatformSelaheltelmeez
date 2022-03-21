@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/app_theme.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
-import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:selaheltelmeez/features/student/classes/class_search/view_model/class_search_cubit.dart';
 import 'package:selaheltelmeez/features/student/classes/class_search/view_model/class_search_states.dart';
 import 'package:selaheltelmeez/widgets/buttons/fancy_elevated_button.dart';

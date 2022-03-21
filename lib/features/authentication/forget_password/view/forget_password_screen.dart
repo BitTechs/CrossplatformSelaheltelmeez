@@ -6,7 +6,6 @@ import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/helpers/utilities.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
-import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/model/data_transfer_object/forget_password_request.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/model/repository/forget_password_repository.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/view_model/forget_password_cubit.dart';

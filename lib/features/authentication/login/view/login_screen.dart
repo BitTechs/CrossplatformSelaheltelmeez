@@ -6,7 +6,6 @@ import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/helpers/utilities.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
-import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:selaheltelmeez/features/authentication/login/model/data_transfer_object/login_request.dart';
 import 'package:selaheltelmeez/features/authentication/login/model/repository/login_repository.dart';
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
@@ -44,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
             }
             if (state is LoginVerifiedSuccess) {
               // Trying to loading App User Entity Values
-              Navigator.of(context).pushReplacementNamed("/StudentHome");
+              Navigator.of(context).pushReplacementNamed(RouteNames.studentHomeLayout);
             }
             if(state is LoginNotVerifiedSuccess){
               // Trying to loading App User Entity Values

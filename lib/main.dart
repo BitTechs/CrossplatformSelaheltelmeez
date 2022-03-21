@@ -35,6 +35,7 @@ import 'package:selaheltelmeez/features/student/dashboard/dashboard/view_model/c
 import 'package:selaheltelmeez/features/student/student_navigation_bar/view_model/navigation_bar_cubit.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
 import 'core/local_storage/app_user_local_storage_provider.dart';
+import 'core/router/route_names.dart';
 import 'features/authentication/update_profile/model/data_provider/remote_update_profile_provider.dart';
 import 'features/authentication/validate_otp/view_model/validate_otp_cubit.dart';
 
@@ -137,8 +138,8 @@ class SelaheltelmeezLauncher extends StatelessWidget {
                 supportedLocales: S.delegate.supportedLocales,
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.lightTheme,
-                initialRoute: '/',
-                //initialRoute: AppUserLocalStorageProvider.sharedAppUserEntity == null ? RouteNames.index : RouteNames.StudentHome,
+                //initialRoute: '/',
+                 initialRoute: AppUserLocalStorageProvider.sharedAppUserEntity == null ? RouteNames.index : RouteNames.studentHomeLayout,
                 locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocal,
                 onGenerateRoute: RouteGenerator.generateRoute,
               ),

@@ -8,4 +8,5 @@ class RouteNames{
   static const String forgetPassword = "/forget-password";
   static const String validateForgetPassword = "/validate-forget-password-otp";
   static const String resetPassword = "/reset-password";
+  static const String studentHomeLayout = "/student-home";
 }

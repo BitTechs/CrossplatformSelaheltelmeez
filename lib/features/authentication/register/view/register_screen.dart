@@ -5,7 +5,6 @@ import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/helpers/utilities.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
-import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:selaheltelmeez/features/authentication/register/model/data_transfer_object/grade_menu_item.dart';
 import 'package:selaheltelmeez/features/authentication/register/model/data_transfer_object/register_request.dart';
 import 'package:selaheltelmeez/features/authentication/register/model/repository/register_repository.dart';

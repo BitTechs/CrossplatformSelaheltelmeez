@@ -60,7 +60,7 @@ class RouteGenerator {
       case RouteNames.resetPassword:
         String identityId = (args as String);
         return PageTransition(child:  ResetPasswordScreen(identityUserId: identityId),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/StudentDashboard':
+      case RouteNames.studentHomeLayout:
         return PageTransition(child: const StudentNavBarScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/StudentSubject':
         return PageTransition(child: const SubjectScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
@@ -78,8 +78,6 @@ class RouteGenerator {
         return PageTransition(child: const DetailedLessonReportScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/achievements':
         return PageTransition(child: const Achievements(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/StudentHome':
-      return PageTransition(child: const StudentNavBarScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       // Validation of correct data type
       case '/WebViewer':
         ListItem listItem = (args as ListItem);
