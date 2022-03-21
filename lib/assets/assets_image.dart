@@ -21,6 +21,11 @@ class AssetsImage {
   static const String paperTxt = "assets/images/student/papertxt.png";
   static const String all = "assets/images/student/all.png";
 
+  static const String prizeBronze = "assets/images/student/prizeBronze.png";
+  static const String prizeCube = "assets/images/student/prizeCube.png";
+  static const String prizeGold = "assets/images/student/prizeGold.png";
+  static const String prizePlatinum = "assets/images/student/prizePlatinum.png";
+  static const String prizeSilver = "assets/images/student/prizeSilver.png";
 
 
 }

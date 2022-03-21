@@ -132,11 +132,13 @@ class UpdateProfileScreen extends StatelessWidget {
                           Text(S.of(context).gender),
                           ScaledButtonAssetImage(
                             scale: cubit.gender == "female" ? 1.5 : 1.0,
+                            opacity: cubit.gender == "female" ? 1.0 : 0.6,
                             onTap: () => cubit.changeGender('female'),
                             imageUrl: AssetsImage.female,
                           ),
                           ScaledButtonAssetImage(
                             scale: cubit.gender == "male" ? 1.5 : 1.0,
+                            opacity: cubit.gender == "male" ? 1.0 : 0.6,
                             onTap: () => cubit.changeGender('male'),
                             imageUrl: AssetsImage.male,
                           ),

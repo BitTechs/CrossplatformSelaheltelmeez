@@ -25,7 +25,7 @@ class  RegisterFailed extends RegisterState {
 }
 
 
-class  ChangeRoleColor extends RegisterState {
+class  ShowInputForm extends RegisterState {
   @override
   List<Object> get props => [];
 }
