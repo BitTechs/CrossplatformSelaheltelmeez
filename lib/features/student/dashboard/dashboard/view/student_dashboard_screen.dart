@@ -122,6 +122,7 @@ class StudentDashboardScreen extends StatelessWidget {
       centeredExpandedWidgets: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /* recentLessonsResult.when(
               loading: () => const Center(child: DoubleBounce()),
@@ -207,35 +208,27 @@ class StudentDashboardScreen extends StatelessWidget {
             const SizedBox(
               height: 16.0,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "المواد الدراسية",
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
-                Expanded(
-                  child: FancyDropDownFormField<TermEntity>(
-                    name: 'term',
-                    width: MediaQuery.of(context).size.width - 170,
-                    hintTitle: 'اختر الفصل الدراسي',
-                    items: [
-                      TermEntity(id: 1, name: 'الفصل الدراسي الاول'),
-                      TermEntity(id: 2, name: 'الفصل الدراسي الثاني')
-                    ],
-                    itemBuilder: (context, item) => Text(
-                      item.name,
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1
-                          ?.copyWith(fontSize: 14),
-                    ),
-                    onChanged: (value) => context
-                        .read<CurriculumCubit>()
-                        .getSubjectsAsync(value?.id),
-                  ),
-                ),
+            Text(
+              "المواد الدراسية",
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+            FancyDropDownFormField<TermEntity>(
+              name: 'term',
+              hintTitle: 'اختر الفصل الدراسي',
+              items: [
+                TermEntity(id: 1, name: 'الفصل الدراسي الاول'),
+                TermEntity(id: 2, name: 'الفصل الدراسي الثاني')
               ],
+              itemBuilder: (context, item) => Text(
+                item.name,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(fontSize: 14),
+              ),
+              onChanged: (value) => context
+                  .read<CurriculumCubit>()
+                  .getSubjectsAsync(value?.id),
             ),
             BlocBuilder<CurriculumCubit, CurriculumState>(
                 builder: (context, state) {

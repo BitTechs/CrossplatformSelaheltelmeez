@@ -1,3 +1,4 @@
+import 'package:enterprise_validator/enterprise_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -75,7 +76,7 @@ class ResetPasswordScreen extends StatelessWidget {
                         name: 'password',
                         controller: _controller,
                         validators: [
-                          IsValidRequiredRule(S.of(context).field_required),
+                          IsRequiredRule(S.of(context).field_required),
                         ],
                       ),
                       const SizedBox(

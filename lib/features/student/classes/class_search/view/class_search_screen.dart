@@ -1,3 +1,4 @@
+import 'package:enterprise_validator/enterprise_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -175,7 +176,7 @@ class ClassSearchScreen extends StatelessWidget {
                 name: 'teacherNameOrMobile',
                 width:  MediaQuery.of(context).size.width,
                 validators: [
-                  IsValidRequiredRule('هذا الحقل مطلوب'),
+                  IsRequiredRule('هذا الحقل مطلوب'),
                 ],
               ),
             ),
@@ -200,7 +201,7 @@ class ClassSearchScreen extends StatelessWidget {
                 name: 'classCode',
                 width:  MediaQuery.of(context).size.width,
                 validators: [
-                  IsValidRequiredRule('هذا الحقل مطلوب'),
+                  IsRequiredRule('هذا الحقل مطلوب'),
                 ],
               ),
             ),

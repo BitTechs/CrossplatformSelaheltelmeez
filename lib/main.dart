@@ -45,12 +45,6 @@ Future<void> main() async {
   // Trying to loading App User Entity Values
   await AppUserLocalStorageProvider.tryToLoadAppUserEntity();
 
-  if(AppUserLocalStorageProvider.sharedAppUserEntity == null){
-
-  }else{
-
-  }
-
   runApp(
     const SelaheltelmeezLauncher(),
   );
@@ -144,6 +138,7 @@ class SelaheltelmeezLauncher extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.lightTheme,
                 initialRoute: '/',
+                //initialRoute: AppUserLocalStorageProvider.sharedAppUserEntity == null ? RouteNames.index : RouteNames.StudentHome,
                 locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocal,
                 onGenerateRoute: RouteGenerator.generateRoute,
               ),

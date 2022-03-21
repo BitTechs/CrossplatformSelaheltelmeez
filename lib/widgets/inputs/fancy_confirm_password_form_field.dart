@@ -1,9 +1,9 @@
+import 'package:enterprise_validator/enterprise_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
-import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:sizer/sizer.dart';
 
 class FancyConfirmPasswordFormField extends StatelessWidget {

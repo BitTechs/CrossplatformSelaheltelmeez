@@ -15,6 +15,7 @@ import 'package:selaheltelmeez/features/authentication/register/view_model/regis
 import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/buttons/scaled_button_image.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
+import 'package:enterprise_validator/enterprise_validator.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
@@ -159,9 +160,9 @@ class RegisterScreen extends StatelessWidget {
                                 placeholderText: S.of(context).email_or_mobile,
                                 name: 'emailOrMobile',
                                 validators: [
-                                  IsValidRequiredRule(
+                                  IsRequiredRule(
                                       S.of(context).field_required),
-                                  IsValidEmailOrMobileRule(
+                                  IsEmailOrEgyptianMobileRule(
                                       S.of(context).incorrect_email_or_mobile)
                                 ],
                               ),
@@ -172,7 +173,7 @@ class RegisterScreen extends StatelessWidget {
                                 placeholderText: S.of(context).full_name,
                                 name: 'fullName',
                                 validators: [
-                                  IsValidRequiredRule(
+                                  IsRequiredRule(
                                       S.of(context).field_required)
                                 ],
                               ),
@@ -200,7 +201,7 @@ class RegisterScreen extends StatelessWidget {
                                       name: 'gradeMenu',
                                       hintTitle: S.of(context).choose_year,
                                       validators: (value) => [
-                                        IsValidRequiredRule(
+                                        IsRequiredRule(
                                             S.of(context).field_required)
                                       ].getValidationErrorMessage(value?.name),
                                       items: state.items ?? [],
@@ -228,7 +229,7 @@ class RegisterScreen extends StatelessWidget {
                                 name: 'password',
                                 controller: _controller,
                                 validators: [
-                                  IsValidRequiredRule(
+                                  IsRequiredRule(
                                       S.of(context).field_required),
                                 ],
                               ),
@@ -240,8 +241,7 @@ class RegisterScreen extends StatelessWidget {
                                 name: 'confirmPassword',
                                 passwordController: _controller,
                                 validators: [
-                                  IsValidRequiredRule(
-                                      S.of(context).field_required),
+                                  IsRequiredRule(S.of(context).field_required),
                                 ],
                               ),
                             ],

@@ -1,3 +1,4 @@
+import 'package:enterprise_validator/enterprise_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -119,8 +120,8 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
               placeholderText: S.of(context).email_or_mobile,
               name: 'emailOrMobile',
               validators: [
-                IsValidRequiredRule(S.of(context).field_required),
-                IsValidEmailOrMobileRule(S.of(context).incorrect_email_or_mobile)
+                IsRequiredRule(S.of(context).field_required),
+                IsEmailOrEgyptianMobileRule(S.of(context).incorrect_email_or_mobile)
               ],
             ),
             const SizedBox(
@@ -130,7 +131,7 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
               placeholderText: S.of(context).password,
               name: 'password',
               validators: [
-                IsValidRequiredRule(S.of(context).field_required),
+                IsRequiredRule(S.of(context).field_required),
               ],
             ),
           ],
