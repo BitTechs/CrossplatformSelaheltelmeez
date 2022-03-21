@@ -225,6 +225,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.4"
+  enterprise_validator:
+    dependency: "direct main"
+    description:
+      name: enterprise_validator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   equatable:
     dependency: "direct main"
     description:

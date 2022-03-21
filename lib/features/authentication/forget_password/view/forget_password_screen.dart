@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/helpers/utilities.dart';
+import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/model/data_transfer_object/forget_password_request.dart';
+import 'package:selaheltelmeez/features/authentication/forget_password/model/repository/forget_password_repository.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/view_model/forget_password_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
@@ -26,7 +28,9 @@ class _ForgetPasswordState extends State<ForgetPasswordScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return NavigatedAppScaffold(
+    return BlocProvider(
+  create: (context) => ForgetPasswordCubit(context.read<ForgetPasswordRepository>()),
+  child: NavigatedAppScaffold(
       title: S.of(context).forget_my_password,
       child: SingleChildScrollView(
         child: BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
@@ -39,7 +43,7 @@ class _ForgetPasswordState extends State<ForgetPasswordScreen> {
             }
             if (state is ForgetPasswordSuccess) {
               // Navigate to OTP Verification.
-              Navigator.of(context).pushNamed("/validate_forget_password_otp");
+              Navigator.of(context).pushReplacementNamed(RouteNames.validateForgetPassword);
             }
           },
           builder: (context, state) => OpacityLoading(
@@ -109,7 +113,8 @@ class _ForgetPasswordState extends State<ForgetPasswordScreen> {
           ),
         ),
       ),
-    );
+    ),
+);
   }
 
   Widget _forgetPasswordForm() => FormBuilder(

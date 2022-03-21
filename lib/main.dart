@@ -114,16 +114,9 @@ class SelaheltelmeezLauncher extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (BuildContext context) => LoginCubit(context.read<LoginRepository>())),
           BlocProvider(create: (BuildContext context) => ChangeEmailOrMobileCubit(context.read<ChangeEmailOrMobileRepository>())),
-          BlocProvider(create: (BuildContext context) => RegisterCubit(context.read<RegisterRepository>())),
           BlocProvider(create: (BuildContext context) => GradeMenuCubit(context.read<RegisterRepository>())),
           BlocProvider(create: (BuildContext context) => CurriculumCubit(context.read<CurriculumRepository>())),
-          BlocProvider(create: (BuildContext context) => ValidateOtpCubit(context.read<ValidateOTPRepository>())),
-          BlocProvider(create: (BuildContext context) => ForgetPasswordCubit(context.read<ForgetPasswordRepository>())),
-          BlocProvider(create: (BuildContext context) => ValidateForgetPasswordOtpCubit(context.read<ForgetPasswordRepository>())),
-          BlocProvider(create: (BuildContext context) => ResetPasswordCubit(context.read<ForgetPasswordRepository>())),
-          BlocProvider(create: (BuildContext context) => UpdateProfileCubit(context.read<UpdateProfileRepository>())),
           BlocProvider(create: (BuildContext context) => StudentNavBarCubit()),
           BlocProvider(create: (BuildContext context) => ClassSearchCubit()),
           BlocProvider(create: (BuildContext context) => IdentityRoleCubit()),

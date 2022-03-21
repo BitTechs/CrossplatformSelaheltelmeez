@@ -24,9 +24,11 @@ class AppUserLocalStorageProvider {
   }
 
   static Future<void> addLoginResponseAsync(LoginResponse loginResponse) async{
+        await removeAsync();
         await addAsJsonAsync(loginResponse.toJson());
   }
   static Future<void> addRegisterResponseAsync(RegisterResponse registerResponse) async{
+    await removeAsync();
     final mappedJson = <String,dynamic>{};
     mappedJson['fullName'] = registerResponse.fullName;
     mappedJson['email'] = registerResponse.email;
@@ -65,8 +67,11 @@ class AppUserLocalStorageProvider {
     }
   }
 
-  static Future<bool> removeAsync() async =>
+  static Future<void> removeAsync() async{
+    if(await _sharedPreferenceInstance.then((value)=> value.getString(_keyName) != null)){
       await _sharedPreferenceInstance.then((value) => value.remove(_keyName));
+    }
+  }
 
 
   static Future<Map<String, dynamic>> readAsJsonAsync() async =>

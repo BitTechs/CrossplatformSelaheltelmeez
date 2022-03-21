@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
+import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/model/data_transfer_object/reset_password_request.dart';
+import 'package:selaheltelmeez/features/authentication/forget_password/model/repository/forget_password_repository.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/view_model/reset_password_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
@@ -21,7 +23,9 @@ class ResetPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NavigatedAppScaffold(
+    return BlocProvider(
+  create: (context) => ResetPasswordCubit(context.read<ForgetPasswordRepository>()),
+  child: NavigatedAppScaffold(
       title: S.of(context).update_password,
       child: SingleChildScrollView(
         child: BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
@@ -33,7 +37,7 @@ class ResetPasswordScreen extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
             if (state is ResetPasswordSuccess) {
-              Navigator.of(context).pushNamed("/login");
+              Navigator.of(context).pushReplacementNamed(RouteNames.login);
             }
           },
           builder: (context, state) => OpacityLoading(
@@ -111,6 +115,7 @@ class ResetPasswordScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ),
+);
   }
 }

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
+import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
+import 'package:selaheltelmeez/features/authentication/forget_password/model/repository/forget_password_repository.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/view_model/validate_forget_password_otp_cubit.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
@@ -16,7 +18,9 @@ class ValidateForgetPasswordOTPScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NavigatedAppScaffold(
+    return BlocProvider(
+  create: (context) => ValidateForgetPasswordOtpCubit(context.read<ForgetPasswordRepository>()),
+  child: NavigatedAppScaffold(
       title: S.of(context).activation_code,
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -29,7 +33,7 @@ class ValidateForgetPasswordOTPScreen extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
             if(state is ValidateForgetPasswordOtpSuccess){
-              Navigator.of(context).pushNamed('/reset_password', arguments: state.identityUserId);
+              Navigator.of(context).pushReplacementNamed(RouteNames.resetPassword, arguments: state.identityUserId);
             }
           },
           builder: (context, state) {
@@ -95,6 +99,7 @@ class ValidateForgetPasswordOTPScreen extends StatelessWidget {
           },
         ),
       ),
-    );
+    ),
+);
   }
 }

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
+import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/update_profile/model/data_transfer_object/governorate_response.dart';
+import 'package:selaheltelmeez/features/authentication/update_profile/model/repository/update_profile_repository.dart';
 import 'package:selaheltelmeez/features/authentication/update_profile/view_model/update_profile_cubit.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/buttons/scaled_button_image.dart';
@@ -20,7 +22,9 @@ class UpdateProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = UpdateProfileCubit.get(context);
     cubit.loadAvatars();
-    return NavigatedAppScaffold(
+    return BlocProvider(
+  create: (context) => UpdateProfileCubit(context.read<UpdateProfileRepository>()),
+  child: NavigatedAppScaffold(
       title: S.of(context).continue_signup_information,
       child: SingleChildScrollView(
         child: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
@@ -32,11 +36,11 @@ class UpdateProfileScreen extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
             if (state is UpdateProfileSuccess) {
-              Navigator.of(context).pushNamed("/validate_otp");
+              Navigator.of(context).pushReplacementNamed(RouteNames.validateOTP);
             }
           },
           builder: (context, state) => OpacityLoading(
-            opacity: state is LoginSubmit ? 0.5 : 1.0,
+            opacity: state is UpdateProfileLoadAvatarsSubmit ? 0.5 : 1.0,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -174,7 +178,8 @@ class UpdateProfileScreen extends StatelessWidget {
                             CommonColors.fancyElevatedButtonBackGroundColor,
                         titleColor: CommonColors.fancyElevatedTitleColor,
                         shadowColor: CommonColors.fancyElevatedShadowTitleColor,
-                        onPressed: () => Navigator.of(context).pushNamed("/validate_otp")),
+                        onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(RouteNames.validateOTP,  (Route<dynamic> route) => false)
+                    ),
                   ],
                 ),
               ],
@@ -182,6 +187,7 @@ class UpdateProfileScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ),
+);
   }
 }

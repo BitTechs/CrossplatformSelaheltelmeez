@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
+import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/view/change_email_or_mobile_screen.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/view/forget_password_screen.dart';
 import 'package:selaheltelmeez/features/authentication/forget_password/view/reset_password_screen.dart';
@@ -8,7 +10,9 @@ import 'package:selaheltelmeez/features/authentication/forget_password/view/vali
 import 'package:selaheltelmeez/features/authentication/forget_password/view_model/validate_forget_password_otp_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/login/view/login_screen.dart';
 import 'package:selaheltelmeez/features/authentication/register/view/register_screen.dart';
+import 'package:selaheltelmeez/features/authentication/update_profile/model/repository/update_profile_repository.dart';
 import 'package:selaheltelmeez/features/authentication/update_profile/view/update_profile_screen.dart';
+import 'package:selaheltelmeez/features/authentication/update_profile/view_model/update_profile_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/validate_otp/view/validate_otp_screen.dart';
 import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_object/list_item.dart';
 import 'package:selaheltelmeez/features/landing/presentation_layer/landing_screen.dart';
@@ -36,23 +40,24 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
-      case '/':
+      case RouteNames.index:
         return PageTransition(child: const LandingScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/login':
+      case RouteNames.login:
         return PageTransition(child: const LoginScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/register':
+      case RouteNames.register:
         return PageTransition(child:  RegisterScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/update_profile':
-        return PageTransition(child:  UpdateProfileScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/validate_otp':
-        return PageTransition(child: const ValidateOTPScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/change_email_or_mobile':
+      case RouteNames.updateProfile:
+        return PageTransition(child:  BlocProvider(create: (context) => UpdateProfileCubit(context.read<UpdateProfileRepository>()),
+            child: UpdateProfileScreen()),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.validateOTP:
+        return PageTransition(child:  ValidateOTPScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.changeEmailOrMobile:
         return PageTransition(child: const ChangeEmailOrMobileScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/forget_password':
+      case RouteNames.forgetPassword:
         return PageTransition(child: const ForgetPasswordScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/validate_forget_password_otp':
+      case RouteNames.validateForgetPassword:
         return PageTransition(child:  ValidateForgetPasswordOTPScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/reset_password':
+      case RouteNames.resetPassword:
         String identityId = (args as String);
         return PageTransition(child:  ResetPasswordScreen(identityUserId: identityId),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case '/StudentDashboard':

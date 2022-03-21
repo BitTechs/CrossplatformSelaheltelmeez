@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/helpers/utilities.dart';
+import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:selaheltelmeez/features/authentication/login/model/data_transfer_object/login_request.dart';
+import 'package:selaheltelmeez/features/authentication/login/model/repository/login_repository.dart';
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
@@ -26,7 +28,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return NavigatedAppScaffold(
+    return BlocProvider(
+    create: (context) => LoginCubit(context.read<LoginRepository>()),
+    child: NavigatedAppScaffold(
       title: S.of(context).login,
       child: SingleChildScrollView(
         child: BlocConsumer<LoginCubit, LoginState>(
@@ -39,11 +43,11 @@ class _LoginScreenState extends State<LoginScreen> {
             }
             if (state is LoginVerifiedSuccess) {
               // Trying to loading App User Entity Values
-              Navigator.of(context).pushNamed("/StudentHome");
+              Navigator.of(context).pushReplacementNamed("/StudentHome");
             }
             if(state is LoginNotVerifiedSuccess){
               // Trying to loading App User Entity Values
-              Navigator.of(context).pushNamed("/validate_otp");
+              Navigator.of(context).pushNamed(RouteNames.validateOTP);
             }
           },
           builder: (context, state) => OpacityLoading(
@@ -81,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: CustomTextButton(
                     text: S.of(context).forget_my_password,
                     color: CommonColors.forgetPasswordColor,
-                    onPressed: ()=> Navigator.of(context).pushNamed('/forget_password'),
+                    onPressed: ()=> Navigator.of(context).pushNamed(RouteNames.forgetPassword),
                   ),
                 ),
                 const SizedBox(
@@ -150,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     text: S.of(context).create_new_account,
                     color: Colors.blue,
                     onPressed: () =>
-                        Navigator.of(context).pushNamed('/register'),
+                        Navigator.of(context).pushNamed(RouteNames.register),
                   ),
                 ),
               ],
@@ -158,7 +162,8 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
-    );
+    ),
+);
   }
 
   Widget _loginForm() => FormBuilder(

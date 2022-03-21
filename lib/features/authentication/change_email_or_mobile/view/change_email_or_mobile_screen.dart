@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/helpers/utilities.dart';
+import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/core/validation_rules/validatable.dart';
 import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/model/data_transfer_object/change_email_or_mobile_request.dart';
+import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/model/repository/change_email_or_mobile_repository.dart';
 import 'package:selaheltelmeez/features/authentication/change_email_or_mobile/view_model/change_email_or_mobile_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
@@ -27,7 +29,9 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return NavigatedAppScaffold(
+    return BlocProvider(
+  create: (context) => ChangeEmailOrMobileCubit(context.read<ChangeEmailOrMobileRepository>()),
+  child: NavigatedAppScaffold(
       title: S.of(context).update_email_or_mobile,
       child: SingleChildScrollView(
         child: BlocConsumer<ChangeEmailOrMobileCubit, ChangeEmailOrMobileState>(
@@ -39,8 +43,7 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
             if (state is ChangeEmailOrMobileSuccess) {
-              // Navigate to OTP Verification.
-              Navigator.of(context).pushNamed("/StudentHome");
+              Navigator.of(context).pushReplacementNamed("/StudentHome");
             }
           },
           builder: (context, state) => OpacityLoading(
@@ -104,7 +107,8 @@ class _ChangeEmailOrMobileState extends State<ChangeEmailOrMobileScreen> {
           ),
         ),
       ),
-    );
+    ),
+);
   }
 
   Widget _changeEmailOrMobileForm() => FormBuilder(

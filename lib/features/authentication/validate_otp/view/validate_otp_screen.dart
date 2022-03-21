@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
+import 'package:selaheltelmeez/features/authentication/validate_otp/model/repository/validate_otp_repository.dart';
 import 'package:selaheltelmeez/features/authentication/validate_otp/view_model/validate_otp_cubit.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
-class ValidateOTPScreen extends StatefulWidget {
-  const ValidateOTPScreen({Key? key}) : super(key: key);
-
-  @override
-  State<ValidateOTPScreen> createState() => _ValidateOTPScreenState();
-}
-
-class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+class ValidateOTPScreen extends StatelessWidget {
+   ValidateOTPScreen({Key? key}) : super(key: key);
+  final  _formKey = GlobalKey<FormBuilderState>();
   final _otpController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    return NavigatedAppScaffold(
+    return BlocProvider(
+  create: (context) => ValidateOtpCubit(context.read<ValidateOTPRepository>()),
+  child: NavigatedAppScaffold(
       title: S.of(context).activation_code,
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -38,7 +34,7 @@ class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
               savedResponse['isVerified'] = true;
               await AppUserLocalStorageProvider.addAsJsonAsync(savedResponse);
 
-              Navigator.of(context).pushNamed('/StudentHome');
+              Navigator.of(context).pushReplacementNamed('/StudentHome');
             }
           },
           builder: (context, state) {
@@ -68,64 +64,63 @@ class _ValidateOTPScreenState extends State<ValidateOTPScreen> {
                 ),
                 Text(S.of(context).enter_activation_code),
                 const SizedBox(height: 16.0),
-                _otpForm(),
+                FormBuilder(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FancyOTPFormField(
+                        length: 4,
+                        controller: _otpController,
+                        inputColor: CommonColors.otpInputColor,
+                      ),
+                      const SizedBox(height: 64.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          FancyElevatedButton(
+                            title: S.of(context).activate,
+                            onPressed: () async {
+                              if (_otpController.text.isNotEmpty) {
+                                final savedResponse =  await AppUserLocalStorageProvider.readAsAppUserObjectAsync();
+                                bool isMobile = savedResponse.mobileNumber?.isNotEmpty ?? false;
+                                context
+                                    .read<ValidateOtpCubit>()
+                                    .validateAsync(_otpController.text, isMobile);
+                              }
+                            },
+                            backGroundColor:
+                            CommonColors.fancyElevatedButtonBackGroundColor,
+                            shadowColor: CommonColors.fancyElevatedShadowTitleColor,
+                            titleColor: CommonColors.fancyElevatedTitleColor,
+                            width: 150,
+                          ),
+                          FancyElevatedButton(
+                            title: S.of(context).resend,
+                            onPressed: () async {
+                              final savedResponse =  await AppUserLocalStorageProvider.readAsAppUserObjectAsync();
+                              bool isMobile = savedResponse.mobileNumber?.isNotEmpty ?? false;
+                              context
+                                  .read<ValidateOtpCubit>()
+                                  .resendActivationCodeAsync(isMobile);
+                            },
+                            backGroundColor:
+                            CommonColors.fancyElevatedButtonBackGroundColor,
+                            shadowColor: CommonColors.fancyElevatedShadowTitleColor,
+                            titleColor: CommonColors.fancyElevatedTitleColor,
+                            width: 150,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             );
           },
         ),
       ),
-    );
+    ),
+);
   }
-
-  Widget _otpForm() => Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FancyOTPFormField(
-              length: 4,
-              controller: _otpController,
-              inputColor: CommonColors.otpInputColor,
-            ),
-            const SizedBox(height: 64.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                FancyElevatedButton(
-                  title: S.of(context).activate,
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      final savedResponse =  await AppUserLocalStorageProvider.readAsAppUserObjectAsync();
-                      bool isMobile = savedResponse.mobileNumber?.isNotEmpty ?? false;
-                      context
-                          .read<ValidateOtpCubit>()
-                          .validateAsync(_otpController.text, isMobile);
-                    }
-                  },
-                  backGroundColor:
-                      CommonColors.fancyElevatedButtonBackGroundColor,
-                  shadowColor: CommonColors.fancyElevatedShadowTitleColor,
-                  titleColor: CommonColors.fancyElevatedTitleColor,
-                  width: 150,
-                ),
-                FancyElevatedButton(
-                  title: S.of(context).resend,
-                  onPressed: () async {
-                    final savedResponse =  await AppUserLocalStorageProvider.readAsAppUserObjectAsync();
-                    bool isMobile = savedResponse.mobileNumber?.isNotEmpty ?? false;
-                    context
-                        .read<ValidateOtpCubit>()
-                        .resendActivationCodeAsync(isMobile);
-                  },
-                  backGroundColor:
-                      CommonColors.fancyElevatedButtonBackGroundColor,
-                  shadowColor: CommonColors.fancyElevatedShadowTitleColor,
-                  titleColor: CommonColors.fancyElevatedTitleColor,
-                  width: 150,
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
 }
