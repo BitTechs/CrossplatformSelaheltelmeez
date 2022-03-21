@@ -47,8 +47,7 @@ class RouteGenerator {
       case RouteNames.register:
         return PageTransition(child:  RegisterScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.updateProfile:
-        return PageTransition(child:  BlocProvider(create: (context) => UpdateProfileCubit(context.read<UpdateProfileRepository>()),
-            child: UpdateProfileScreen()),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+        return PageTransition(child:  UpdateProfileScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.validateOTP:
         return PageTransition(child:  ValidateOTPScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.changeEmailOrMobile:

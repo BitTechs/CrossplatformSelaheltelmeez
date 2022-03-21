@@ -4,14 +4,12 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
-import 'package:selaheltelmeez/features/authentication/login/view_model/login_cubit.dart';
 import 'package:selaheltelmeez/features/authentication/update_profile/model/data_transfer_object/governorate_response.dart';
 import 'package:selaheltelmeez/features/authentication/update_profile/model/repository/update_profile_repository.dart';
 import 'package:selaheltelmeez/features/authentication/update_profile/view_model/update_profile_cubit.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/buttons/scaled_button_image.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
-import 'package:sizer/sizer.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
    UpdateProfileScreen({Key? key}) : super(key: key);
@@ -20,11 +18,10 @@ class UpdateProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = UpdateProfileCubit.get(context);
-    cubit.loadAvatars();
+    final cubit = UpdateProfileCubit(context.read<UpdateProfileRepository>())..loadAvatars();
     return BlocProvider(
-  create: (context) => UpdateProfileCubit(context.read<UpdateProfileRepository>()),
-  child: NavigatedAppScaffold(
+      create: (context) => cubit,
+      child: NavigatedAppScaffold(
       title: S.of(context).continue_signup_information,
       child: SingleChildScrollView(
         child: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
