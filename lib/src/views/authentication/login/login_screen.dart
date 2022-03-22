@@ -11,6 +11,7 @@ import 'package:selaheltelmeez/src/bloc/authentication/login/login_cubit.dart';
 import 'package:selaheltelmeez/src/data/authentication/dtos/login/login_request.dart';
 import 'package:selaheltelmeez/src/data/authentication/repositories/login/login_repository.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
+import 'package:sizer/sizer.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -56,9 +57,9 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 180,
+                  height: 25.h,
                   child: Stack(children: [
-                    const Center(
+                     Center(
                         child: Image(
                       image: AssetImage(AssetsImage.loginPersonPointsDown),
                     )),
@@ -69,16 +70,22 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge
-                              ?.copyWith(color: Colors.white),
+                              ?.copyWith(color: Colors.white,
+                            fontSize: 12.sp,
+                          ),
+                          textAlign: TextAlign.center,
                         )),
                   ]),
                 ),
-                const SizedBox(
-                  height: 16.0,
+                 SizedBox(
+                  height: 4.h,
                 ),
-                _loginForm(),
-                const SizedBox(
-                  height: 16.0,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                  child: _loginForm(),
+                ),
+                 SizedBox(
+                  height: 2.h,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -88,12 +95,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: ()=> Navigator.of(context).pushNamed(RouteNames.forgetPassword),
                   ),
                 ),
-                const SizedBox(
-                  height: 16.0,
+                 SizedBox(
+                  height: 1.h,
                 ),
                 Center(
                   child: FancyElevatedButton(
-                      width: 140.0,
+                      width: 30.w,
                       title: S.of(context).login_btn,
                       backGroundColor:
                           CommonColors.fancyElevatedButtonBackGroundColor,
@@ -117,7 +124,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Center(
                   child: Text(S.of(context).login_with_social,
-                      style: Theme.of(context).textTheme.bodyMedium),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: 11.sp,
+                      )),
                 ),
                 const SizedBox(
                   height: 16.0,
@@ -128,19 +137,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
+                        children:  [
                           Image(
                             image: AssetImage(
                               AssetsImage.facebookAuth,
                             ),
-                            width: 65.0,
+                            width: 15.w,
                           ),
                           Image(
                               image: AssetImage(AssetsImage.googleAuth),
-                              width: 65.0),
+                              width: 15.w),
                           Image(
                               image: AssetImage(AssetsImage.microsoftAuth),
-                              width: 65.0)
+                              width: 15.w)
                         ],
                       ),
                     )

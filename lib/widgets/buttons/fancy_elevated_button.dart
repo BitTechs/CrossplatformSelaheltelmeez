@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class FancyElevatedButton extends StatelessWidget {
   final String title;
@@ -18,13 +19,14 @@ class FancyElevatedButton extends StatelessWidget {
           backgroundColor: MaterialStateProperty.all<Color>(backGroundColor),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18.0),
+              borderRadius: BorderRadius.circular(100.w),
             ),
           ),
         ),
         onPressed: onPressed,
         child: Text(title,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            fontSize: 14.sp,
               color: titleColor,
               shadows: <Shadow>[
                  Shadow(

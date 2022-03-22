@@ -26,6 +26,7 @@ class AssetsImage {
   static const String prizeGold = "assets/images/student/prizeGold.png";
   static const String prizePlatinum = "assets/images/student/prizePlatinum.png";
   static const String prizeSilver = "assets/images/student/prizeSilver.png";
+  static const String statistics = "assets/images/student/statistics.png";
 
 
 }

@@ -28,24 +28,39 @@ class FancyTextFormField extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        SvgPicture.asset(
-          AssetsImage.inputBackground,
-          color: CommonColors.inputBackgroundColor,
-          width: width ?? 90.w,
-          height: height ?? 10.h,
+        // SvgPicture.asset(
+        //   AssetsImage.inputBackground,
+        //   color: CommonColors.inputBackgroundColor,
+        //   width: width ?? 90.w,
+        //   height: height ?? 10.h,
+        // ),
+        SizedBox(
+          height: 10.h,
+          width: MediaQuery.of(context).size.width,
+          child: SvgPicture.asset(
+            AssetsImage.inputBackground,
+            color: CommonColors.inputBackgroundColor,
+            fit: BoxFit.fill,
+          ),
         ),
         FormBuilderTextField(
             name: name,
+            style: TextStyle(
+              fontSize: 11.sp,
+            ),
             decoration: InputDecoration(
               hintText: placeholderText,
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
-              errorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
+              errorBorder: InputBorder.none, disabledBorder: InputBorder.none,
               helperText: helperText,
               contentPadding:
-              EdgeInsets.only(left: 15.w, bottom: 0, top: 0, right: 15.w),
+              EdgeInsets.only(left: 4.w, bottom: 0, top: 0, right: 4.w),
+              hintStyle: TextStyle(
+                  fontSize: 11.sp
+              ),
+
               errorStyle: Theme.of(context)
                   .textTheme
                   .bodySmall
