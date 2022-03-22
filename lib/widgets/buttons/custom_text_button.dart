@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class CustomTextButton extends StatelessWidget {
   final String text;
@@ -15,7 +16,7 @@ class CustomTextButton extends StatelessWidget {
         textStyle: const TextStyle(fontSize: 16),
       ),
       onPressed: onPressed,
-      child: Text(text,style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: color),
+      child: Text(text,style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: color, fontSize: 10.sp),
       ),
     );
   }

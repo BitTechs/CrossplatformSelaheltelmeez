@@ -8,5 +8,17 @@ class RouteNames{
   static const String forgetPassword = "/forget-password";
   static const String validateForgetPassword = "/validate-forget-password-otp";
   static const String resetPassword = "/reset-password";
+
   static const String studentHomeLayout = "/student-home";
+  static const String studentSubject = "/student-subject";
+  static const String studentLesson = "/student-lesson";
+  static const String classSearch = "/class-search";
+  static const String usageReport = "/usage-report";
+  static const String recentActivity = "/recent-activity";
+  static const String detailedSubjectReport = "/detailed-subject-report";
+  static const String detailedLessonReport = "/detailed-lesson-report";
+  static const String studentAchievements = "/student-achievements";
+
+  static const String webViewer = "/web-viewer";
+  static const String youTubeViewer = "/youTube-viewer";
 }

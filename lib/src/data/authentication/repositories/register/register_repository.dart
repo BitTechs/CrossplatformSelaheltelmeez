@@ -1,4 +1,4 @@
-// The repository layer is a wrapper around one or more data providers with which the Bloc Layer communicates.
+// The repositories layer is a wrapper around one or more data providers with which the Bloc Layer communicates.
 
 import 'package:selaheltelmeez/core/data_transfer_object/value_commit_result.dart';
 import 'package:selaheltelmeez/src/data/authentication/data_providers/register/register_data_provider.dart';

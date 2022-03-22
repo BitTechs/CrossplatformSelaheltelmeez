@@ -15,18 +15,37 @@ class FancyPasswordFormField extends StatelessWidget {
   final String name;
   final ValueChanged<String?>? onChanged;
   final TextEditingController? controller;
-  const FancyPasswordFormField({Key? key, required this.placeholderText,  this.width,  this.validators, required this.name, this.helperText, this.height, this.onChanged,  this.controller, }) : super(key: key);
+  const FancyPasswordFormField({
+    Key? key,
+    required this.placeholderText,
+    this.width,
+    this.validators,
+    required this.name,
+    this.helperText,
+    this.height,
+    this.onChanged,
+    this.controller,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
       children: [
-        SvgPicture.asset(
-          AssetsImage.inputBackground,
-          color: CommonColors.inputBackgroundColor,
-          width: width ?? 90.h,
-          height: height ?? 10.h,
+        // SvgPicture.asset(
+        //   AssetsImage.inputBackground,
+        //   color: CommonColors.inputBackgroundColor,
+        //   width: width ?? 90.h,
+        //   height: height ?? 10.h,
+        // ),
+        SizedBox(
+          height: 10.h,
+          width: MediaQuery.of(context).size.width,
+          child: SvgPicture.asset(
+            AssetsImage.inputBackground,
+            color: CommonColors.inputBackgroundColor,
+            fit: BoxFit.fill,
+          ),
         ),
         FormBuilderTextField(
             name: name,
@@ -35,7 +54,10 @@ class FancyPasswordFormField extends StatelessWidget {
             enableSuggestions: false,
             autocorrect: false,
             onChanged: onChanged,
-            decoration:  InputDecoration(
+            style: TextStyle(
+              fontSize: 11.sp,
+            ),
+            decoration: InputDecoration(
               hintText: placeholderText,
               helperText: helperText,
               border: InputBorder.none,
@@ -43,10 +65,17 @@ class FancyPasswordFormField extends StatelessWidget {
               enabledBorder: InputBorder.none,
               errorBorder: InputBorder.none,
               disabledBorder: InputBorder.none,
-              contentPadding: EdgeInsets.only(left: 15.w, bottom: 0, top: 0, right: 15.w),
-              errorStyle:Theme.of(context).textTheme.bodySmall?.copyWith(color: CommonColors.errorTextColor, height: 0.3, fontSize: 9.sp),),
-              validator: (value) => validators?.getValidationErrorMessage(value)
-        ),
+              hintStyle: TextStyle(
+                fontSize: 11.sp,
+              ),
+              contentPadding:
+                  EdgeInsets.only(left: 4.w, bottom: 0, top: 0, right: 4.w),
+              errorStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: CommonColors.errorTextColor,
+                  height: 0.3,
+                  fontSize: 9.sp),
+            ),
+            validator: (value) => validators?.getValidationErrorMessage(value)),
       ],
     );
   }

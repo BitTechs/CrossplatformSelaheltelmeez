@@ -19,16 +19,16 @@ import 'package:selaheltelmeez/src/data/authentication/repositories/login/login_
 import 'package:selaheltelmeez/src/data/authentication/repositories/register/register_repository.dart';
 import 'package:selaheltelmeez/src/data/authentication/repositories/update_profile/update_profile_repository.dart';
 import 'package:selaheltelmeez/src/data/authentication/repositories/validate_otp/validate_otp_repository.dart';
+import 'package:selaheltelmeez/src/data/student/repositories/curriculum/curriculum_repository.dart';
 import 'package:sizer/sizer.dart';
 import 'package:selaheltelmeez/core/router/route_generator.dart';
 import 'package:selaheltelmeez/core/theme/app_theme.dart';
-import 'package:selaheltelmeez/features/student/classes/class_search/view_model/class_search_cubit.dart';
-import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/data_provider/curriculum_data_provider.dart';
-import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/repository/curriculum_repository.dart';
-import 'package:selaheltelmeez/features/student/student_navigation_bar/view_model/navigation_bar_cubit.dart';
+import 'package:selaheltelmeez/src/bloc/student/student_navigation_bar/navigation_bar_cubit.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
 import 'core/local_storage/app_user_local_storage_provider.dart';
 import 'core/router/route_names.dart';
+import 'src/bloc/student/classes/class_search_cubit.dart';
+import 'src/data/student/data_provider/curriculum/curriculum_data_provider.dart';
 
 
 Future<void> main() async {
@@ -123,8 +123,8 @@ class SelaheltelmeezLauncher extends StatelessWidget {
                 supportedLocales: S.delegate.supportedLocales,
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.lightTheme,
-                //initialRoute: '/',
-                 initialRoute: AppUserLocalStorageProvider.sharedAppUserEntity == null ? RouteNames.index : RouteNames.studentHomeLayout,
+                initialRoute: RouteNames.studentAchievements,
+                //initialRoute: AppUserLocalStorageProvider.sharedAppUserEntity == null ? RouteNames.index : RouteNames.studentHomeLayout,
                 locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocal,
                 onGenerateRoute: RouteGenerator.generateRoute,
               ),

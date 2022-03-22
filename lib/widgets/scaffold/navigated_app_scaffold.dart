@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class NavigatedAppScaffold extends StatelessWidget {
   final Widget child;
@@ -11,7 +12,7 @@ class NavigatedAppScaffold extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 1,
-        title: Text(title,style: Theme.of(context).textTheme.titleMedium),
+        title: Text(title,style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 11.sp)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),

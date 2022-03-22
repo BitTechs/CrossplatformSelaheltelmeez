@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
-import 'package:selaheltelmeez/features/landing/data_access_layer/data_transfer_object/list_item.dart';
-import 'package:selaheltelmeez/features/landing/presentation_layer/landing_screen.dart';
-import 'package:selaheltelmeez/features/student/classes/class_search/view/class_search_screen.dart';
-import 'package:selaheltelmeez/features/student/dashboard/achievements/view/achievements.dart';
-import 'package:selaheltelmeez/features/student/dashboard/detailed_lesson_report/detailed_lesson_report_screen.dart';
-import 'package:selaheltelmeez/features/student/dashboard/detailed_subject_report/detailed_subject_report_screen.dart';
-import 'package:selaheltelmeez/features/student/dashboard/lesson/view/lesson_screen.dart';
-import 'package:selaheltelmeez/features/student/dashboard/recent_activity/view/recent_activity_screen.dart';
-import 'package:selaheltelmeez/features/student/dashboard/subject/view/subject_screen.dart';
-import 'package:selaheltelmeez/features/student/dashboard/usage_report/view/usage_report_screen.dart';
-import 'package:selaheltelmeez/features/student/student_navigation_bar/view/student%20_navigation_bar_screen.dart';
+import 'package:selaheltelmeez/src/data/landing/dtos/list_item.dart';
+import 'package:selaheltelmeez/src/views/landing/landing_screen.dart';
+import 'package:selaheltelmeez/src/views/student/achievements/achievements_screen.dart';
+import 'package:selaheltelmeez/src/views/student/detailed_lesson_report/detailed_lesson_report_screen.dart';
+import 'package:selaheltelmeez/src/views/student/detailed_subject_report/detailed_subject_report_screen.dart';
+import 'package:selaheltelmeez/src/views/student/lesson/lesson_screen.dart';
+import 'package:selaheltelmeez/src/views/student/recent_activity/recent_activity_screen.dart';
+import 'package:selaheltelmeez/src/views/student/student_navigation_bar/student%20_navigation_bar_screen.dart';
 import 'package:selaheltelmeez/src/views/authentication/change_email_or_mobile/change_email_or_mobile_screen.dart';
 import 'package:selaheltelmeez/src/views/authentication/forget_password/forget_password_screen.dart';
 import 'package:selaheltelmeez/src/views/authentication/forget_password/reset_password_screen.dart';
@@ -20,6 +17,9 @@ import 'package:selaheltelmeez/src/views/authentication/login/login_screen.dart'
 import 'package:selaheltelmeez/src/views/authentication/register/register_screen.dart';
 import 'package:selaheltelmeez/src/views/authentication/update_profile/update_profile_screen.dart';
 import 'package:selaheltelmeez/src/views/authentication/validate_otp/validate_otp_screen.dart';
+import 'package:selaheltelmeez/src/views/student/classes/class_search_screen.dart';
+import 'package:selaheltelmeez/src/views/student/subject/subject_screen.dart';
+import 'package:selaheltelmeez/src/views/student/usage_report/usage_report_screen.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class RouteGenerator {
@@ -55,27 +55,27 @@ class RouteGenerator {
         return PageTransition(child:  ResetPasswordScreen(identityUserId: identityId),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.studentHomeLayout:
         return PageTransition(child: const StudentNavBarScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/StudentSubject':
+      case RouteNames.studentSubject:
         return PageTransition(child: const SubjectScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/StudentLesson':
+      case RouteNames.studentLesson:
         return PageTransition(child: LessonScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/ClassSearch':
+      case RouteNames.classSearch:
         return PageTransition(child: ClassSearchScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/UsageReport':
+      case RouteNames.usageReport:
         return PageTransition(child: const UsageReportScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/RecentActivity':
+      case RouteNames.recentActivity:
         return PageTransition(child: const RecentActivityScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/detailed_subject_report':
+      case RouteNames.detailedSubjectReport:
         return PageTransition(child: const DetailedSubjectReportScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/detailed_lesson_report':
+      case RouteNames.detailedLessonReport:
         return PageTransition(child: const DetailedLessonReportScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/achievements':
-        return PageTransition(child: const Achievements(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.studentAchievements:
+        return PageTransition(child: const AchievementsScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       // Validation of correct data type
-      case '/WebViewer':
+      case RouteNames.webViewer:
         ListItem listItem = (args as ListItem);
           return PageTransition(child:  WebViewer(url: listItem.url!,title: listItem.name!,),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      case '/YouTubeViewer':
+      case RouteNames.youTubeViewer:
       // Validation of correct data type
         ListItem listItem = (args as ListItem);
         return PageTransition(child: YouTubeViewer(videoCode: listItem.url!),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
