@@ -4,17 +4,19 @@ import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/entity/term_entity.dart';
+import 'package:selaheltelmeez/features/student/dashboard/dashboard/model/repository/curriculum_repository.dart';
 import 'package:selaheltelmeez/features/student/dashboard/dashboard/view_model/curriculum_cubit.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
+import 'package:sizer/sizer.dart';
 
 class StudentDashboardScreen extends StatelessWidget {
-  const StudentDashboardScreen({
-    Key? key,
-  }) : super(key: key);
+  const StudentDashboardScreen({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return FlatAppScaffold(
+    return BlocProvider(
+    create: (_) =>  CurriculumCubit(context.read<CurriculumRepository>()),
+    child: FlatAppScaffold(
         child: ScrollColumnExpandable(
       crossAxisAlignment: CrossAxisAlignment.start,
       headerWidgets: Column(
@@ -212,30 +214,34 @@ class StudentDashboardScreen extends StatelessWidget {
               "المواد الدراسية",
               style: Theme.of(context).textTheme.subtitle1,
             ),
-            FancyDropDownFormField<TermEntity>(
-              name: 'term',
-              hintTitle: 'اختر الفصل الدراسي',
-              items: [
-                TermEntity(id: 1, name: 'الفصل الدراسي الاول'),
-                TermEntity(id: 2, name: 'الفصل الدراسي الثاني')
-              ],
-              itemBuilder: (context, item) => Text(
-                item.name,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(fontSize: 14),
-              ),
-              onChanged: (value) => context
-                  .read<CurriculumCubit>()
-                  .getSubjectsAsync(value?.id),
+            Builder(
+              builder: (context) {
+                return FancyDropDownFormField<TermEntity>(
+                  name: 'term',
+                  hintTitle: 'اختر الفصل الدراسي',
+                  items: [
+                    TermEntity(id: 1, name: 'الفصل الدراسي الاول'),
+                    TermEntity(id: 2, name: 'الفصل الدراسي الثاني')
+                  ],
+                  itemBuilder: (context, item) => Text(
+                    item.name,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(fontSize: 14),
+                  ),
+                  onChanged: (value) => context
+                      .read<CurriculumCubit>()
+                      .getSubjectsAsync(value?.id),
+                );
+              }
             ),
             BlocBuilder<CurriculumCubit, CurriculumState>(
                 builder: (context, state) {
               if (state is CurriculumLoading) {
                 return Center(
                     child: SizedBox(
-                        height: MediaQuery.of(context).size.height / 2,
+                        height: 50.w,
                         child: const DoubleBounce()));
               }
               if (state is CurriculumError) {
@@ -306,6 +312,7 @@ class StudentDashboardScreen extends StatelessWidget {
           )
         ],
       ),
-    ));
+    )),
+);
   }
 }

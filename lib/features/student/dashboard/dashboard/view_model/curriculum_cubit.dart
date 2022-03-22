@@ -16,6 +16,7 @@ class CurriculumCubit extends Cubit<CurriculumState> {
 
   Future<void> getSubjectsAsync(int? termId) async {
     if(curriculumSubjects.isNotEmpty){
+      print(curriculumSubjects.length);
       emit(CurriculumLoaded(subjects: curriculumSubjects.where((element) => element.term == termId).toList()));
     }else{
       emit(CurriculumLoading());

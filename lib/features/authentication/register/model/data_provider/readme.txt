@@ -1,1 +1,0 @@
-// Remote Data Provider: Should only have "GET", "POST" , "Delete", "PUT" Requests for remote data services.
