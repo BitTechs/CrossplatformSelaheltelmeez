@@ -15,6 +15,9 @@ class AnonymousDioClient implements IDioClient {
         receiveTimeout: const Duration(seconds: 60).inMilliseconds,
         validateStatus: (_) => true,
         receiveDataWhenStatusError: true,
+        headers: {
+          'Accept-Language': 'ar-EG',
+        },
         baseUrl: 'https://10.0.2.2:7228'));
 
     _dio.interceptors.add(
@@ -38,15 +41,18 @@ class AnonymousDioClient implements IDioClient {
 class AuthorizedDioClient implements IDioClient {
   @override
   Dio getClient() {
-    final dio = Dio(BaseOptions(
+    final _dio = Dio(BaseOptions(
         connectTimeout: const Duration(seconds: 60).inMilliseconds,
         sendTimeout: const Duration(seconds: 60).inMilliseconds,
         receiveTimeout: const Duration(seconds: 60).inMilliseconds,
         validateStatus: (_) => true,
         receiveDataWhenStatusError: true,
+        headers: {
+          'Accept-Language': 'ar-EG',
+        },
         baseUrl: 'https://10.0.2.2:7228'));
 
-    dio.interceptors.add(
+    _dio.interceptors.add(
       LogInterceptor(
         request: true,
         requestBody: true,
@@ -57,13 +63,13 @@ class AuthorizedDioClient implements IDioClient {
       ),
     );
 
-    dio.interceptors.add(AuthInterceptor());
+    _dio.interceptors.add(AuthInterceptor());
 
-    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {
       client.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
     };
-    return dio;
+    return _dio;
   }
 }

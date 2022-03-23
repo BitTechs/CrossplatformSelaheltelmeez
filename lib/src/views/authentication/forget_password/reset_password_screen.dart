@@ -73,9 +73,7 @@ class ResetPasswordScreen extends StatelessWidget {
                         placeholderText: S.of(context).password,
                         name: 'password',
                         controller: _controller,
-                        validators: [
-                          IsRequiredRule(S.of(context).field_required),
-                        ],
+                        validator: IsRequiredRule(validationError: S.of(context).field_required),
                       ),
                       const SizedBox(
                         height: 8.0,

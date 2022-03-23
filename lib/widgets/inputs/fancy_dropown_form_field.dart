@@ -1,3 +1,4 @@
+import 'package:enterprise_validator/enterprise_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,11 +13,11 @@ class FancyDropDownFormField<T> extends StatelessWidget {
   final double? height;
   final List<T> items;
   final T? initialValue;
-  final FormFieldValidator<T>? validators;
+  final ValidationRule? validator;
   final Widget Function(BuildContext, T) itemBuilder;
   final ValueChanged<T?>? onChanged;
   final bool? isEnabled;
-  const FancyDropDownFormField({Key? key, required this.hintTitle,  this.width,  this.validators, required this.items, required this.itemBuilder, this.onChanged, this.initialValue, required this.name, this.height, this.isEnabled}) : super(key: key);
+  const FancyDropDownFormField({Key? key, required this.hintTitle,  this.width,  this.validator, required this.items, required this.itemBuilder, this.onChanged, this.initialValue, required this.name, this.height, this.isEnabled}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class FancyDropDownFormField<T> extends StatelessWidget {
               disabledBorder: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 15.w, bottom: 0, top: 0, right: 15.w),
               errorStyle:Theme.of(context).textTheme.bodySmall?.copyWith(color: CommonColors.errorTextColor, height: 0.3, fontSize: 12),),
-              validator: validators,
+              //validator: (value)=> validator == null? null : validator!(value),
               onChanged: onChanged,
         ),
       ],

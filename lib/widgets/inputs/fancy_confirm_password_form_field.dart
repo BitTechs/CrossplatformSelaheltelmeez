@@ -11,10 +11,10 @@ class FancyConfirmPasswordFormField extends StatelessWidget {
   final String? helperText;
   final double? width;
   final double? height;
-  final List<ValidationRule>? validators;
+  final ValidationRule? validator;
   final String name;
   final TextEditingController passwordController;
-  const FancyConfirmPasswordFormField({Key? key, required this.placeholderText,  this.width,  this.validators, required this.name, this.helperText, this.height, required this.passwordController, }) : super(key: key);
+  const FancyConfirmPasswordFormField({Key? key, required this.placeholderText,  this.width,  this.validator, required this.name, this.helperText, this.height, required this.passwordController, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class FancyConfirmPasswordFormField extends StatelessWidget {
               disabledBorder: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 15.w, bottom: 0, top: 0, right: 15.w),
               errorStyle:Theme.of(context).textTheme.bodySmall?.copyWith(color: CommonColors.errorTextColor, height: 0.3, fontSize: 9.sp),),
-              validator: (value) => passwordController.text != value ? "Passwords are not matching, please re-enter the password" : validators?.getValidationErrorMessage(value)
+              validator: (value) => passwordController.text != value ? "Passwords are not matching, please re-enter the password" : validator == null ? null : validator!(value)
         ),
       ],
     );

@@ -11,7 +11,7 @@ class FancyPasswordFormField extends StatelessWidget {
   final String? helperText;
   final double? width;
   final double? height;
-  final List<ValidationRule>? validators;
+  final ValidationRule? validator;
   final String name;
   final ValueChanged<String?>? onChanged;
   final TextEditingController? controller;
@@ -19,7 +19,7 @@ class FancyPasswordFormField extends StatelessWidget {
     Key? key,
     required this.placeholderText,
     this.width,
-    this.validators,
+    this.validator,
     required this.name,
     this.helperText,
     this.height,
@@ -75,7 +75,7 @@ class FancyPasswordFormField extends StatelessWidget {
                   height: 0.3,
                   fontSize: 9.sp),
             ),
-            validator: (value) => validators?.getValidationErrorMessage(value)),
+            validator: (value)=> validator == null ? null : validator!(value)),
       ],
     );
   }

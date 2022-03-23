@@ -58,7 +58,7 @@ class AchievementsScreen extends StatelessWidget {
                           ),
                           Padding(
                             padding:  EdgeInsets.only(bottom: 2.h),
-                            child: Container(
+                            child: SizedBox(
                                 width: 12.w,
                                 child: Text('1000 نقطة',
                                   textAlign: TextAlign.center,
@@ -94,7 +94,7 @@ class AchievementsScreen extends StatelessWidget {
                           ),
                           Padding(
                             padding:  EdgeInsets.only(bottom: 2.h),
-                            child: Container(
+                            child: SizedBox(
                                 width: 12.w,
                                 child: Text('1000 نقطة',
                                   textAlign: TextAlign.center,
@@ -129,7 +129,7 @@ class AchievementsScreen extends StatelessWidget {
                           ),
                           Padding(
                             padding:  EdgeInsets.only(bottom: 2.h),
-                            child: Container(
+                            child: SizedBox(
                                 width: 12.w,
                                 child: Text('1000 نقطة',
                                   textAlign: TextAlign.center,
@@ -165,7 +165,7 @@ class AchievementsScreen extends StatelessWidget {
                           ),
                           Padding(
                             padding:  EdgeInsets.only(bottom: 2.h),
-                            child: Container(
+                            child: SizedBox(
                                 width: 12.w,
                                 child: Text('1000 نقطة',
                                   textAlign: TextAlign.center,
@@ -194,7 +194,7 @@ class AchievementsScreen extends StatelessWidget {
                           Stack(
                             alignment: AlignmentDirectional.topCenter,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: 12.w,
                                 height: 32.h,
                               ),
@@ -206,7 +206,7 @@ class AchievementsScreen extends StatelessWidget {
                           ),
                           Padding(
                             padding:  EdgeInsets.only(bottom: 2.h),
-                            child: Container(
+                            child: SizedBox(
                                 width: 12.w,
                                 child: Text('1000 نقطة',
                                   textAlign: TextAlign.center,

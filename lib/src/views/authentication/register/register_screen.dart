@@ -158,12 +158,11 @@ class RegisterScreen extends StatelessWidget {
                               FancyTextFormField(
                                 placeholderText: S.of(context).email_or_mobile,
                                 name: 'emailOrMobile',
-                                validators: [
-                                  IsRequiredRule(
-                                      S.of(context).field_required),
-                                  IsEmailOrEgyptianMobileRule(
-                                      S.of(context).incorrect_email_or_mobile)
-                                ],
+                                  validator : MultiValidationRules([
+                                    IsRequiredRule(validationError: S.of(context).field_required),
+                                    IsEmailOrEgyptianMobileRule(
+                                        validationError: S.of(context).incorrect_email_or_mobile),
+                                  ])
                               ),
                               const SizedBox(
                                 height: 8.0,
@@ -171,10 +170,7 @@ class RegisterScreen extends StatelessWidget {
                               FancyTextFormField(
                                 placeholderText: S.of(context).full_name,
                                 name: 'fullName',
-                                validators: [
-                                  IsRequiredRule(
-                                      S.of(context).field_required)
-                                ],
+                                validator: IsRequiredRule(validationError: S.of(context).field_required),
                               ),
                               const SizedBox(
                                 height: 8.0,
@@ -199,10 +195,7 @@ class RegisterScreen extends StatelessWidget {
                                         GradeMenuItem>(
                                       name: 'gradeMenu',
                                       hintTitle: S.of(context).choose_year,
-                                      validators: (value) => [
-                                        IsRequiredRule(
-                                            S.of(context).field_required)
-                                      ].getValidationErrorMessage(value?.name),
+                                      validator: IsRequiredRule(validationError: S.of(context).field_required),
                                       items: state.items ?? [],
                                       itemBuilder: (context, item) => Text(
                                         item.name,
@@ -227,10 +220,7 @@ class RegisterScreen extends StatelessWidget {
                                 placeholderText: S.of(context).password,
                                 name: 'password',
                                 controller: _controller,
-                                validators: [
-                                  IsRequiredRule(
-                                      S.of(context).field_required),
-                                ],
+                                validator: IsRequiredRule(validationError: S.of(context).field_required),
                               ),
                               const SizedBox(
                                 height: 8.0,
@@ -239,9 +229,7 @@ class RegisterScreen extends StatelessWidget {
                                 placeholderText: S.of(context).confirm_password,
                                 name: 'confirmPassword',
                                 passwordController: _controller,
-                                validators: [
-                                  IsRequiredRule(S.of(context).field_required),
-                                ],
+                                validator: IsRequiredRule(validationError: S.of(context).field_required),
                               ),
                             ],
                           ),

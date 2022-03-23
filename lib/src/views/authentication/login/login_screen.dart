@@ -182,10 +182,11 @@ class _LoginScreenState extends State<LoginScreen> {
             FancyTextFormField(
               placeholderText:S.of(context).email_or_mobile,
               name: 'emailOrMobile',
-              validators: [
-                IsRequiredRule(S.of(context).field_required),
-                IsEmailOrEgyptianMobileRule(S.of(context).incorrect_email_or_mobile)
-              ],
+              validator : MultiValidationRules([
+                IsRequiredRule(validationError: S.of(context).field_required),
+                IsEmailOrEgyptianMobileRule(
+                    validationError: S.of(context).incorrect_email_or_mobile),
+              ])
             ),
             const SizedBox(
               height: 8.0,
@@ -193,9 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
             FancyPasswordFormField(
               placeholderText: S.of(context).password,
               name: 'password',
-              validators: [
-                IsRequiredRule(S.of(context).field_required),
-              ],
+              validator: IsRequiredRule(validationError: S.of(context).field_required),
             ),
           ],
         ),

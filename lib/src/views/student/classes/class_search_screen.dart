@@ -174,9 +174,7 @@ class ClassSearchScreen extends StatelessWidget {
                 placeholderText: 'اسم المعلم او رقم الموبايل',
                 name: 'teacherNameOrMobile',
                 width:  MediaQuery.of(context).size.width,
-                validators: [
-                  IsRequiredRule('هذا الحقل مطلوب'),
-                ],
+                validator: IsRequiredRule(validationError:  'هذا الحقل مطلوب'),
               ),
             ),
             const SizedBox(width: 10.0,),
@@ -199,9 +197,7 @@ class ClassSearchScreen extends StatelessWidget {
                 placeholderText: 'ادخل كود الفصل',
                 name: 'classCode',
                 width:  MediaQuery.of(context).size.width,
-                validators: [
-                  IsRequiredRule('هذا الحقل مطلوب'),
-                ],
+                validator:  IsRequiredRule(validationError: 'هذا الحقل مطلوب'),
               ),
             ),
             const SizedBox(width: 10.0,),

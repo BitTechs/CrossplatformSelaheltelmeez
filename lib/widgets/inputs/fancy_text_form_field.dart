@@ -11,14 +11,14 @@ class FancyTextFormField extends StatelessWidget {
   final String? helperText;
   final double? width;
   final double? height;
-  final List<ValidationRule>? validators;
+  final ValidationRule? validator;
   final String name;
   const FancyTextFormField(
       {Key? key,
       required this.placeholderText,
       this.width,
       this.height,
-      this.validators,
+      this.validator,
       required this.name,
       this.helperText})
       : super(key: key);
@@ -66,7 +66,7 @@ class FancyTextFormField extends StatelessWidget {
                   .bodySmall
                   ?.copyWith(color: CommonColors.errorTextColor, fontSize: 9.sp , height: 0.3),
             ),
-            validator: (value) => validators?.getValidationErrorMessage(value)),
+            validator: (value)=> validator == null ? null : validator!(value)),
       ],
     );
   }
