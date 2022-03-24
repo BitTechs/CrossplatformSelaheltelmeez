@@ -14,3 +14,5 @@ class CurriculumError extends CurriculumState{
   final String errorMessage;
   CurriculumError({required this.errorMessage});
 }
+
+
