@@ -5,6 +5,7 @@ import 'package:selaheltelmeez/core/language_change_provider.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
+import 'package:sizer/sizer.dart';
 
 class LandingScreen extends StatelessWidget {
   const LandingScreen({
@@ -23,15 +24,15 @@ class LandingScreen extends StatelessWidget {
                 children: [
                   const Image(image: AssetImage(AssetsImage.landing)),
                   Padding(
-                    padding: const EdgeInsets.only(
-                      left: 8.0,
-                      top: 32.0,
+                    padding:  EdgeInsetsDirectional.only(
+                      end: 4.w,
+                      top: 4.w,
                     ),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: SizedBox(
-                        width: 95.0,
-                        height: 40.0,
+                        width: 25.w,
+                        height: 10.w,
                         child: FancyElevatedButton(
                           title: S.of(context).login_btn,
                           backGroundColor:
@@ -45,15 +46,15 @@ class LandingScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                      right: 8.0,
-                      top: 32.0,
+                    padding: EdgeInsetsDirectional.only(
+                      start: 4.w,
+                      top: 4.w,
                     ),
                     child: Align(
                       alignment: Alignment.topRight,
                       child: SizedBox(
-                        width: 95.0,
-                        height: 40.0,
+                        width: 25.w,
+                        height: 10.w,
                         child: FancyElevatedButton(
                           title: 'تغير',
                           backGroundColor:
@@ -173,20 +174,22 @@ class LandingScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding:  EdgeInsets.symmetric(horizontal: 4.w),
                 child: Text(
                   "قريبا Joy School",
                   style: Theme
                       .of(context)
                       .textTheme
-                      .bodyText2,
+                      .bodyText2?.copyWith(
+                    fontSize: 11.sp,
+                  ),
                 ),
               ),
               const SizedBox(
                 height: 8.0,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
+               Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
                 child: Image(image: AssetImage(AssetsImage.joySchool)),
               )
             ],

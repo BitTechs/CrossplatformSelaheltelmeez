@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -15,6 +16,7 @@ import 'package:selaheltelmeez/src/data/authentication/repositories/register/reg
 import 'package:selaheltelmeez/widgets/buttons/scaled_button_image.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 import 'package:enterprise_validator/enterprise_validator.dart';
+import 'package:sizer/sizer.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
@@ -47,7 +49,7 @@ class RegisterScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 180,
+                    height: 29.h,
                     child: Stack(children: [
                       const Center(
                           child: Image(
@@ -55,17 +57,21 @@ class RegisterScreen extends StatelessWidget {
                       )),
                       Align(
                           alignment: Alignment.bottomCenter,
-                          child: Text(
-                            S.of(context).sign_up,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(color: Colors.white),
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 1.5.w),
+                            child: Text(
+                              S.of(context).sign_up,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(color: Colors.white,
+                                  fontSize: 10.sp),
+                            ),
                           )),
                     ]),
                   ),
-                  const SizedBox(
-                    height: 24.0,
+                   SizedBox(
+                    height: 8.w,
                   ),
                   BlocBuilder<IdentityRoleCubit, IdentityRoleState>(
                     builder: (context, state) {
@@ -89,7 +95,7 @@ class RegisterScreen extends StatelessWidget {
                                   .confirmSelectionToStudentRole(true);
                             },
                             child: ImageWithBottomHeader(
-                              width: 100.0,
+                              width: 25.w,
                               image: AssetsImage.studentUser,
                               header: 'طالب',
                               headerBackgroundColor:
@@ -111,7 +117,7 @@ class RegisterScreen extends StatelessWidget {
                                   .confirmSelectionToStudentRole(false);
                             },
                             child: ImageWithBottomHeader(
-                              width: 100.0,
+                              width: 25.w,
                               image: AssetsImage.parentUser,
                               header: 'ولي أمر',
                               headerBackgroundColor:
@@ -133,7 +139,7 @@ class RegisterScreen extends StatelessWidget {
                                   .confirmSelectionToStudentRole(false);
                             },
                             child: ImageWithBottomHeader(
-                              width: 100.0,
+                              width: 25.w,
                               image: AssetsImage.teacherUser,
                               header: 'مدرس',
                               headerBackgroundColor:
@@ -144,102 +150,108 @@ class RegisterScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  const SizedBox(
-                    height: 24.0,
+                   SizedBox(
+                    height: 8.w,
                   ),
                   Visibility(
                     visible: (state is ShowInputForm) ? true : false,
                     child: Column(
                       children: [
-                        FormBuilder(
-                          key: _formKey,
-                          child: Column(
-                            children: [
-                              FancyTextFormField(
-                                placeholderText: S.of(context).email_or_mobile,
-                                name: 'emailOrMobile',
-                                  validator : MultiValidationRules([
-                                    IsRequiredRule(validationError: S.of(context).field_required),
-                                    IsEmailOrEgyptianMobileRule(
-                                        validationError: S.of(context).incorrect_email_or_mobile),
-                                  ])
-                              ),
-                              const SizedBox(
-                                height: 8.0,
-                              ),
-                              FancyTextFormField(
-                                placeholderText: S.of(context).full_name,
-                                name: 'fullName',
-                                validator: IsRequiredRule(validationError: S.of(context).field_required),
-                              ),
-                              const SizedBox(
-                                height: 8.0,
-                              ),
-                              BlocConsumer<GradeMenuCubit, GradeMenuState>(
-                                listener: (context, state) async {
-                                  if (state is GradeMenuError) {
-                                    final snackBar = SnackBar(
-                                      content:
-                                          Text(state.errorMessage ?? "Error"),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                  }
-                                },
-                                builder: (context, state) {
-                                  if (state is GradeMenuLoading) {
-                                    const Center(child: DoubleBounce());
-                                  }
-                                  if (state is GradeMenuLoaded) {
-                                    return FancyDropDownFormField<
-                                        GradeMenuItem>(
-                                      name: 'gradeMenu',
-                                      hintTitle: S.of(context).choose_year,
-                                      validator: IsRequiredRule(validationError: S.of(context).field_required),
-                                      items: state.items ?? [],
-                                      itemBuilder: (context, item) => Text(
-                                        item.name,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1
-                                            ?.copyWith(fontSize: 14),
-                                      ),
-                                      onChanged: (value) => context
-                                          .read<GradeMenuCubit>()
-                                          .selectGradeMenuItem(value!.id),
-                                    );
-                                  } else {
-                                    return const SizedBox();
-                                  }
-                                },
-                              ),
-                              const SizedBox(
-                                height: 8.0,
-                              ),
-                              FancyPasswordFormField(
-                                placeholderText: S.of(context).password,
-                                name: 'password',
-                                controller: _controller,
-                                validator: IsRequiredRule(validationError: S.of(context).field_required),
-                              ),
-                              const SizedBox(
-                                height: 8.0,
-                              ),
-                              FancyConfirmPasswordFormField(
-                                placeholderText: S.of(context).confirm_password,
-                                name: 'confirmPassword',
-                                passwordController: _controller,
-                                validator: IsRequiredRule(validationError: S.of(context).field_required),
-                              ),
-                            ],
+                        Padding(
+                          padding:  EdgeInsetsDirectional.only(
+                            start: 4.w,
+                            end: 4.w,
+                          ),
+                          child: FormBuilder(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                FancyTextFormField(
+                                  placeholderText: S.of(context).email_or_mobile,
+                                  name: 'emailOrMobile',
+                                    validator : MultiValidationRules([
+                                      IsRequiredRule(validationError: S.of(context).field_required),
+                                      IsEmailOrEgyptianMobileRule(
+                                          validationError: S.of(context).incorrect_email_or_mobile),
+                                    ])
+                                ),
+                                 SizedBox(
+                                  height: 2.w,
+                                ),
+                                FancyTextFormField(
+                                  placeholderText: S.of(context).full_name,
+                                  name: 'fullName',
+                                  validator: IsRequiredRule(validationError: S.of(context).field_required),
+                                ),
+                                 SizedBox(
+                                  height: 2.0,
+                                ),
+                                BlocConsumer<GradeMenuCubit, GradeMenuState>(
+                                  listener: (context, state) async {
+                                    if (state is GradeMenuError) {
+                                      final snackBar = SnackBar(
+                                        content:
+                                            Text(state.errorMessage ?? "Error"),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+                                    }
+                                  },
+                                  builder: (context, state) {
+                                    if (state is GradeMenuLoading) {
+                                      const Center(child: DoubleBounce());
+                                    }
+                                    if (state is GradeMenuLoaded) {
+                                      return FancyDropDownFormField<
+                                          GradeMenuItem>(
+                                        name: 'gradeMenu',
+                                        hintTitle: S.of(context).choose_year,
+                                        validator: IsRequiredRule(validationError: S.of(context).field_required),
+                                        items: state.items ?? [],
+                                        itemBuilder: (context, item) => Text(
+                                          item.name,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1
+                                              ?.copyWith(fontSize: 14),
+                                        ),
+                                        onChanged: (value) => context
+                                            .read<GradeMenuCubit>()
+                                            .selectGradeMenuItem(value!.id),
+                                      );
+                                    } else {
+                                      return const SizedBox();
+                                    }
+                                  },
+                                ),
+                                 SizedBox(
+                                  height: 2.w,
+                                ),
+                                FancyPasswordFormField(
+                                  placeholderText: S.of(context).password,
+                                  name: 'password',
+                                  controller: _controller,
+                                  validator: IsRequiredRule(validationError: S.of(context).field_required),
+                                ),
+                                SizedBox(
+                                  height: 2.w,
+                                ),
+                                FancyConfirmPasswordFormField(
+                                  placeholderText: S.of(context).confirm_password,
+                                  name: 'confirmPassword',
+                                  passwordController: _controller,
+                                  validator: IsRequiredRule(validationError: S.of(context).field_required),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 16.0,
+                         SizedBox(
+                          height: 8.w,
                         ),
                         Center(
                           child: FancyElevatedButton(
-                            width: 140.0,
+                            width: 30.w,
                             title: S.of(context).register,
                             backGroundColor:
                                 CommonColors.fancyElevatedButtonBackGroundColor,
@@ -275,12 +287,14 @@ class RegisterScreen extends StatelessWidget {
                             },
                           ),
                         ),
-                        const SizedBox(
-                          height: 8.0,
+                         SizedBox(
+                          height: 4.w,
                         ),
                         Center(
                           child: Text(S.of(context).login_with_social,
-                              style: Theme.of(context).textTheme.bodyMedium),
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                fontSize: 11.sp,
+                              )),
                         ),
                         const SizedBox(
                           height: 16.0,
@@ -292,20 +306,20 @@ class RegisterScreen extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
-                                children: const [
+                                children:  [
                                   Image(
                                     image: AssetImage(
                                       AssetsImage.facebookAuth,
                                     ),
-                                    width: 65.0,
+                                    width: 15.w,
                                   ),
                                   Image(
                                       image: AssetImage(AssetsImage.googleAuth),
-                                      width: 65.0),
+                                      width: 15.w),
                                   Image(
                                       image:
                                           AssetImage(AssetsImage.microsoftAuth),
-                                      width: 65.0)
+                                      width: 15.w)
                                 ],
                               ),
                             )

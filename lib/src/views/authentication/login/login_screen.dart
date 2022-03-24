@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 25.h,
+                  height: 27.h,
                   child: Stack(children: [
                      Center(
                         child: Image(
@@ -188,8 +188,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     validationError: S.of(context).incorrect_email_or_mobile),
               ])
             ),
-            const SizedBox(
-              height: 8.0,
+             SizedBox(
+              height: 2.h,
             ),
             FancyPasswordFormField(
               placeholderText: S.of(context).password,

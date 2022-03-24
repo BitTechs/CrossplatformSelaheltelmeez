@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
+import 'package:sizer/sizer.dart';
 
 class ImageWithBottomHeader extends StatelessWidget {
   final String image;
@@ -23,7 +24,7 @@ class ImageWithBottomHeader extends StatelessWidget {
         Align(
           alignment: Alignment.bottomCenter,
           child: SizedBox(
-            height: 40,
+            height: 4.h,
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(40),
@@ -40,7 +41,8 @@ class ImageWithBottomHeader extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge
-                      ?.copyWith(color: Colors.white),
+                      ?.copyWith(color: Colors.white,
+                  fontSize: 8.sp),
                 ),
               ),
             ),

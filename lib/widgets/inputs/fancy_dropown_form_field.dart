@@ -24,11 +24,20 @@ class FancyDropDownFormField<T> extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        SvgPicture.asset(
-          AssetsImage.inputBackground,
-          color: CommonColors.inputBackgroundColor,
-          width: width ?? 90.w,
-          height:  height ?? 10.h,
+        // SvgPicture.asset(
+        //   AssetsImage.inputBackground,
+        //   color: CommonColors.inputBackgroundColor,
+        //   width: width ?? 90.w,
+        //   height:  height ?? 10.h,
+        // ),
+        SizedBox(
+          height: height ?? 10.h,
+          width: width ?? MediaQuery.of(context).size.width,
+          child: SvgPicture.asset(
+            AssetsImage.inputBackground,
+            color: CommonColors.inputBackgroundColor,
+            fit: BoxFit.fill,
+          ),
         ),
         FormBuilderDropdown<T>(
             name: name,
@@ -49,7 +58,7 @@ class FancyDropDownFormField<T> extends StatelessWidget {
               enabledBorder: InputBorder.none,
               errorBorder: InputBorder.none,
               disabledBorder: InputBorder.none,
-              contentPadding: EdgeInsets.only(left: 15.w, bottom: 0, top: 0, right: 15.w),
+              contentPadding: EdgeInsets.only(left: 4.w, bottom: 0, top: 0, right: 4.w),
               errorStyle:Theme.of(context).textTheme.bodySmall?.copyWith(color: CommonColors.errorTextColor, height: 0.3, fontSize: 12),),
               //validator: (value)=> validator == null? null : validator!(value),
               onChanged: onChanged,
