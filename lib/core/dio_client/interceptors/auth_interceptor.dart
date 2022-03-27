@@ -1,14 +1,20 @@
 import 'package:dio/dio.dart';
-import 'package:selaheltelmeez/core/local_storage/app_user_entity.dart';
+import 'package:get_it/get_it.dart';
+import 'package:selaheltelmeez/core/local_storage/entities/app_user_entity.dart';
 import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
+import 'package:selaheltelmeez/core/local_storage/repositories/app_user_repository.dart';
 
 class AuthInterceptor extends Interceptor {
-  AuthInterceptor();
+  final AppUserRepository _repository;
+  AuthInterceptor(this._repository);
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    AppUserEntity appUserEntity =  await AppUserLocalStorageProvider.readAsAppUserObjectAsync();
-    options.headers["Authorization"] = "Bearer ${appUserEntity.accessToken}";
+
+    final appUserEntity =  _repository.getAppUser();
+    if(appUserEntity != null){
+      options.headers["Authorization"] = "Bearer ${appUserEntity.accessToken ?? ""}";
+    }
     return handler.next(options);
   }
 

@@ -1,0 +1,119 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:3717963250085474326",
+      "lastPropertyId": "18:6573412102067689913",
+      "name": "AppUserEntity",
+      "properties": [
+        {
+          "id": "1:7645681541879279366",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:595787963488381418",
+          "name": "appUserId",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "1:7656925614553981487"
+        },
+        {
+          "id": "3:3758282649347494992",
+          "name": "fullName",
+          "type": 9
+        },
+        {
+          "id": "4:6676262266468308378",
+          "name": "email",
+          "type": 9
+        },
+        {
+          "id": "5:2447669088290843873",
+          "name": "mobileNumber",
+          "type": 9
+        },
+        {
+          "id": "6:8066626800004261274",
+          "name": "grade",
+          "type": 9
+        },
+        {
+          "id": "7:2871733990845995572",
+          "name": "gender",
+          "type": 9
+        },
+        {
+          "id": "8:8106155181526398788",
+          "name": "country",
+          "type": 9
+        },
+        {
+          "id": "9:2784865966489940202",
+          "name": "dateOfBirth",
+          "type": 9
+        },
+        {
+          "id": "10:7223361669329576780",
+          "name": "referralCode",
+          "type": 9
+        },
+        {
+          "id": "11:1445535545480957480",
+          "name": "role",
+          "type": 9
+        },
+        {
+          "id": "12:3918587477480591979",
+          "name": "governorate",
+          "type": 9
+        },
+        {
+          "id": "13:4326589202494955189",
+          "name": "avatarUrl",
+          "type": 9
+        },
+        {
+          "id": "14:273796558880942011",
+          "name": "accessToken",
+          "type": 9
+        },
+        {
+          "id": "15:8044255094879510125",
+          "name": "refreshToken",
+          "type": 9
+        },
+        {
+          "id": "16:6138658003751903583",
+          "name": "isPremium",
+          "type": 1
+        },
+        {
+          "id": "17:4122114817341546328",
+          "name": "isEmailVerified",
+          "type": 1
+        },
+        {
+          "id": "18:6573412102067689913",
+          "name": "isMobileVerified",
+          "type": 1
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "1:3717963250085474326",
+  "lastIndexId": "1:7656925614553981487",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

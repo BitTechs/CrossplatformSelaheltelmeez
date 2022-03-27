@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/helpers/utilities.dart';
+import 'package:selaheltelmeez/core/local_storage/repositories/app_user_repository.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
@@ -26,8 +27,7 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) =>
-          RegisterCubit(context.read<RegisterRepository>()),
+      create: (BuildContext context) => RegisterCubit(repo: context.read<RegisterRepository>(),appUserRepository: context.read<AppUserRepository>()),
       child: NavigatedAppScaffold(
         title: S.of(context).sign_up,
         child: SingleChildScrollView(
@@ -183,7 +183,7 @@ class RegisterScreen extends StatelessWidget {
                                   name: 'fullName',
                                   validator: IsRequiredRule(validationError: S.of(context).field_required),
                                 ),
-                                 SizedBox(
+                                 const SizedBox(
                                   height: 2.0,
                                 ),
                                 BlocConsumer<GradeMenuCubit, GradeMenuState>(
@@ -308,17 +308,17 @@ class RegisterScreen extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children:  [
                                   Image(
-                                    image: AssetImage(
+                                    image: const AssetImage(
                                       AssetsImage.facebookAuth,
                                     ),
                                     width: 15.w,
                                   ),
                                   Image(
-                                      image: AssetImage(AssetsImage.googleAuth),
+                                      image: const AssetImage(AssetsImage.googleAuth),
                                       width: 15.w),
                                   Image(
                                       image:
-                                          AssetImage(AssetsImage.microsoftAuth),
+                                          const AssetImage(AssetsImage.microsoftAuth),
                                       width: 15.w)
                                 ],
                               ),

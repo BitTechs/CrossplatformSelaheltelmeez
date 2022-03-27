@@ -9,8 +9,10 @@ part of 'update_profile_response.dart';
 UpdateProfileResponse _$UpdateProfileResponseFromJson(
         Map<String, dynamic> json) =>
     UpdateProfileResponse(
+      id: json['id'] as String,
       gender: json['gender'] as String?,
-      isVerified: json['isVerified'] as bool,
+      isEmailVerified: json['isEmailVerified'] as bool,
+      isMobileVerified: json['isMobileVerified'] as bool,
       fullName: json['fullName'] as String,
       email: json['email'] as String?,
       mobileNumber: json['mobileNumber'] as String?,
@@ -21,23 +23,29 @@ UpdateProfileResponse _$UpdateProfileResponseFromJson(
       role: json['role'] as String,
       governorate: json['governorate'] as String?,
       avatarUrl: json['avatarUrl'] as String,
+      accessToken: json['accessToken'] as String,
+      refreshToken: json['refreshToken'] as String,
       isPremium: json['isPremium'] as bool,
     );
 
 Map<String, dynamic> _$UpdateProfileResponseToJson(
         UpdateProfileResponse instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'fullName': instance.fullName,
       'email': instance.email,
       'mobileNumber': instance.mobileNumber,
       'grade': instance.grade,
-      'country': instance.country,
       'gender': instance.gender,
+      'country': instance.country,
       'dateOfBirth': instance.dateOfBirth,
       'referralCode': instance.referralCode,
       'role': instance.role,
       'governorate': instance.governorate,
       'avatarUrl': instance.avatarUrl,
+      'accessToken': instance.accessToken,
+      'refreshToken': instance.refreshToken,
       'isPremium': instance.isPremium,
-      'isVerified': instance.isVerified,
+      'isEmailVerified': instance.isEmailVerified,
+      'isMobileVerified': instance.isMobileVerified,
     };

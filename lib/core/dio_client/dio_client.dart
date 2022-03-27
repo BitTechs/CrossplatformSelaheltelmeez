@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:selaheltelmeez/core/dio_client/interceptors/auth_interceptor.dart';
+import 'package:selaheltelmeez/core/local_storage/repositories/app_user_repository.dart';
 
 abstract class IDioClient {
   Dio getClient();
@@ -39,6 +40,9 @@ class AnonymousDioClient implements IDioClient {
   }
 }
 class AuthorizedDioClient implements IDioClient {
+  final AppUserRepository appUserRepository;
+  AuthorizedDioClient({required this.appUserRepository});
+
   @override
   Dio getClient() {
     final _dio = Dio(BaseOptions(
@@ -63,7 +67,7 @@ class AuthorizedDioClient implements IDioClient {
       ),
     );
 
-    _dio.interceptors.add(AuthInterceptor());
+    _dio.interceptors.add(AuthInterceptor(appUserRepository));
 
     (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
+import 'package:selaheltelmeez/core/local_storage/repositories/app_user_repository.dart';
 import 'package:selaheltelmeez/src/data/authentication/dtos/update_profile/avatar_response.dart';
 import 'package:selaheltelmeez/src/data/authentication/dtos/update_profile/governorate_response.dart';
 import 'package:selaheltelmeez/src/data/authentication/dtos/update_profile/update_profile_request.dart';
@@ -11,8 +11,9 @@ import 'package:selaheltelmeez/src/data/authentication/repositories/update_profi
 part 'update_profile_state.dart';
 
 class UpdateProfileCubit extends Cubit<UpdateProfileState> {
-  final UpdateProfileRepository _repo;
-  UpdateProfileCubit(this._repo) : super(UpdateProfileInitial());
+  final UpdateProfileRepository repo;
+  final AppUserRepository appUserRepository;
+  UpdateProfileCubit({required this.repo, required this.appUserRepository}) : super(UpdateProfileInitial());
 
   static UpdateProfileCubit get(context) => BlocProvider.of(context);
 
@@ -28,7 +29,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
 
   Future<void> updateProfileAsync()async{
     emit(UpdateProfileSubmit());
-    final response =  await _repo.updateProfileAsync(UpdateProfileRequest(
+    final response =  await repo.updateProfileAsync(UpdateProfileRequest(
         dateOfBirth: selectedBirthYear,
         avatarId: selectedAvatar?.id,
         countryId: liveInEgypt? 1 : 0,
@@ -36,7 +37,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
         gender: gender == "male" ? 1 : 0,
         isEmailSubscribed: false));
     if(response.isSuccess){
-      await AppUserLocalStorageProvider.addUpdateProfileResponseAsync(response.value!);
+       appUserRepository.saveUpdateProfileResponse(response.value!);
       emit(UpdateProfileSuccess());
     }else{
       emit(UpdateProfileFailed(errorMessage: response.errorMessage ?? "Error"));
@@ -45,7 +46,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
 
   Future<void> loadAvatars()async{
     emit(UpdateProfileLoadAvatarsSubmit());
-    final response = await _repo.getAvatarsAsync();
+    final response = await repo.getAvatarsAsync();
     if(response.isSuccess){
       avatars.addAll(response.value!);
       emit(UpdateProfileLoadAvatarsSuccess());
@@ -54,7 +55,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   }
   Future<void> loadGovernorates()async{
     emit(UpdateProfileLoadGovernoratesSubmit());
-    final response = await _repo.getGovernoratesAsync();
+    final response = await repo.getGovernoratesAsync();
     if(response.isSuccess){
       governorates.addAll(response.value!);
       emit(UpdateProfileLoadGovernoratesSuccess());

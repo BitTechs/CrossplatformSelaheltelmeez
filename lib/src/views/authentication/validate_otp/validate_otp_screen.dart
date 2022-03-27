@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
+import 'package:selaheltelmeez/core/local_storage/repositories/app_user_repository.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
@@ -17,7 +18,7 @@ class ValidateOTPScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-  create: (context) => ValidateOtpCubit(context.read<ValidateOTPRepository>()),
+  create: (context) => ValidateOtpCubit(repo:context.read<ValidateOTPRepository>(), appUserRepository: context.read<AppUserRepository>()),
   child: NavigatedAppScaffold(
       title: S.of(context).activation_code,
       child: SingleChildScrollView(
@@ -31,10 +32,6 @@ class ValidateOTPScreen extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
             if(state is ValidateOtpSuccess){
-              final savedResponse =  await AppUserLocalStorageProvider.readAsJsonAsync();
-              savedResponse['isVerified'] = true;
-              await AppUserLocalStorageProvider.addAsJsonAsync(savedResponse);
-
               Navigator.of(context).pushReplacementNamed(RouteNames.studentHomeLayout);
             }
           },
@@ -83,11 +80,9 @@ class ValidateOTPScreen extends StatelessWidget {
                             title: S.of(context).activate,
                             onPressed: () async {
                               if (_otpController.text.isNotEmpty) {
-                                final savedResponse =  await AppUserLocalStorageProvider.readAsAppUserObjectAsync();
-                                bool isMobile = savedResponse.mobileNumber?.isNotEmpty ?? false;
                                 context
                                     .read<ValidateOtpCubit>()
-                                    .validateAsync(_otpController.text, isMobile);
+                                    .validateAsync(_otpController.text);
                               }
                             },
                             backGroundColor:
@@ -99,11 +94,9 @@ class ValidateOTPScreen extends StatelessWidget {
                           FancyElevatedButton(
                             title: S.of(context).resend,
                             onPressed: () async {
-                              final savedResponse =  await AppUserLocalStorageProvider.readAsAppUserObjectAsync();
-                              bool isMobile = savedResponse.mobileNumber?.isNotEmpty ?? false;
                               context
                                   .read<ValidateOtpCubit>()
-                                  .resendActivationCodeAsync(isMobile);
+                                  .resendActivationCodeAsync();
                             },
                             backGroundColor:
                             CommonColors.fancyElevatedButtonBackGroundColor,

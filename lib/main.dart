@@ -1,9 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:selaheltelmeez/core/dio_client/dio_client.dart';
 import 'package:selaheltelmeez/core/language_change_provider.dart';
+import 'package:selaheltelmeez/core/local_storage/object_box_db.dart';
+import 'package:selaheltelmeez/core/local_storage/repositories/app_user_repository.dart';
 import 'package:selaheltelmeez/src/bloc/authentication/change_email_or_mobile/change_email_or_mobile_cubit.dart';
 import 'package:selaheltelmeez/src/bloc/authentication/register/grade_menu_cubit.dart';
 import 'package:selaheltelmeez/src/bloc/authentication/register/identity_role_cubit.dart';
@@ -20,6 +25,7 @@ import 'package:selaheltelmeez/src/data/authentication/repositories/register/reg
 import 'package:selaheltelmeez/src/data/authentication/repositories/update_profile/update_profile_repository.dart';
 import 'package:selaheltelmeez/src/data/authentication/repositories/validate_otp/validate_otp_repository.dart';
 import 'package:selaheltelmeez/src/data/student/repositories/curriculum/curriculum_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:selaheltelmeez/core/router/route_generator.dart';
 import 'package:selaheltelmeez/core/theme/app_theme.dart';
@@ -33,9 +39,10 @@ import 'src/data/student/data_provider/curriculum/curriculum_data_provider.dart'
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  GetIt.I.registerSingletonAsync<ObjectBox>(() async => await ObjectBox.create());
+  GetIt.I.registerSingletonAsync<SharedPreferences>(() async => await SharedPreferences.getInstance());
+  await GetIt.I.allReady();
   // Trying to loading App User Entity Values
-  await AppUserLocalStorageProvider.tryToLoadAppUserEntity();
 
   runApp(
     const SelaheltelmeezLauncher(),
@@ -45,25 +52,31 @@ Future<void> main() async {
 class SelaheltelmeezLauncher extends StatelessWidget {
   const SelaheltelmeezLauncher({Key? key}) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
+        // AppUser Repository
+        RepositoryProvider<AppUserRepository>(
+            create: (context) => AppUserRepository(
+                objectBox: GetIt.I.get<ObjectBox>(),
+                sharedPreferenceInstance: GetIt.I.get<SharedPreferences>())),
+
         // Dio Clients
         RepositoryProvider<AnonymousDioClient>(
             create: (context) => AnonymousDioClient()),
         RepositoryProvider<AuthorizedDioClient>(
-            create: (context) => AuthorizedDioClient()),
+            create: (context) => AuthorizedDioClient(appUserRepository: context.read<AppUserRepository>())),
+
+
 
         // Login
         RepositoryProvider<RemoteLoginDataProvider>(
             create: (context) => RemoteLoginDataProvider(
                 dioClient: context.read<AnonymousDioClient>())),
+
         RepositoryProvider<LoginRepository>(
-            create: (context) => LoginRepository(
-                dataProvider: context.read<RemoteLoginDataProvider>())),
+            create: (context) => LoginRepository(dataProvider: context.read<RemoteLoginDataProvider>())),
 
         // Register
         RepositoryProvider<RemoteRegisterDataProvider>(
@@ -110,6 +123,7 @@ class SelaheltelmeezLauncher extends StatelessWidget {
     create: (context)=> LanguageChangeProvider(),
     child: Builder(
       builder: (context) {
+        final appUser = context.read<AppUserRepository>().getAppUser();
         return Sizer(
             builder: (context, orientation, deviceType)=>
                 MaterialApp(
@@ -123,8 +137,7 @@ class SelaheltelmeezLauncher extends StatelessWidget {
                 supportedLocales: S.delegate.supportedLocales,
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.lightTheme,
-                //initialRoute: RouteNames.studentAchievements,
-                initialRoute: AppUserLocalStorageProvider.sharedAppUserEntity == null ? RouteNames.index : RouteNames.studentHomeLayout,
+                initialRoute: appUser == null ? RouteNames.index : RouteNames.studentHomeLayout ,
                 locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocal,
                 onGenerateRoute: RouteGenerator.generateRoute,
               ),

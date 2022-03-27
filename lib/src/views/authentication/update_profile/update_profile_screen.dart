@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
+import 'package:selaheltelmeez/core/local_storage/repositories/app_user_repository.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
@@ -18,7 +19,7 @@ class UpdateProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = UpdateProfileCubit(context.read<UpdateProfileRepository>())..loadAvatars();
+    final cubit = UpdateProfileCubit(repo:context.read<UpdateProfileRepository>(), appUserRepository: context.read<AppUserRepository>())..loadAvatars();
     return BlocProvider(
       create: (context) => cubit,
       child: NavigatedAppScaffold(

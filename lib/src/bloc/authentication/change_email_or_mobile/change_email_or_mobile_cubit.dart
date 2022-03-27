@@ -15,10 +15,7 @@ class ChangeEmailOrMobileCubit extends Cubit<ChangeEmailOrMobileState> {
     emit(ChangeEmailOrMobileSubmit());
     CommitResult response = await _repo.updateAsync(request);
     if (response.isSuccess) {
-      Map<String, dynamic> appUserEntityMappedJson =  await AppUserLocalStorageProvider.readAsJsonAsync();
-      appUserEntityMappedJson['email'] = request.newEmail;
-      appUserEntityMappedJson['mobileNumber'] = request.newMobileNumber;
-      await AppUserLocalStorageProvider.addAsJsonAsync(appUserEntityMappedJson);
+
       emit(ChangeEmailOrMobileSuccess());
     } else {
       emit(ChangeEmailOrMobileFailed(

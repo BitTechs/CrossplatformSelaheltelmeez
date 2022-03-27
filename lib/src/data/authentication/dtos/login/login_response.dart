@@ -3,6 +3,7 @@ part 'login_response.g.dart';
 
 @JsonSerializable()
 class LoginResponse{
+  final String id;
   final String fullName;
   final String? email;
   final String? mobileNumber;
@@ -17,8 +18,9 @@ class LoginResponse{
   final String accessToken;
   final String refreshToken;
   final bool isPremium;
-  final bool isVerified;
-  LoginResponse( {required this.gender,required this.isVerified,required this.fullName, required this.email, required this.mobileNumber, required this.grade, required this.country, required this.dateOfBirth, required this.referralCode, required this.role, required this.governorate, required this.avatarUrl, required this.accessToken, required this.refreshToken, required this.isPremium});
+  final bool isEmailVerified;
+  final bool isMobileVerified;
+  LoginResponse( {required this.id,required this.gender,required this.isEmailVerified,required this.isMobileVerified,required this.fullName, required this.email, required this.mobileNumber, required this.grade, required this.country, required this.dateOfBirth, required this.referralCode, required this.role, required this.governorate, required this.avatarUrl, required this.accessToken, required this.refreshToken, required this.isPremium});
   factory LoginResponse.fromJson(Map<String,dynamic> json)=> _$LoginResponseFromJson(json);
   Map<String,dynamic> toJson()=> _$LoginResponseToJson(this);
 }

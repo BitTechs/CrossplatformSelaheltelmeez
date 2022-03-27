@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
+import 'package:selaheltelmeez/core/local_storage/repositories/app_user_repository.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/src/bloc/student/dashboard/curriculum_cubit.dart';
@@ -19,6 +20,7 @@ class StudentDashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appUser = context.read<AppUserRepository>().getAppUser();
     return BlocProvider(
       create: (_) => CurriculumCubit(context.read<CurriculumRepository>()),
       child: FlatAppScaffold(
@@ -48,9 +50,7 @@ class StudentDashboardScreen extends StatelessWidget {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(35.0),
                             child: Image(
-                              image: NetworkImage(AppUserLocalStorageProvider
-                                      .sharedAppUserEntity?.avatarUrl ??
-                                  "Url"),
+                              image: NetworkImage(appUser?.avatarUrl ?? "Url"),
                               height: 70,
                               width: 70,
                             ),
@@ -66,18 +66,14 @@ class StudentDashboardScreen extends StatelessWidget {
                               child: Column(
                                 children: [
                                   Text(
-                                    AppUserLocalStorageProvider
-                                            .sharedAppUserEntity?.fullName ??
-                                        "Name",
+                                    appUser?.fullName ?? "Name",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge
                                         ?.copyWith(color: Colors.white),
                                   ),
                                   Text(
-                                    AppUserLocalStorageProvider
-                                            .sharedAppUserEntity?.grade ??
-                                        "Grade",
+                                    appUser?.grade ?? "Grade",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge
@@ -119,8 +115,14 @@ class StudentDashboardScreen extends StatelessWidget {
                               titleColor: CommonColors.fancyElevatedTitleColor,
                               shadowColor:
                                   CommonColors.fancyElevatedShadowTitleColor,
-                              onPressed: () =>
-                                  Navigator.of(context).pushNamed('/login'),
+                              onPressed: () {
+                                if (context
+                                    .read<AppUserRepository>()
+                                    .remove()) {
+                                  Navigator.of(context)
+                                      .pushNamed(RouteNames.index);
+                                }
+                              },
                             ),
                           ),
                         ],
@@ -141,7 +143,9 @@ class StudentDashboardScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BlocProvider(
-                create: (context) => RecentLessonsCubit(context.read<CurriculumRepository>())..getRecentLessonsAsync(),
+                create: (context) =>
+                    RecentLessonsCubit(context.read<CurriculumRepository>())
+                      ..getRecentLessonsAsync(),
                 child: BlocConsumer<RecentLessonsCubit, RecentLessonsState>(
                     builder: (context, state) {
                   if (state is RecentLessonEmpty) {
@@ -290,31 +294,33 @@ class StudentDashboardScreen extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: Text(
-                    "المواد الدراسية",
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),),
+                      "المواد الدراسية",
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                  ),
                   Expanded(
                     flex: 2,
                     child: Builder(builder: (context) {
-                    return FancyDropDownFormField<TermEntity>(
-                      name: 'term',
-                      hintTitle: 'اختر الفصل الدراسي',
-                      items: [
-                        TermEntity(id: 1, name: 'الفصل الدراسي الاول'),
-                        TermEntity(id: 2, name: 'الفصل الدراسي الثاني')
-                      ],
-                      itemBuilder: (context, item) => Text(
-                        item.name,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(fontSize: 14),
-                      ),
-                      onChanged: (value) => context
-                          .read<CurriculumCubit>()
-                          .getSubjectsAsync(value?.id),
-                    );
-                  }),)
+                      return FancyDropDownFormField<TermEntity>(
+                        name: 'term',
+                        hintTitle: 'اختر الفصل الدراسي',
+                        items: [
+                          TermEntity(id: 1, name: 'الفصل الدراسي الاول'),
+                          TermEntity(id: 2, name: 'الفصل الدراسي الثاني')
+                        ],
+                        itemBuilder: (context, item) => Text(
+                          item.name,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(fontSize: 14),
+                        ),
+                        onChanged: (value) => context
+                            .read<CurriculumCubit>()
+                            .getSubjectsAsync(value?.id),
+                      );
+                    }),
+                  )
                 ],
               ),
               BlocBuilder<CurriculumCubit, CurriculumState>(
