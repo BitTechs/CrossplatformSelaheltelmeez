@@ -67,8 +67,6 @@ class AppUserRepository{
         role: response.role,
         governorate: response.governorate,
         avatarUrl: response.avatarUrl,
-        accessToken: response.accessToken,
-        refreshToken: response.refreshToken,
         isPremium: response.isPremium));
     sharedPreferenceInstance.setInt(appUserId, internalAppUserId);
   }

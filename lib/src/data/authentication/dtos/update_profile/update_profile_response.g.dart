@@ -23,8 +23,6 @@ UpdateProfileResponse _$UpdateProfileResponseFromJson(
       role: json['role'] as String,
       governorate: json['governorate'] as String?,
       avatarUrl: json['avatarUrl'] as String,
-      accessToken: json['accessToken'] as String,
-      refreshToken: json['refreshToken'] as String,
       isPremium: json['isPremium'] as bool,
     );
 
@@ -43,8 +41,6 @@ Map<String, dynamic> _$UpdateProfileResponseToJson(
       'role': instance.role,
       'governorate': instance.governorate,
       'avatarUrl': instance.avatarUrl,
-      'accessToken': instance.accessToken,
-      'refreshToken': instance.refreshToken,
       'isPremium': instance.isPremium,
       'isEmailVerified': instance.isEmailVerified,
       'isMobileVerified': instance.isMobileVerified,

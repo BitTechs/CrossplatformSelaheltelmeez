@@ -31,7 +31,6 @@ import 'package:selaheltelmeez/core/router/route_generator.dart';
 import 'package:selaheltelmeez/core/theme/app_theme.dart';
 import 'package:selaheltelmeez/src/bloc/student/student_navigation_bar/navigation_bar_cubit.dart';
 import 'package:selaheltelmeez/generated/l10n.dart';
-import 'core/local_storage/app_user_local_storage_provider.dart';
 import 'core/router/route_names.dart';
 import 'src/bloc/student/classes/class_search_cubit.dart';
 import 'src/data/student/data_provider/curriculum/curriculum_data_provider.dart';

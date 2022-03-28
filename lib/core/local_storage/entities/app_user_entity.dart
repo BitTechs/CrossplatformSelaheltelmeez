@@ -36,7 +36,7 @@ class AppUserEntity{
     required this.referralCode,
     required this.role,
     required this.avatarUrl,
-    required this.accessToken,
-    required this.refreshToken,
+    this.accessToken,
+    this.refreshToken,
     required this.isPremium});
 }
