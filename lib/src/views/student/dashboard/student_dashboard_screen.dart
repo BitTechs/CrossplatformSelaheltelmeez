@@ -352,7 +352,7 @@ class StudentDashboardScreen extends StatelessWidget {
                               return InkWell(
                                 onTap: () {
                                   Navigator.of(context)
-                                      .pushNamed(RouteNames.studentSubject);
+                                      .pushNamed(RouteNames.studentSubject, arguments:[state.subjects[index].id, state.subjects[index].backgroundImage, state.subjects[index].name]);
                                 },
                                 child: Card(
                                   color: Colors.grey[100],

@@ -18,7 +18,7 @@ import 'package:selaheltelmeez/src/views/authentication/register/register_screen
 import 'package:selaheltelmeez/src/views/authentication/update_profile/update_profile_screen.dart';
 import 'package:selaheltelmeez/src/views/authentication/validate_otp/validate_otp_screen.dart';
 import 'package:selaheltelmeez/src/views/student/classes/class_search_screen.dart';
-import 'package:selaheltelmeez/src/views/student/subject/subject_screen.dart';
+import 'package:selaheltelmeez/src/views/student/units/unit_screen.dart';
 import 'package:selaheltelmeez/src/views/student/usage_report/usage_report_screen.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
@@ -56,7 +56,8 @@ class RouteGenerator {
       case RouteNames.studentHomeLayout:
         return PageTransition(child: const StudentNavBarScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.studentSubject:
-        return PageTransition(child: const SubjectScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+        List<dynamic> dynamicArgs = (args as List<dynamic>);
+        return PageTransition(child: UnitScreen(curriculumId: dynamicArgs[0], backgroundImage: dynamicArgs[1], curriculumName: dynamicArgs[2],),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.studentLesson:
         return PageTransition(child: LessonScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.classSearch:

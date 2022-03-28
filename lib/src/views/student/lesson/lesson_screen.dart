@@ -24,14 +24,14 @@ class _LessonScreenState extends State<LessonScreen> {
           leading: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               IconButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
               ),
             ],
           ),
@@ -202,7 +202,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 color: CommonColors.studentHomeTopBar,
                 borderRadius: BorderRadius.circular(16.0),
                 image: const DecorationImage(
-                  image: const AssetImage(AssetsImage.gameLand),
+                  image: AssetImage(AssetsImage.gameLand),
                   fit: BoxFit.cover,
                 ),
               ),

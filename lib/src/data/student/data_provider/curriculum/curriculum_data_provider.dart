@@ -3,6 +3,7 @@ import 'package:selaheltelmeez/core/data_transfer_object/value_commit_result.dar
 import 'package:selaheltelmeez/core/dio_client/dio_client.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/curriculum/student_curriculum.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/recent_progress/student_recent_lesson_progress_response.dart';
+import 'package:selaheltelmeez/src/data/student/dtos/unit/curriculum_unit.dart';
 
 class CurriculumDataProvider {
   final IDioClient dioClient;
@@ -16,5 +17,10 @@ class CurriculumDataProvider {
   Future<ValueCommitResult<List<StudentRecentLessonProgressResponse>>> getRecentLessonsProgressAsync() async{
     Response<dynamic> response = await dioClient.getClient().get("/StudentCurriculum/GetStudentRecentLessonsProgress");
     return ValueCommitResult<List<StudentRecentLessonProgressResponse>>.fromJson(response.data,(data)=> (data as List).map((e) => StudentRecentLessonProgressResponse.fromJson(e as Map<String,dynamic>)).toList());
+  }
+
+  Future<ValueCommitResult<List<CurriculumUnit>>> getCurriculumUnitsAsync(String curriculumId)async{
+    Response<dynamic> response = await dioClient.getClient().get("/Curriculum/GetCurriculumUnits?CurriculumId=$curriculumId");
+    return ValueCommitResult<List<CurriculumUnit>>.fromJson(response.data,(data)=> (data as List).map((e) => CurriculumUnit.fromJson(e as Map<String,dynamic>)).toList());
   }
 }
