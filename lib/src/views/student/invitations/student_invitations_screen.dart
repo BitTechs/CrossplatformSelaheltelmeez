@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
+import 'package:selaheltelmeez/widgets/buttons/fancy_elevated_button.dart';
 import 'package:selaheltelmeez/widgets/scaffold/flat_app_scaffold.dart';
+import 'package:sizer/sizer.dart';
 
 
 class StudentInvitationsScreen extends StatelessWidget {
@@ -43,6 +47,92 @@ class StudentInvitationsScreen extends StatelessWidget {
                 ],
               ),
             ],
+          ),
+
+          Padding(
+            padding:  EdgeInsets.all(4.w),
+            child: Stack(
+              alignment: AlignmentDirectional.bottomEnd,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom:6.w),
+                  child: Stack(
+                    alignment: AlignmentDirectional.topStart,
+                    children: [
+                      SizedBox(
+                        height: 10.h,
+                        width: MediaQuery.of(context).size.width,
+                        child: SvgPicture.asset(
+                          AssetsImage.inputBackground,
+                          color: CommonColors.inputBackgroundColor,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children:  [
+                          Image(
+                            width: 10.h,
+                            height: 10.h,
+                            //fit: BoxFit.fill,
+                            image: AssetImage(AssetsImage.studentUser),
+                          ),
+                          SizedBox(width: 4.w,),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('ارسل علي احمد طلب اضافة'),
+                                SizedBox(height: 2.w,),
+                                Text('1/3/2022  03:38',
+
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding:  EdgeInsets.only(top: 1.w),
+                        child: CircleAvatar(
+                          backgroundColor: CommonColors.studentHomeTopBar,
+                          radius: 2.w,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    FancyElevatedButton(
+                      title: 'موافق',
+                      backGroundColor:
+                      CommonColors.fancyElevatedButtonBackGroundColor,
+                      titleColor: CommonColors.fancyElevatedTitleColor,
+                      shadowColor:
+                      CommonColors.fancyElevatedShadowTitleColor,
+                      onPressed: () {
+
+                      },
+                    ),
+SizedBox(width: 1.w,),
+                    FancyElevatedButton(
+                      title: 'رفض',
+                      backGroundColor:
+                      CommonColors.fancyElevatedButtonBackGroundColor,
+                      titleColor: CommonColors.fancyElevatedTitleColor,
+                      shadowColor:
+                      CommonColors.fancyElevatedShadowTitleColor,
+                      onPressed: () {
+
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
 
           Expanded(

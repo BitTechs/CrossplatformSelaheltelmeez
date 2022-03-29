@@ -18,6 +18,11 @@ class RouteNames{
   static const String detailedSubjectReport = "/detailed-subject-report";
   static const String detailedLessonReport = "/detailed-lesson-report";
   static const String studentAchievements = "/student-achievements";
+  static const String classScreen = "/class-screen";
+  static const String homeworkScreen = "/homework-screen";
+  static const String homeworkDetailedScreen = "/homework-detailed-screen";
+  static const String quizScreen = "/quiz-screen";
+
 
   static const String webViewer = "/web-viewer";
   static const String youTubeViewer = "/youTube-viewer";

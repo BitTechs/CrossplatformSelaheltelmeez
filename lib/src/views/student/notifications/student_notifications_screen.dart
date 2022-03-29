@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/widgets/scaffold/flat_app_scaffold.dart';
+import 'package:sizer/sizer.dart';
 
 
 class StudentNotificationsScreen extends StatelessWidget {
@@ -43,6 +46,55 @@ class StudentNotificationsScreen extends StatelessWidget {
                 ],
               ),
             ],
+          ),
+
+          Padding(
+            padding:  EdgeInsets.all(4.w),
+            child: Stack(
+              alignment: AlignmentDirectional.topStart,
+              children: [
+                SizedBox(
+                  height: 10.h,
+                  width: MediaQuery.of(context).size.width,
+                  child: SvgPicture.asset(
+                    AssetsImage.inputBackground,
+                    color: CommonColors.inputBackgroundColor,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children:  [
+                    Image(
+                      width: 10.h,
+                      height: 10.h,
+                      //fit: BoxFit.fill,
+                      image: AssetImage(AssetsImage.studentUser),
+                    ),
+                    SizedBox(width: 4.w,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('علي احمد وافق علي طلب الاضافة'),
+                          SizedBox(height: 2.w,),
+                          Text('1/3/2022  03:38',
+
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding:  EdgeInsets.only(top: 1.w),
+                  child: CircleAvatar(
+                    backgroundColor: CommonColors.studentHomeTopBar,
+                    radius: 2.w,
+                  ),
+                ),
+              ],
+            ),
           ),
 
           Expanded(

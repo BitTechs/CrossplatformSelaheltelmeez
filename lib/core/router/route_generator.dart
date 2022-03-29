@@ -4,9 +4,13 @@ import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/src/data/landing/dtos/list_item.dart';
 import 'package:selaheltelmeez/src/views/landing/landing_screen.dart';
 import 'package:selaheltelmeez/src/views/student/achievements/achievements_screen.dart';
+import 'package:selaheltelmeez/src/views/student/class_screen/class_screen.dart';
 import 'package:selaheltelmeez/src/views/student/detailed_lesson_report/detailed_lesson_report_screen.dart';
 import 'package:selaheltelmeez/src/views/student/detailed_subject_report/detailed_subject_report_screen.dart';
+import 'package:selaheltelmeez/src/views/student/homework/homework_screen.dart';
+import 'package:selaheltelmeez/src/views/student/homework_detailed/homework_detailed_screen.dart';
 import 'package:selaheltelmeez/src/views/student/lesson_clips/lesson_screen.dart';
+import 'package:selaheltelmeez/src/views/student/quiz/quiz_screen.dart';
 import 'package:selaheltelmeez/src/views/student/recent_activity/recent_activity_screen.dart';
 import 'package:selaheltelmeez/src/views/student/student_navigation_bar/student%20_navigation_bar_screen.dart';
 import 'package:selaheltelmeez/src/views/authentication/change_email_or_mobile/change_email_or_mobile_screen.dart';
@@ -73,7 +77,16 @@ class RouteGenerator {
         return PageTransition(child: const DetailedLessonReportScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.studentAchievements:
         return PageTransition(child: const AchievementsScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-      // Validation of correct data type
+      case RouteNames.quizScreen:
+        return PageTransition(child: const QuizScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.homeworkDetailedScreen:
+        return PageTransition(child: const HomeworkDetailedScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.classScreen:
+        return PageTransition(child: const ClassScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.homeworkScreen:
+        return PageTransition(child: const HomeworkScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+
+    // Validation of correct data type
       case RouteNames.webViewer:
         ListItem listItem = (args as ListItem);
           return PageTransition(child:  WebViewer(url: listItem.url!,title: listItem.name!,),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);

@@ -74,29 +74,39 @@ class ImageWithFloatingBottomHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
-      child: Stack(children: [
-        Center(child: isNetworkImage ?  Image(image:NetworkImage(image)) : Image(image:AssetImage(image))),
-        Align(
-          alignment: alignment,
-          child: SizedBox(
-            height: 40,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(40),
-                // if you need this
-                side: BorderSide(
-                  color: Colors.grey.withOpacity(0.2),
-                  width: 1,
+      child: Stack(
+        alignment: AlignmentDirectional.bottomCenter,
+          children: [
+        Padding(
+          padding:  EdgeInsets.only(bottom: 4.5.w),
+          child: Container(
+            color: Colors.grey[100],
+              child: Center(child: isNetworkImage ?  Image(image:NetworkImage(image)) : Image(image:AssetImage(image)))),
+        ),
+        Padding(
+          padding:  EdgeInsets.symmetric(horizontal: 6.w),
+          child: Align(
+            alignment: alignment,
+            child: SizedBox(
+              height: 40,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40),
+                  // if you need this
+                  side: BorderSide(
+                    color: Colors.grey.withOpacity(0.2),
+                    width: 1,
+                  ),
                 ),
-              ),
-              color: headerBackgroundColor,
-              child: Center(
-                child: Text(
-                  header,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(color: headerColor),
+                color: headerBackgroundColor,
+                child: Center(
+                  child: Text(
+                    header,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(color: headerColor),
+                  ),
                 ),
               ),
             ),

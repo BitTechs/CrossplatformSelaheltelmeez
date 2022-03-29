@@ -360,7 +360,7 @@ class StudentDashboardScreen extends StatelessWidget {
                                   ]);
                                 },
                                 child: Card(
-                                  color: Colors.grey[100],
+                                  //color: Colors.grey[100],
                                   child: ImageWithFloatingBottomHeader(
                                     image:
                                         state.subjects[index].backgroundImage ??

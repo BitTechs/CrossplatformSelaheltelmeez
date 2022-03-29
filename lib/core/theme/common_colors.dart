@@ -35,4 +35,7 @@ class CommonColors{
   static get parentIdentityRoleColor => Colors.green;
   static get teacherIdentityRoleColor => Colors.blue;
 
+  /// quiz Colors
+  static get quizQuestionColor => const Color(0xffebedff);
+
 }

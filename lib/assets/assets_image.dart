@@ -28,5 +28,10 @@ class AssetsImage {
   static const String prizeSilver = "assets/images/student/prizeSilver.png";
   static const String statistics = "assets/images/student/statistics.png";
 
+  static const String classExam = "assets/images/student/classexam.png";
+  static const String classHomework = "assets/images/student/classhomework.png";
+  static const String homeworkDetails = "assets/images/student/examsdetailscircle.png";
+  static const String attach = "assets/images/shared/input/attach.svg";
+
 
 }
