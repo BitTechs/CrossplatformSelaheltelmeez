@@ -28,7 +28,7 @@ class _LessonScreenState extends State<LessonScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LessonClipsCubit(context.read<CurriculumRepository>())..getLessonClipsAsync(widget.lessonId),
+      create: (context) => LessonClipsCubit(context.read<CurriculumRepository>())..getLessonClipsAsync(10),
       child: FancyDetailedNavigatedAppScaffold(
         title: widget.title,
         subtitle: widget.subtitle,
