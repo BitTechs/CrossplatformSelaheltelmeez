@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/app_theme.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
+import 'package:selaheltelmeez/widgets/scaffold/fancy_navigated_app_scaffold.dart';
 
 class RecentActivityScreen extends StatelessWidget {
   const RecentActivityScreen({Key? key}) : super(key: key);
@@ -11,17 +12,9 @@ class RecentActivityScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: CommonColors.studentHomeTopBar,
-        title: Text('الانشطة الاخيرة',
-        style: AppTheme.screenTitle,
-             textAlign : TextAlign.center,
-        ),
-        centerTitle: true,
-      ),
-
-      body: Padding(
+    return FancyNavigatedAppScaffold(
+      title: "الانشطة الاخيرة",
+      child:  Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.separated(
             itemBuilder: (context, index) => Container(
@@ -54,7 +47,7 @@ class RecentActivityScreen extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       Text('مارس',
-                      textAlign: TextAlign.center,
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
@@ -83,12 +76,12 @@ class RecentActivityScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: const [
-                                   Text('اللغة العربية',
-                                  style: TextStyle(
-                                    fontSize: 14.0
-                                  ),
-                                     maxLines: 2,
-                                     overflow: TextOverflow.ellipsis,
+                                  Text('اللغة العربية',
+                                    style: TextStyle(
+                                        fontSize: 14.0
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                   Text('المحور 1 اكتشف ذاتي الموضوع 1 وطني',
                                     style: TextStyle(

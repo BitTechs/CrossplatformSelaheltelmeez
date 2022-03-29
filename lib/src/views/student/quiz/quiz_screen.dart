@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:selaheltelmeez/core/theme/app_theme.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/widgets/buttons/fancy_elevated_button.dart';
+import 'package:selaheltelmeez/widgets/scaffold/fancy_navigated_app_scaffold.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -17,71 +18,64 @@ class _QuizScreenState extends State<QuizScreen> {
   int? radioValue = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:  AppBar(
-        backgroundColor: CommonColors.studentHomeTopBar,
-        title: Text(
-          'سلاح التلميذ',
-          style: AppTheme.screenTitle,
-        ),
-      ),
-
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text('متبقي 9 دقائق و 10 ثواني',
-          style: TextStyle(
-            color: CommonColors.studentHomeTopBar,
-            fontWeight: FontWeight.bold,
-          ),
-          ),
-
-          SizedBox(height: 4.w,),
-
-          Expanded(
-            child: PageView.builder(
-              controller: quizController,
-              itemBuilder: (context, index) => quizItem(index),
-              itemCount: 10,
-            ),
-          ),
-
-          SizedBox(height: 4.w,),
-
-          SmoothPageIndicator(
-              controller: quizController,
-              effect: JumpingDotEffect(
-                verticalOffset: -15.0,
-                activeDotColor: CommonColors.studentHomeTopBar,
-                dotHeight: 3.w,
-                dotWidth: 3.w,
-
+    return FancyNavigatedAppScaffold(
+        child:  Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('متبقي 9 دقائق و 10 ثواني',
+              style: TextStyle(
+                color: CommonColors.studentHomeTopBar,
+                fontWeight: FontWeight.bold,
               ),
-              count: 10),
+            ),
 
-          SizedBox(height: 4.w,),
+            SizedBox(height: 4.w,),
 
-          FancyElevatedButton(
-            title: 'التالي',
-            backGroundColor:
-            CommonColors.fancyElevatedButtonBackGroundColor,
-            width: 40.w,
-            titleColor: CommonColors.fancyElevatedTitleColor,
-            shadowColor:
-            CommonColors.fancyElevatedShadowTitleColor,
-            onPressed: () {
+            Expanded(
+              child: PageView.builder(
+                controller: quizController,
+                itemBuilder: (context, index) => quizItem(index),
+                itemCount: 10,
+              ),
+            ),
+
+            SizedBox(height: 4.w,),
+
+            SmoothPageIndicator(
+                controller: quizController,
+                effect: JumpingDotEffect(
+                  verticalOffset: -15.0,
+                  activeDotColor: CommonColors.studentHomeTopBar,
+                  dotHeight: 3.w,
+                  dotWidth: 3.w,
+
+                ),
+                count: 10),
+
+            SizedBox(height: 4.w,),
+
+            FancyElevatedButton(
+              title: 'التالي',
+              backGroundColor:
+              CommonColors.fancyElevatedButtonBackGroundColor,
+              width: 40.w,
+              titleColor: CommonColors.fancyElevatedTitleColor,
+              shadowColor:
+              CommonColors.fancyElevatedShadowTitleColor,
+              onPressed: () {
                 quizController.nextPage(
-                    duration: Duration(milliseconds: 750),
-                    curve: Curves.easeIn,
+                  duration: Duration(milliseconds: 750),
+                  curve: Curves.easeIn,
                 );
-            },
-          ),
+              },
+            ),
 
-          SizedBox(height: 10.w,),
+            SizedBox(height: 10.w,),
 
 
-        ],
-      ),
+          ],
+        ),
+        title: "سلاح التلميذ",
     );
   }
 

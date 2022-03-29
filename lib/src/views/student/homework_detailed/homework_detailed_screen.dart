@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/widgets/layouts/image_with_bottom_header.dart';
+import 'package:selaheltelmeez/widgets/scaffold/fancy_detailed_navigated_app_scaffold.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeworkDetailedScreen extends StatelessWidget {
@@ -11,88 +12,18 @@ class HomeworkDetailedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            leading: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 16,
-                ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: const Icon(Icons.arrow_back),
-                ),
-              ],
-            ),
-            toolbarHeight: 15.h,
-            //centerTitle: true,
-            elevation: 0.0,
-            backgroundColor: Colors.transparent,
-            flexibleSpace: Stack(
-              children: [
-                Container(
-                  color: CommonColors.studentHomeTopBar,
-                  height: 10.h,
-                  width: double.infinity,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 1.5.h),
-                  child: Expanded(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 16.w,
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding:  EdgeInsets.only(top: 2.w),
-                            child: Text(
-                              'تفاصيل الاختبارات والواجبات',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 13.sp,
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 3.w,
-                        ),
-                        Image(
-                          width: 110,
-                          height: 110,
-                          image: AssetImage(AssetsImage.homeworkDetails),
-                          //fit: BoxFit.fill,
-                        ),
-                        SizedBox(
-                          width: 3.w,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          body:Padding(
-            padding:  EdgeInsets.all(8.w),
-            child: ListView.separated(
-                itemBuilder: (context, index) => homeworkDetailedItem(),
-                separatorBuilder: (context, index) => SizedBox(height: 4.w,),
-                itemCount: 4),
-          ),
-
-
+    return FancyDetailedNavigatedAppScaffold(
+        child: Padding(
+          padding:  EdgeInsets.all(8.w),
+          child: ListView.separated(
+              itemBuilder: (context, index) => homeworkDetailedItem(),
+              separatorBuilder: (context, index) => SizedBox(height: 4.w,),
+              itemCount: 4),
         ),
+        title: "تفاصيل الاختبارات والواجبات",
+        subtitle: "",
+        image: AssetsImage.homeworkDetails,
+        isLocalImage: true,
     );
   }
 

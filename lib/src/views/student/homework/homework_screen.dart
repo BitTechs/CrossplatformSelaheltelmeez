@@ -5,6 +5,7 @@ import 'package:selaheltelmeez/core/theme/app_theme.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/widgets/buttons/fancy_elevated_button.dart';
 import 'package:selaheltelmeez/widgets/inputs/fancy_text_form_field.dart';
+import 'package:selaheltelmeez/widgets/scaffold/fancy_navigated_app_scaffold.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeworkScreen extends StatelessWidget {
@@ -12,23 +13,16 @@ class HomeworkScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:  AppBar(
-        backgroundColor: CommonColors.studentHomeTopBar,
-        title: Text(
-          'واجب دراسي عربي',
-          style: AppTheme.screenTitle,
-        ),
-      ),
-
-      body: Padding(
+    return FancyNavigatedAppScaffold(
+      title: "واجب درس عربي",
+      child: Padding(
         padding:  EdgeInsets.all(4.w),
         child: Column(
           children: [
             FancyTextFormField(
               placeholderText: 'الرسالة',
               name: 'message',
-                  ),
+            ),
 
             SizedBox(height: 2.w,),
 
@@ -50,9 +44,9 @@ class HomeworkScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children:  [
                       Text('اختار الملف المرفق',
-                      style: TextStyle(
-                        color: Colors.black54,
-                      ),
+                        style: TextStyle(
+                          color: Colors.black54,
+                        ),
                       ),
                       const Spacer(),
                       InkWell(
@@ -68,7 +62,7 @@ class HomeworkScreen extends StatelessWidget {
 
               ],
             ),
-const Spacer(),
+            const Spacer(),
             FancyElevatedButton(
               title: 'ارسال',
               width: 40.w,

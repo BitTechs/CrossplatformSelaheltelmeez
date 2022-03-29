@@ -5,6 +5,7 @@ import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/widgets/buttons/fancy_elevated_button.dart';
+import 'package:selaheltelmeez/widgets/scaffold/fancy_detailed_navigated_app_scaffold.dart';
 import 'package:sizer/sizer.dart';
 
 class ClassScreen extends StatelessWidget {
@@ -12,79 +13,8 @@ class ClassScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 16,
-              ),
-              IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: const Icon(Icons.arrow_back),
-              ),
-            ],
-          ),
-          toolbarHeight: 15.h,
-          //centerTitle: true,
-          elevation: 0.0,
-          backgroundColor: Colors.transparent,
-          flexibleSpace: Stack(
-            children: [
-              Container(
-                color: CommonColors.studentHomeTopBar,
-                height: 10.h,
-                width: double.infinity,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 1.5.h),
-                child: Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 16.w,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding:  EdgeInsets.only(top: 2.w),
-                          child: Text(
-                            'فصل الفراشات',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 13.sp,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 3.w,
-                      ),
-                      Image(
-                        width: 110,
-                        height: 110,
-                        image: AssetImage(AssetsImage.parentUser),
-                        //fit: BoxFit.fill,
-                      ),
-                      SizedBox(
-                        width: 3.w,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        body: Padding(
+    return FancyDetailedNavigatedAppScaffold(
+        child: Padding(
           padding:  EdgeInsets.all(4.w),
           child: Column(
             children: [
@@ -120,16 +50,16 @@ class ClassScreen extends StatelessWidget {
                             Row(
                               children: [
                                 Text('تم الرد',
-                                style: TextStyle(
-                                  color: CommonColors.studentHomeTopBar
-                                ),
+                                  style: TextStyle(
+                                      color: CommonColors.studentHomeTopBar
+                                  ),
                                 ),
                                 SizedBox(width: 2.w,),
                                 Text('1/3/2022',),
+                              ],
+                            ),
                           ],
                         ),
-                        ],
-                      ),
                       ),
 
                       Padding(
@@ -226,7 +156,7 @@ class ClassScreen extends StatelessWidget {
                               onPressed: () {
                                 Navigator.of(context).pushNamed(RouteNames.homeworkDetailedScreen);
 
-                                  },
+                              },
                             ),
                           ],
                         ),
@@ -391,7 +321,10 @@ class ClassScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
+        title: "فصل الفراشات",
+        subtitle: "",
+        image: AssetsImage.parentUser,
+        isLocalImage: true,
     );
   }
 }

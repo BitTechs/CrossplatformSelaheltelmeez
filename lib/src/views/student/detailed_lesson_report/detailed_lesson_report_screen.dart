@@ -4,6 +4,7 @@ import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/app_theme.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/widgets/buttons/scaled_button_image.dart';
+import 'package:selaheltelmeez/widgets/scaffold/fancy_navigated_app_scaffold.dart';
 import 'package:sizer/sizer.dart';
 
 class DetailedLessonReportScreen extends StatefulWidget {
@@ -19,20 +20,9 @@ class _DetailedLessonReportScreenState
   int selectedItem = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: CommonColors.studentHomeTopBar,
-        title: Text(
-          'Ahmed AboElnoor',
-          style: TextStyle(
-            fontSize: 14.sp,
-            color: Colors.white,
-            fontWeight: FontWeight.normal,
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: Column(
+    return FancyNavigatedAppScaffold(
+      title: "Ahmed Ali",
+      child: Column(
         children: [
           Container(
             height: 15.h,
@@ -55,7 +45,7 @@ class _DetailedLessonReportScreenState
                   Text(
                     'مستوي تقدمي في اللغة العربية',
                     style: TextStyle(fontSize: 12.sp,
-                    color: Colors.black54),
+                        color: Colors.black54),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

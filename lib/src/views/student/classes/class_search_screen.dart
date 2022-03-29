@@ -10,6 +10,7 @@ import 'package:selaheltelmeez/src/bloc/student/classes/class_search_states.dart
 import 'package:selaheltelmeez/widgets/buttons/fancy_elevated_button.dart';
 import 'package:selaheltelmeez/widgets/inputs/fancy_dropown_form_field.dart';
 import 'package:selaheltelmeez/widgets/inputs/fancy_text_form_field.dart';
+import 'package:selaheltelmeez/widgets/scaffold/fancy_navigated_app_scaffold.dart';
 
 class ClassSearchScreen extends StatelessWidget {
    ClassSearchScreen({Key? key}) : super(key: key);
@@ -20,19 +21,9 @@ class ClassSearchScreen extends StatelessWidget {
     var cubit = ClassSearchCubit.get(context);
     return BlocConsumer<ClassSearchCubit, ClassSearchStates>(
       listener: (context, state) {},
-      builder: (context, state) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: CommonColors.studentHomeTopBar,
-          title: Text(
-              'البحث عن فصل',
-            style: AppTheme.screenTitle,
-            textAlign: TextAlign.center,
-          ),
-          centerTitle: true,
-
-        ),
-
-        body: Padding(
+      builder: (context, state) => FancyNavigatedAppScaffold(
+        title: "البحث عن فصل",
+        child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
