@@ -9,23 +9,25 @@ class FancyNavigatedAppScaffold extends StatelessWidget {
   const FancyNavigatedAppScaffold({Key? key, required this.child, required this.title}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          centerTitle: true,
-          elevation: 0.0,
-          title: Text(
-            title,
-            style: AppTheme.screenTitle.copyWith(fontSize: 14.sp),
-            textAlign: TextAlign.center,
+    return SafeArea(
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            centerTitle: true,
+            elevation: 0.0,
+            title: Text(
+              title,
+              style: AppTheme.screenTitle.copyWith(fontSize: 14.sp),
+              textAlign: TextAlign.center,
+            ),
+            backgroundColor: CommonColors.studentHomeTopBar,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           ),
-          backgroundColor: CommonColors.studentHomeTopBar,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ),
-        body: SafeArea(child: child)
+          body: child
+      ),
     );
   }
 }

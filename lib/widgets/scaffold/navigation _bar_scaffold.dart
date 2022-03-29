@@ -6,13 +6,13 @@ class NavigationBarScaffold extends StatelessWidget {
   const NavigationBarScaffold({Key? key, required this.child, required this.navigationBar}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: child,
+        bottomNavigationBar: navigationBar,
 
-      body: SafeArea(child: child),
-
-      bottomNavigationBar: navigationBar,
-
+      ),
     );
   }
 }

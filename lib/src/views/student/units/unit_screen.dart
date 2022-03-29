@@ -14,8 +14,9 @@ import 'package:sizer/sizer.dart';
 class UnitScreen extends StatelessWidget {
   final String curriculumId;
   final String backgroundImage;
+  final String iconImage;
   final String curriculumName;
-  const UnitScreen({Key? key, required this.curriculumId, required this.backgroundImage, required this.curriculumName}) : super(key: key);
+  const UnitScreen({Key? key, required this.curriculumId, required this.backgroundImage, required this.curriculumName, required this.iconImage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +154,7 @@ class UnitScreen extends StatelessWidget {
   Widget lessonsItem(UnitLesson item, context) =>
       GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(RouteNames.studentLesson);
+          Navigator.of(context).pushNamed(RouteNames.studentLesson, arguments: [curriculumName,item.name,iconImage,item.id]);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

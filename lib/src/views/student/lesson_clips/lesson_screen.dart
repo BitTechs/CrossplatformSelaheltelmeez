@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
+import 'package:selaheltelmeez/src/bloc/student/lesson_clips/lesson_clips_cubit.dart';
+import 'package:selaheltelmeez/src/data/student/dtos/lesson_clips/clip_type.dart';
+import 'package:selaheltelmeez/src/data/student/dtos/lesson_clips/game_object_clip.dart';
+import 'package:selaheltelmeez/src/data/student/repositories/curriculum/curriculum_repository.dart';
 import 'package:selaheltelmeez/widgets/buttons/scaled_button_image.dart';
+import 'package:selaheltelmeez/widgets/loading/double_bounce.dart';
+import 'package:selaheltelmeez/widgets/scaffold/fancy_detailed_navigated_app_scaffold.dart';
 
 class LessonScreen extends StatefulWidget {
-  const LessonScreen({Key? key}) : super(key: key);
+  final String title;
+  final String subtitle;
+  final String image;
+  final int lessonId;
+  const LessonScreen({Key? key, required this.title, required this.subtitle, required this.image, required this.lessonId}) : super(key: key);
 
   @override
   State<LessonScreen> createState() => _LessonScreenState();
@@ -16,89 +27,14 @@ class _LessonScreenState extends State<LessonScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 16,
-              ),
-              IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: const Icon(Icons.arrow_back),
-              ),
-            ],
-          ),
-          toolbarHeight: 110,
-          //centerTitle: true,
-          elevation: 0.0,
-          backgroundColor: Colors.transparent,
-          flexibleSpace: Stack(
-            children: [
-              Container(
-                color: CommonColors.studentHomeTopBar,
-                height: 80.0,
-                width: double.infinity,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        width: 72.0,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              'اللغة العربية',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'النص الشعري اسلمي يامصر',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                      const Image(
-                        width: 110,
-                        height: 110,
-                        image: AssetImage(AssetsImage.all),
-                        //fit: BoxFit.fill,
-                      ),
-                      const SizedBox(
-                        width: 10.0,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        body: Column(
+    return BlocProvider(
+      create: (context) => LessonClipsCubit(context.read<CurriculumRepository>())..getLessonClipsAsync(widget.lessonId),
+      child: FancyDetailedNavigatedAppScaffold(
+        title: widget.title,
+        subtitle: widget.subtitle,
+        image: widget.image ,
+        isLocalImage: false,
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(
@@ -121,63 +57,87 @@ class _LessonScreenState extends State<LessonScreen> {
             const SizedBox(
               height: 10.0,
             ),
-            Container(
-              height: 110.0,
-              color: Colors.white,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => itemFilterList(index),
-                separatorBuilder: (context, index) => const SizedBox(
-                  width: 0.0,
-                ),
-                itemCount: 7,
-              ),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: ListView.separated(
-                    //shrinkWrap: true,
-                    //physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => itemLessonList(),
-                    separatorBuilder: (context, index) => const SizedBox(
-                          height: 15.0,
+              child: BlocConsumer<LessonClipsCubit, LessonClipsState>(
+                listener: (context, state) {
+                  if (state is LessonClipsFailed) {
+                    final snackBar = SnackBar(
+                      content: Text(state.errorMessage),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                },
+                builder: (context, state) {
+                  if (state is LessonClipsLoading) {
+                    return const DoubleBounce();
+                  }
+                  if (state is LessonClipsSuccess) {
+                    return Column(
+                      children: [
+                        Container(
+                          height: 110.0,
+                          color: Colors.white,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) =>
+                                itemFilterList(state.lessonsClip.types[index]),
+                            separatorBuilder: (context, index) => const SizedBox(
+                              width: 0.0,
+                            ),
+                            itemCount: state.lessonsClip.types.length,
+                          ),
                         ),
-                    itemCount: 10),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: ListView.separated(
+                                itemBuilder: (context, index) => itemLessonList(state.lessonsClip.clips[index]),
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(
+                                      height: 15.0,
+                                    ),
+                                itemCount: state.lessonsClip.clips.length),
+                          ),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
               ),
-            ),
+            )
           ],
-        ),
-      ),
-    );
+        )),
+);
   }
 
-  Widget itemFilterList(index) => Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: ScaledWidget(
-      scale: (selectedItem == index) ? 1.2 : 1.0,
-      opacity: (selectedItem == index)? 1.0: 0.6,
-      onTap: () {
-        setState(() {
-          selectedItem = index;
-        });
-      },
-      child: Column(
+  Widget itemFilterList(ClipType clipType) => Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ScaledWidget(
+          scale: (selectedItem == clipType.value) ? 1.2 : 1.0,
+          opacity: (selectedItem == clipType.value) ? 1.0 : 0.6,
+          onTap: () {
+            setState(() {
+               selectedItem == clipType.value;
+            });
+          },
+          child: Column(
             children: [
-              Image.asset(
-                      AssetsImage.all,
-                      height: 50,
-                      width: 50,
-                      fit: BoxFit.fill,
-                    ),
-              const Text('فيديو'),
+              Image.network(
+                clipType.imageUrl!,
+                height: 50,
+                width: 50,
+                fit: BoxFit.fill,
+              ),
+              Text(clipType.name!),
             ],
           ),
-    ),
-  );
+        ),
+      );
 
   Widget selectedItemFilterList() => Column(
         children: const [
@@ -190,7 +150,7 @@ class _LessonScreenState extends State<LessonScreen> {
         ],
       );
 
-  Widget itemLessonList() => SizedBox(
+  Widget itemLessonList(GameObjectClip gameObjectClip) => SizedBox(
         height: 90,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,9 +159,9 @@ class _LessonScreenState extends State<LessonScreen> {
               decoration: BoxDecoration(
                 color: CommonColors.studentHomeTopBar,
                 borderRadius: BorderRadius.circular(16.0),
-                image: const DecorationImage(
-                  image: AssetImage(AssetsImage.gameLand),
-                  fit: BoxFit.cover,
+                image: DecorationImage(
+                  image: NetworkImage(gameObjectClip.thumbnail),
+                  fit: BoxFit.fill,
                 ),
               ),
               height: 90.0,
@@ -217,16 +177,16 @@ class _LessonScreenState extends State<LessonScreen> {
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children:  [
                       Expanded(
                         child: Text(
-                          'نشاط 1 علي الفصل الاول',
+                          gameObjectClip.clipName,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       //Spacer(),
-                      Icon(
+                      const Icon(
                         Icons.airplay,
                         size: 16,
                       ),
@@ -234,7 +194,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   ),
                   const Spacer(),
                   Text(
-                    'الدرجة : 10',
+                    'الدرجة : ${gameObjectClip.clipScore}',
                     style: TextStyle(color: CommonColors.studentHomeTopBar),
                   ),
                   Container(

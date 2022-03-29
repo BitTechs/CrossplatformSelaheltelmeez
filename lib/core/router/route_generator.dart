@@ -6,7 +6,7 @@ import 'package:selaheltelmeez/src/views/landing/landing_screen.dart';
 import 'package:selaheltelmeez/src/views/student/achievements/achievements_screen.dart';
 import 'package:selaheltelmeez/src/views/student/detailed_lesson_report/detailed_lesson_report_screen.dart';
 import 'package:selaheltelmeez/src/views/student/detailed_subject_report/detailed_subject_report_screen.dart';
-import 'package:selaheltelmeez/src/views/student/lesson/lesson_screen.dart';
+import 'package:selaheltelmeez/src/views/student/lesson_clips/lesson_screen.dart';
 import 'package:selaheltelmeez/src/views/student/recent_activity/recent_activity_screen.dart';
 import 'package:selaheltelmeez/src/views/student/student_navigation_bar/student%20_navigation_bar_screen.dart';
 import 'package:selaheltelmeez/src/views/authentication/change_email_or_mobile/change_email_or_mobile_screen.dart';
@@ -57,9 +57,10 @@ class RouteGenerator {
         return PageTransition(child: const StudentNavBarScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.studentSubject:
         List<dynamic> dynamicArgs = (args as List<dynamic>);
-        return PageTransition(child: UnitScreen(curriculumId: dynamicArgs[0], backgroundImage: dynamicArgs[1], curriculumName: dynamicArgs[2],),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+        return PageTransition(child: UnitScreen(curriculumId: dynamicArgs[0],curriculumName: dynamicArgs[1], backgroundImage: dynamicArgs[2], iconImage: dynamicArgs[3],),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.studentLesson:
-        return PageTransition(child: const LessonScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+        List<dynamic> dynamicArgs = (args as List<dynamic>);
+        return PageTransition(child: LessonScreen(title: dynamicArgs[0], subtitle: dynamicArgs[1], image: dynamicArgs[2], lessonId: dynamicArgs[3]),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.classSearch:
         return PageTransition(child: ClassSearchScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.usageReport:

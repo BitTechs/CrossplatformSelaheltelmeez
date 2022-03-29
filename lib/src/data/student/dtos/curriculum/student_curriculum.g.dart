@@ -11,7 +11,7 @@ StudentCurriculum _$StudentCurriculumFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       name: json['name'] as String?,
       backgroundImage: json['backgroundImage'] as String?,
-      backgroundColor: json['backgroundColor'] as String?,
+      icon: json['icon'] as String?,
       term: json['term'] as int?,
     );
 
@@ -20,6 +20,6 @@ Map<String, dynamic> _$StudentCurriculumToJson(StudentCurriculum instance) =>
       'id': instance.id,
       'name': instance.name,
       'backgroundImage': instance.backgroundImage,
-      'backgroundColor': instance.backgroundColor,
+      'icon': instance.icon,
       'term': instance.term,
     };
