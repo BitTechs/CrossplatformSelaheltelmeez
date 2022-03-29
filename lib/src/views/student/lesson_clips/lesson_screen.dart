@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
-import 'package:selaheltelmeez/core/theme/app_theme.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/widgets/buttons/scaled_button_image.dart';
 
 class LessonScreen extends StatefulWidget {
-  LessonScreen({Key? key}) : super(key: key);
+  const LessonScreen({Key? key}) : super(key: key);
 
   @override
   State<LessonScreen> createState() => _LessonScreenState();
@@ -52,7 +50,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 72.0,
                       ),
                       Expanded(
@@ -175,7 +173,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       width: 50,
                       fit: BoxFit.fill,
                     ),
-              Text('فيديو'),
+              const Text('فيديو'),
             ],
           ),
     ),
@@ -192,7 +190,7 @@ class _LessonScreenState extends State<LessonScreen> {
         ],
       );
 
-  Widget itemLessonList() => Container(
+  Widget itemLessonList() => SizedBox(
         height: 90,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

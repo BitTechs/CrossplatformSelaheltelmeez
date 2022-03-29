@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/src/bloc/student/units/unit_cubit.dart';

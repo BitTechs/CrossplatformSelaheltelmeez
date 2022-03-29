@@ -59,7 +59,7 @@ class RouteGenerator {
         List<dynamic> dynamicArgs = (args as List<dynamic>);
         return PageTransition(child: UnitScreen(curriculumId: dynamicArgs[0], backgroundImage: dynamicArgs[1], curriculumName: dynamicArgs[2],),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.studentLesson:
-        return PageTransition(child: LessonScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+        return PageTransition(child: const LessonScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.classSearch:
         return PageTransition(child: ClassSearchScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.usageReport:
