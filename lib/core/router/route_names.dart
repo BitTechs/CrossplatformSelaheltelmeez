@@ -26,4 +26,11 @@ class RouteNames{
 
   static const String webViewer = "/web-viewer";
   static const String youTubeViewer = "/youTube-viewer";
+
+
+  static const String gameObjectInteractiveViewer = "/game-object-interactive-viewer";
+  static const String gameObjectYouTubeViewer = "/game-object-youtube-viewer";
+
+
+
 }

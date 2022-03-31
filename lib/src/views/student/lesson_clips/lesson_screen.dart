@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
+import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/src/bloc/student/lesson_clips/lesson_clips_cubit.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/lesson_clips/clip_type.dart';
@@ -16,7 +17,14 @@ class LessonScreen extends StatefulWidget {
   final String subtitle;
   final String image;
   final int lessonId;
-  const LessonScreen({Key? key, required this.title, required this.subtitle, required this.image, required this.lessonId}) : super(key: key);
+
+  const LessonScreen(
+      {Key? key,
+      required this.title,
+      required this.subtitle,
+      required this.image,
+      required this.lessonId})
+      : super(key: key);
 
   @override
   State<LessonScreen> createState() => _LessonScreenState();
@@ -28,91 +36,113 @@ class _LessonScreenState extends State<LessonScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LessonClipsCubit(context.read<CurriculumRepository>())..getLessonClipsAsync(10),
+      create: (context) =>
+          LessonClipsCubit(context.read<CurriculumRepository>())
+            ..getLessonClipsAsync(10),
       child: FancyDetailedNavigatedAppScaffold(
-        title: widget.title,
-        subtitle: widget.subtitle,
-        image: widget.image ,
-        isLocalImage: false,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 10.0,
-            ),
-            LinearPercentIndicator(
-              width: (MediaQuery.of(context).size.width) - 100,
-              lineHeight: 8.0,
-              alignment: MainAxisAlignment.center,
-              percent: 0.5,
-              isRTL: true,
-              leading: const Text(
-                "50.0%",
-                style: TextStyle(fontSize: 12.0),
+          title: widget.title,
+          subtitle: widget.subtitle,
+          image: widget.image,
+          isLocalImage: false,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 10.0,
               ),
-              barRadius: const Radius.circular(16),
-              backgroundColor: Colors.grey[300],
-              progressColor: Colors.amberAccent,
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            Expanded(
-              child: BlocConsumer<LessonClipsCubit, LessonClipsState>(
-                listener: (context, state) {
-                  if (state is LessonClipsFailed) {
-                    final snackBar = SnackBar(
-                      content: Text(state.errorMessage),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  }
-                },
-                builder: (context, state) {
-                  if (state is LessonClipsLoading) {
-                    return const DoubleBounce();
-                  }
-                  if (state is LessonClipsSuccess) {
-                    return Column(
-                      children: [
-                        Container(
-                          height: 110.0,
-                          color: Colors.white,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) =>
-                                itemFilterList(state.lessonsClip.types[index]),
-                            separatorBuilder: (context, index) => const SizedBox(
-                              width: 0.0,
-                            ),
-                            itemCount: state.lessonsClip.types.length,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10.0,
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              LinearPercentIndicator(
+                width: (MediaQuery.of(context).size.width) - 100,
+                lineHeight: 8.0,
+                alignment: MainAxisAlignment.center,
+                percent: 0.5,
+                isRTL: true,
+                leading: const Text(
+                  "50.0%",
+                  style: TextStyle(fontSize: 12.0),
+                ),
+                barRadius: const Radius.circular(16),
+                backgroundColor: Colors.grey[300],
+                progressColor: Colors.amberAccent,
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              Expanded(
+                child: BlocConsumer<LessonClipsCubit, LessonClipsState>(
+                  listener: (context, state) {
+                    if (state is LessonClipsFailed) {
+                      final snackBar = SnackBar(
+                        content: Text(state.errorMessage),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is LessonClipsLoading) {
+                      return const DoubleBounce();
+                    }
+                    if (state is LessonClipsSuccess) {
+                      return Column(
+                        children: [
+                          Container(
+                            height: 110.0,
+                            color: Colors.white,
                             child: ListView.separated(
-                                itemBuilder: (context, index) => itemLessonList(state.lessonsClip.clips[index]),
-                                separatorBuilder: (context, index) =>
-                                    const SizedBox(
-                                      height: 15.0,
-                                    ),
-                                itemCount: state.lessonsClip.clips.length),
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) => itemFilterList(
+                                  state.lessonsClip.types[index]),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(
+                                width: 0.0,
+                              ),
+                              itemCount: state.lessonsClip.types.length,
+                            ),
                           ),
-                        ),
-                      ],
-                    );
-                  } else {
-                    return const SizedBox();
-                  }
-                },
-              ),
-            )
-          ],
-        )),
-);
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: ListView.separated(
+                                  itemBuilder: (context, index) =>
+                                      GestureDetector(
+                                          onTap: () {
+                                            final type = state.lessonsClip.clips[index].clipType;
+                                            if (type == 1) // interactive
+                                            {
+                                                  final url = state.lessonsClip.clips[index].gameObjectUrl;
+                                                  final title = state.lessonsClip.clips[index].clipName;
+                                                  Navigator.of(context).pushNamed(RouteNames.gameObjectInteractiveViewer, arguments: [url,title]);
+                                            }
+                                            if(type == 4) // youtube
+                                            {
+                                              final url = state.lessonsClip.clips[index].gameObjectUrl;
+                                              final title = state.lessonsClip.clips[index].clipName;
+                                              Navigator.of(context).pushNamed(RouteNames.gameObjectInteractiveViewer, arguments: [url,title]);
+                                            }
+                                          },
+                                          child: itemLessonList(
+                                              state.lessonsClip.clips[index])),
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(
+                                        height: 15.0,
+                                      ),
+                                  itemCount: state.lessonsClip.clips.length),
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
+                ),
+              )
+            ],
+          )),
+    );
   }
 
   Widget itemFilterList(ClipType clipType) => Padding(
@@ -122,7 +152,7 @@ class _LessonScreenState extends State<LessonScreen> {
           opacity: (selectedItem == clipType.value) ? 1.0 : 0.6,
           onTap: () {
             setState(() {
-               selectedItem == clipType.value;
+              selectedItem == clipType.value;
             });
           },
           child: Column(
@@ -177,7 +207,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children:  [
+                    children: [
                       Expanded(
                         child: Text(
                           gameObjectClip.clipName,
