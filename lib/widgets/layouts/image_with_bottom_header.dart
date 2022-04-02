@@ -100,12 +100,15 @@ class ImageWithFloatingBottomHeader extends StatelessWidget {
                 ),
                 color: headerBackgroundColor,
                 child: Center(
-                  child: Text(
-                    header,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(color: headerColor),
+                  child: Padding(
+                    padding:  EdgeInsets.symmetric(horizontal: 2.w),
+                    child: Text(
+                      header,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge
+                          ?.copyWith(color: headerColor),
+                    ),
                   ),
                 ),
               ),

@@ -3,6 +3,19 @@ import 'package:page_transition/page_transition.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/src/data/landing/dtos/list_item.dart';
 import 'package:selaheltelmeez/src/views/landing/landing_screen.dart';
+import 'package:selaheltelmeez/src/views/parent/add_child/add_child_screen.dart';
+import 'package:selaheltelmeez/src/views/parent/child_screen/child_screen.dart';
+import 'package:selaheltelmeez/src/views/parent/classroom/classroom.dart';
+import 'package:selaheltelmeez/src/views/parent/detailed_lesson_report/parent_detailed_lesson_report.dart';
+import 'package:selaheltelmeez/src/views/parent/detailed_subject_report/parent_detailed_subject_report.dart';
+import 'package:selaheltelmeez/src/views/parent/navigation_bar/Parent_navigation_bar_screen.dart';
+import 'package:selaheltelmeez/src/views/parent/recent_activity/parent_recent_activity.dart';
+import 'package:selaheltelmeez/src/views/parent/register_child/register_child_screen.dart';
+import 'package:selaheltelmeez/src/views/parent/search_for_child/search_for_child_screen.dart';
+import 'package:selaheltelmeez/src/views/parent/subject_screen/subject_screen.dart';
+import 'package:selaheltelmeez/src/views/parent/subject_statistics/subject_statistics_screen.dart';
+import 'package:selaheltelmeez/src/views/parent/teacher_screen/teacher_screen.dart';
+import 'package:selaheltelmeez/src/views/parent/usage_report/parent_usage_report.dart';
 import 'package:selaheltelmeez/src/views/student/achievements/achievements_screen.dart';
 import 'package:selaheltelmeez/src/views/student/class_screen/class_screen.dart';
 import 'package:selaheltelmeez/src/views/student/detailed_lesson_report/detailed_lesson_report_screen.dart';
@@ -86,6 +99,35 @@ class RouteGenerator {
         return PageTransition(child: const ClassScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.homeworkScreen:
         return PageTransition(child: const HomeworkScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+
+     //Parent Screens
+      case RouteNames.parentHome:
+        return PageTransition(child: const ParentNavBarScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.addChild:
+        return PageTransition(child: const AddChildScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.searchForChild:
+        return PageTransition(child: const SearchForChildScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.registerChild:
+        return PageTransition(child: const RegisterChildScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.childScreen:
+        return PageTransition(child: const ChildScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.parentSubject:
+        return PageTransition(child: const ParentSubjectScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.subjectStatistics:
+        return PageTransition(child: const SubjectStatisticsScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherScreen:
+        return PageTransition(child: const TeacherScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.classroom:
+        return PageTransition(child: const ClassRoom(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.parentUsageReport:
+        return PageTransition(child: const ParentUsageReport(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.parentRecentActivity:
+        return PageTransition(child: const ParentRecentActivity(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.parentDetailedSubjectReport:
+        return PageTransition(child: const ParentDetailedSubjectReport(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.parentDetailedLessonReport:
+        return PageTransition(child: const ParentDetailedLessonReport(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+
       case RouteNames.gameObjectInteractiveViewer:
         List<dynamic> dynamicArgs = (args as List<dynamic>);
         return PageTransition(child: GameObjectWebViewer(url: dynamicArgs[0], title: dynamicArgs[1]),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);

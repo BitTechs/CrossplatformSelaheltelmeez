@@ -6,7 +6,8 @@ import 'package:sizer/sizer.dart';
 class FancyNavigatedAppScaffold extends StatelessWidget {
   final Widget child;
   final String title;
-  const FancyNavigatedAppScaffold({Key? key, required this.child, required this.title}) : super(key: key);
+  final Color? color;
+  const FancyNavigatedAppScaffold({Key? key, required this.child, required this.title, this.color}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,7 +21,7 @@ class FancyNavigatedAppScaffold extends StatelessWidget {
               style: AppTheme.screenTitle.copyWith(fontSize: 14.sp),
               textAlign: TextAlign.center,
             ),
-            backgroundColor: CommonColors.studentHomeTopBar,
+            backgroundColor: color?? CommonColors.studentHomeTopBar,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () => Navigator.of(context).pop(),
