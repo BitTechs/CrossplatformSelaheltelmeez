@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
+import 'package:selaheltelmeez/src/bloc/student/units/subject_score_cubit.dart';
 import 'package:selaheltelmeez/src/bloc/student/units/unit_cubit.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/unit/curriculum_unit.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/unit/unit_lesson.dart';
@@ -10,18 +11,32 @@ import 'package:selaheltelmeez/widgets/loading/double_bounce.dart';
 import 'package:selaheltelmeez/widgets/scaffold/fancy_navigated_app_scaffold.dart';
 import 'package:sizer/sizer.dart';
 
-
 class UnitScreen extends StatelessWidget {
   final String curriculumId;
   final String backgroundImage;
   final String iconImage;
   final String curriculumName;
-  const UnitScreen({Key? key, required this.curriculumId, required this.backgroundImage, required this.curriculumName, required this.iconImage}) : super(key: key);
+
+  const UnitScreen(
+      {Key? key,
+      required this.curriculumId,
+      required this.backgroundImage,
+      required this.curriculumName,
+      required this.iconImage})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => UnitCubit(context.read<CurriculumRepository>())..loadUnitsByCurriculumId(curriculumId),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) => UnitCubit(context.read<CurriculumRepository>())
+              ..loadUnitsByCurriculumId(curriculumId)),
+        BlocProvider(
+            create: (context) =>
+                SubjectScoreCubit(context.read<CurriculumRepository>())
+                  ..loadStudentSubjectScore(curriculumId))
+      ],
       child: FancyNavigatedAppScaffold(
         title: curriculumName,
         child: SingleChildScrollView(
@@ -40,28 +55,47 @@ class UnitScreen extends StatelessWidget {
                     ),
                     Align(
                       alignment: Alignment.topLeft,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.0),
-                          color: Colors.grey[100],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Text(
-                                'مجموع الدرجات',
-                                style: TextStyle(
-                                    color: CommonColors.studentHomeTopBar),
-                              ),
-                              Text(
-                                '7.5/2570',
-                                style: TextStyle(
-                                    color: CommonColors.studentHomeTopBar),
-                              ),
-                            ],
-                          ),
-                        ),
+                      child: BlocConsumer<SubjectScoreCubit, SubjectScoreState>(
+                        listener: (context, state) {
+                          if (state is SubjectScoreFailed) {
+                            final snackBar = SnackBar(
+                              content: Text(state.errorMessage),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state is SubjectScoreLoading) {
+                            return const DoubleBounce();
+                          } else if (state is SubjectScoreSuccess) {
+                            return Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  color: Colors.grey[100],
+                                ),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'مجموع الدرجات',
+                                          style: TextStyle(
+                                              color: CommonColors
+                                                  .studentHomeTopBar),
+                                        ),
+                                        Text(
+                                          '${state.studentScore}/${state.subjectScore}',
+                                          style: TextStyle(
+                                              color: CommonColors
+                                                  .studentHomeTopBar),
+                                        ),
+                                      ],
+                                    )));
+                          } else {
+                            return const SizedBox();
+                          }
+                        },
                       ),
                     ),
                   ],
@@ -84,18 +118,16 @@ class UnitScreen extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) =>
                               itemLesson(state.units[index], context),
-                          separatorBuilder: (context, index) =>
-                              Container(
-                                color: Colors.grey[300],
-                              ),
+                          separatorBuilder: (context, index) => Container(
+                            color: Colors.grey[300],
+                          ),
                           itemCount: state.units.length,
                         ),
                       );
                     }
                     if (state is UnitLoading) {
                       return const DoubleBounce();
-                    }
-                    else {
+                    } else {
                       return const SizedBox();
                     }
                   },
@@ -108,8 +140,7 @@ class UnitScreen extends StatelessWidget {
     );
   }
 
-  Widget itemLesson(CurriculumUnit item, context) =>
-      Column(
+  Widget itemLesson(CurriculumUnit item, context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
@@ -151,10 +182,10 @@ class UnitScreen extends StatelessWidget {
         ],
       );
 
-  Widget lessonsItem(UnitLesson item, context) =>
-      GestureDetector(
+  Widget lessonsItem(UnitLesson item, context) => GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(RouteNames.studentLesson, arguments: [curriculumName,item.name,iconImage,item.id]);
+          Navigator.of(context).pushNamed(RouteNames.studentLesson,
+              arguments: [curriculumName, item.name, iconImage, item.id]);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

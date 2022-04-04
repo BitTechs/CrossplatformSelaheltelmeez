@@ -6,9 +6,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class GameObjectWebViewer extends StatefulWidget {
   final String url;
-  final String title;
-
-  const GameObjectWebViewer({Key? key, required this.url, required this.title})
+  const GameObjectWebViewer({Key? key, required this.url})
       : super(key: key);
 
   @override
@@ -26,10 +24,11 @@ class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
 
   @override
   Widget build(BuildContext context) {
-    return NavigatedAppScaffold(
+    return FlatAppScaffold(
       child: WebView(
-          initialUrl: Uri.dataFromString(generateLandscapeLayout("https://www.selaheltelmeez.com/Media21-22/Ara_4R_2A/Interactive/Ara_4R_2A_01_01_03/mymovie.html", 100, 4), mimeType: 'text/html').toString(),
+          initialUrl: Uri.dataFromString(generateLandscapeLayout("https://www.selaheltelmeez.com/Media21-22/Ara_4R_2A/Interactive/Ara_4R_2A_01_01_03/mymovie.html", "75", 4), mimeType: 'text/html').toString(),
           javascriptMode: JavascriptMode.unrestricted,
+          debuggingEnabled: true,
           onWebViewCreated: (WebViewController controller){
             _webController = controller;
           },
@@ -41,11 +40,9 @@ class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
                   print(message.message);
                 })
           }),
-      title: widget.title,
     );
   }
-
-  String generateLandscapeLayout(String gameObjectUrl,int progress, int code){
+  String generateLandscapeLayout(String gameObjectUrl,String progress, int code){
     return """ 
     <!DOCTYPE html>
      <html lang="en">
@@ -78,8 +75,11 @@ class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
 
 <body>
       <iframe id="myFrame" onload="iframeLoaded()" src="$gameObjectUrl" frameborder="0"></iframe>
+
       <script>
+      
         var iframeEl = document.getElementById('myFrame');
+        
         var isMobile = {
             Android: function () {
                 return navigator.userAgent.match(/Android/i);

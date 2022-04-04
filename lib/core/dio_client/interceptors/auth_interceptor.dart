@@ -1,7 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:get_it/get_it.dart';
-import 'package:selaheltelmeez/core/local_storage/entities/app_user_entity.dart';
-import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/core/local_storage/repositories/app_user_repository.dart';
 
 class AuthInterceptor extends Interceptor {

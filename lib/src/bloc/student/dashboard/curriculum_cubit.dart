@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/curriculum/student_curriculum.dart';
-import 'package:selaheltelmeez/src/data/student/dtos/recent_progress/student_recent_lesson_progress_response.dart';
 import 'package:selaheltelmeez/src/data/student/repositories/curriculum/curriculum_repository.dart';
 
 
