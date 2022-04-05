@@ -23,7 +23,11 @@ import 'package:selaheltelmeez/src/data/authentication/repositories/login/login_
 import 'package:selaheltelmeez/src/data/authentication/repositories/register/register_repository.dart';
 import 'package:selaheltelmeez/src/data/authentication/repositories/update_profile/update_profile_repository.dart';
 import 'package:selaheltelmeez/src/data/authentication/repositories/validate_otp/validate_otp_repository.dart';
+import 'package:selaheltelmeez/src/data/student/data_provider/game_object_activity/game_object_activity_data_provider.dart';
+import 'package:selaheltelmeez/src/data/student/data_provider/invitations/invitation_data_provider.dart';
 import 'package:selaheltelmeez/src/data/student/repositories/curriculum/curriculum_repository.dart';
+import 'package:selaheltelmeez/src/data/student/repositories/game_object_activity/game_object_activity_repository.dart';
+import 'package:selaheltelmeez/src/data/student/repositories/invitations/invitation_respository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:selaheltelmeez/core/router/route_generator.dart';
@@ -103,6 +107,13 @@ class SelaheltelmeezLauncher extends StatelessWidget {
 
         RepositoryProvider<CurriculumDataProvider>(create: (context) => CurriculumDataProvider(dioClient: context.read<AuthorizedDioClient>())),
         RepositoryProvider<CurriculumRepository>(create: (context) => CurriculumRepository(dataProvider: context.read<CurriculumDataProvider>())),
+
+        RepositoryProvider<GameObjectActivityDataProvider>(create: (context) => GameObjectActivityDataProvider(dioClient: context.read<AuthorizedDioClient>())),
+        RepositoryProvider<GameObjectActivityRepository>(create: (context) => GameObjectActivityRepository(dataProvider: context.read<GameObjectActivityDataProvider>())),
+
+        RepositoryProvider<InvitationDataProvider>(create: (context) => InvitationDataProvider(dioClient: context.read<AuthorizedDioClient>())),
+        RepositoryProvider<InvitationRepository>(create: (context) => InvitationRepository(dataProvider: context.read<InvitationDataProvider>()))
+
       ],
       child: MultiBlocProvider(
         providers: [
@@ -136,8 +147,8 @@ class SelaheltelmeezLauncher extends StatelessWidget {
                 supportedLocales: S.delegate.supportedLocales,
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.lightTheme,
-                //initialRoute: appUser == null ? RouteNames.index : RouteNames.studentHomeLayout ,
-                initialRoute: RouteNames.parentHome ,
+                initialRoute: appUser == null ? RouteNames.index : RouteNames.studentHomeLayout ,
+               // initialRoute: RouteNames.parentHome ,
                 locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocal,
                 onGenerateRoute: RouteGenerator.generateRoute,
               ),

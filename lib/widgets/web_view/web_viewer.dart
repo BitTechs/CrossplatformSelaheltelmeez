@@ -1,8 +1,7 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewer extends StatefulWidget {
   final String url;
@@ -19,17 +18,27 @@ class _WebViewerState extends State<WebViewer> {
   @override
   void initState() {
     super.initState();
-    // Enable virtual display.
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
 
   @override
   Widget build(BuildContext context) {
     return NavigatedAppScaffold(
-      child: WebView(
-        initialUrl: widget.url,
-        javascriptMode: JavascriptMode.unrestricted,
+      child: InAppWebView(
+        initialUrlRequest: URLRequest(url: Uri.parse(widget.url)),
+        initialOptions: InAppWebViewGroupOptions(
+          android: AndroidInAppWebViewOptions(
+            disableDefaultErrorPage: true,
+            useHybridComposition: true,
+
+          ),
+          crossPlatform: InAppWebViewOptions(
+            mediaPlaybackRequiresUserGesture: false,
+            horizontalScrollBarEnabled: false,
+            verticalScrollBarEnabled: false,
+          ),
+        ),
       ),
+
       title: widget.title,
     );
   }

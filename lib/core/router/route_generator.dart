@@ -37,7 +37,7 @@ import 'package:selaheltelmeez/src/views/authentication/validate_otp/validate_ot
 import 'package:selaheltelmeez/src/views/student/classes/class_search_screen.dart';
 import 'package:selaheltelmeez/src/views/student/units/unit_screen.dart';
 import 'package:selaheltelmeez/src/views/student/usage_report/usage_report_screen.dart';
-import 'package:selaheltelmeez/widgets/web_view/lo_web_interactive.dart';
+import 'package:selaheltelmeez/widgets/web_view/game_object_web_interactive.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class RouteGenerator {
@@ -130,7 +130,12 @@ class RouteGenerator {
 
       case RouteNames.gameObjectInteractiveViewer:
         List<dynamic> dynamicArgs = (args as List<dynamic>);
-        return PageTransition(child: GameObjectWebViewer(url: dynamicArgs[0], isLandScape: dynamicArgs[1],),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+        final String url = dynamicArgs[0];
+        final int orientation = dynamicArgs[1];
+        final int lessonId = dynamicArgs[2];
+        final int clipId = dynamicArgs[3];
+        final int activityId = dynamicArgs[4];
+        return PageTransition(child: GameObjectWebViewer(url: url, orientation: orientation, lessonId: lessonId, clipId : clipId, activityId: activityId),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
     // Validation of correct data type
       case RouteNames.webViewer:
         ListItem listItem = (args as ListItem);

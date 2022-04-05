@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:selaheltelmeez/assets/assets_image.dart';
+import 'package:selaheltelmeez/core/data_transfer_object/value_commit_result.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/src/bloc/student/lesson_clips/lesson_clips_cubit.dart';
 import 'package:selaheltelmeez/src/bloc/student/lesson_clips/lesson_score_cubit.dart';
+import 'package:selaheltelmeez/src/data/student/dtos/game_object_activity/activity_request.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/lesson_clips/clip_type.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/lesson_clips/game_object_clip.dart';
 import 'package:selaheltelmeez/src/data/student/repositories/curriculum/curriculum_repository.dart';
+import 'package:selaheltelmeez/src/data/student/repositories/game_object_activity/game_object_activity_repository.dart';
 import 'package:selaheltelmeez/widgets/buttons/scaled_button_image.dart';
 import 'package:selaheltelmeez/widgets/loading/double_bounce.dart';
 import 'package:selaheltelmeez/widgets/scaffold/fancy_detailed_navigated_app_scaffold.dart';
@@ -65,7 +68,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       width: (MediaQuery.of(context).size.width) - 100,
                       lineHeight: 8.0,
                       alignment: MainAxisAlignment.center,
-                      percent: 0.5,
+                      percent: (state.studentScore / state.lessonScore),
                       isRTL: true,
                       leading: Text(
                         "${((state.studentScore / state.lessonScore) * 100).toStringAsFixed(2)} %",
@@ -124,30 +127,23 @@ class _LessonScreenState extends State<LessonScreen> {
                               child: ListView.separated(
                                   itemBuilder: (context, index) =>
                                       GestureDetector(
-                                          onTap: () {
-                                            final type = state.lessonsClip
-                                                .clips[index].clipType;
+                                          onTap: () async {
+                                            final type = state.lessonsClip.clips[index].clipType;
                                             if (type == 1) // interactive
                                             {
-                                              final url = state.lessonsClip
-                                                  .clips[index].gameObjectUrl;
-                                              final title = state.lessonsClip
-                                                  .clips[index].clipName;
-                                              Navigator.of(context).pushNamed(
-                                                  RouteNames
-                                                      .gameObjectInteractiveViewer,
-                                                  arguments: [url, title]);
+                                              final url = state.lessonsClip.clips[index].gameObjectUrl;
+                                              final orientation = state.lessonsClip.clips[index].orientation;
+                                              final lessonId = state.lessonsClip.clips[index].lessonId;
+                                              final clipId = state.lessonsClip.clips[index].id;
+                                              final ValueCommitResult<int> activityId = await context.read<GameObjectActivityRepository>().insertActivity(ActivityRequest(clipId: clipId, lessonId: lessonId));
+                                              Navigator.of(context).pushNamed(RouteNames.gameObjectInteractiveViewer,arguments: [url, orientation, lessonId, clipId, activityId.value]);
                                             }
                                             if (type == 4) // youtube
                                             {
-                                              final url = state.lessonsClip
-                                                  .clips[index].gameObjectUrl;
-                                              final title = state.lessonsClip
-                                                  .clips[index].clipName;
-                                              Navigator.of(context).pushNamed(
-                                                  RouteNames
-                                                      .gameObjectInteractiveViewer,
-                                                  arguments: [url, title]);
+                                              final url = state.lessonsClip.clips[index].gameObjectUrl;
+                                              final title = state.lessonsClip.clips[index].clipName;
+
+                                              Navigator.of(context).pushNamed(RouteNames.gameObjectInteractiveViewer,arguments: [url, title]);
                                             }
                                           },
                                           child: itemLessonList(

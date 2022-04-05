@@ -18,6 +18,7 @@ GameObjectClip _$GameObjectClipFromJson(Map<String, dynamic> json) =>
       json['gameObjectUrl'] as String,
       json['isPremiumOnly'] as bool,
       json['orientation'] as int,
+      json['lessonId'] as int,
     );
 
 Map<String, dynamic> _$GameObjectClipToJson(GameObjectClip instance) =>
@@ -25,6 +26,7 @@ Map<String, dynamic> _$GameObjectClipToJson(GameObjectClip instance) =>
       'id': instance.id,
       'clipName': instance.clipName,
       'clipType': instance.clipType,
+      'lessonId': instance.lessonId,
       'thumbnail': instance.thumbnail,
       'clipScore': instance.clipScore,
       'width': instance.width,
