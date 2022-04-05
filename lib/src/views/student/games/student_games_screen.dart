@@ -14,14 +14,14 @@ class StudentGamesScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(AssetsImage.gameLand),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               Container(
                 height: 160.0,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  image: DecorationImage(
+                  image: const DecorationImage(
                     image: NetworkImage('https://image.winudf.com/v2/image1/Y29tLmFwcHRvaWRlLmtpZHMua2luZGVyZ2FydGVuZWR1Y2F0aW9uX3NjcmVlbl83XzE1NjA0NjI0NDhfMDgy/screen-7.jpg?fakeurl=1&type=.jpg'),
                     fit: BoxFit.cover,
                   ),

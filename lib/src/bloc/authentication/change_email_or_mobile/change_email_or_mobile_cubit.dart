@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:selaheltelmeez/core/data_transfer_object/commit_result.dart';
-import 'package:selaheltelmeez/core/local_storage/app_user_local_storage_provider.dart';
 import 'package:selaheltelmeez/src/data/authentication/dtos/change_email_or_mobile/change_email_or_mobile_request.dart';
 import 'package:selaheltelmeez/src/data/authentication/repositories/change_email_or_mobile/change_email_or_mobile_repository.dart';
 

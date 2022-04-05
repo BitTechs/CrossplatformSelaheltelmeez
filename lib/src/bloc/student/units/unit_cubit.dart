@@ -19,4 +19,6 @@ class UnitCubit extends Cubit<UnitState> {
       emit(UnitFailed(response.errorMessage ?? "Error"));
     }
   }
+
+
 }

@@ -130,7 +130,7 @@ class RouteGenerator {
 
       case RouteNames.gameObjectInteractiveViewer:
         List<dynamic> dynamicArgs = (args as List<dynamic>);
-        return PageTransition(child: GameObjectWebViewer(url: dynamicArgs[0], title: dynamicArgs[1]),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+        return PageTransition(child: GameObjectWebViewer(url: dynamicArgs[0]),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
     // Validation of correct data type
       case RouteNames.webViewer:
         ListItem listItem = (args as ListItem);

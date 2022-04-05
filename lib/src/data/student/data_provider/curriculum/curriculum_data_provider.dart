@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:selaheltelmeez/core/data_transfer_object/value_commit_result.dart';
 import 'package:selaheltelmeez/core/dio_client/dio_client.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/curriculum/student_curriculum.dart';
+import 'package:selaheltelmeez/src/data/student/dtos/curriculum_score/identity_subject_score_response.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/lesson_clips/lesson_clip_response.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/recent_progress/student_recent_lesson_progress_response.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/unit/curriculum_unit.dart';
@@ -28,5 +29,10 @@ class CurriculumDataProvider {
   Future<ValueCommitResult<LessonClipResponse>> getLessonClipsAsync(int lessonId) async{
     Response<dynamic> response = await dioClient.getClient().get("/Curriculum/GetLessonClips?LessonId=$lessonId");
     return ValueCommitResult<LessonClipResponse>.fromJson(response.data,(data)=> LessonClipResponse.fromJson(data as Map<String,dynamic>));
+  }
+
+  Future<ValueCommitResult<IdentitySubjectScoreResponse>> getSubjectScoreAsync(String subjectId) async {
+    Response<dynamic> response = await dioClient.getClient().get("/StudentActivityTracker/GetIdentitySubjectScore?SubjectId=$subjectId");
+    return ValueCommitResult<IdentitySubjectScoreResponse>.fromJson(response.data,(data)=> IdentitySubjectScoreResponse.fromJson(data as Map<String,dynamic>));
   }
 }
