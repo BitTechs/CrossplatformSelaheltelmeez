@@ -10,6 +10,7 @@ import 'package:selaheltelmeez/core/local_storage/repositories/app_user_reposito
 import 'package:selaheltelmeez/src/bloc/authentication/change_email_or_mobile/change_email_or_mobile_cubit.dart';
 import 'package:selaheltelmeez/src/bloc/authentication/register/grade_menu_cubit.dart';
 import 'package:selaheltelmeez/src/bloc/authentication/register/identity_role_cubit.dart';
+import 'package:selaheltelmeez/src/bloc/parent/student_navigation_bar/navigation_bar_cubit.dart';
 import 'package:selaheltelmeez/src/data/authentication/data_providers/change_email_or_mobile/remote_change_email_or_mobile_data_provider.dart';
 import 'package:selaheltelmeez/src/data/authentication/data_providers/forget_password/remote_forget_password_data_provider.dart';
 import 'package:selaheltelmeez/src/data/authentication/data_providers/login/remote_login_data_provider.dart';
@@ -108,6 +109,7 @@ class SelaheltelmeezLauncher extends StatelessWidget {
           BlocProvider(create: (BuildContext context) => ChangeEmailOrMobileCubit(context.read<ChangeEmailOrMobileRepository>())),
           BlocProvider(create: (BuildContext context) => GradeMenuCubit(context.read<RegisterRepository>())),
           BlocProvider(create: (BuildContext context) => StudentNavBarCubit()),
+          BlocProvider(create: (BuildContext context) => ParentNavBarCubit()),
           BlocProvider(create: (BuildContext context) => ClassSearchCubit()),
           BlocProvider(create: (BuildContext context) => IdentityRoleCubit()),
         ],
@@ -135,7 +137,7 @@ class SelaheltelmeezLauncher extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.lightTheme,
                 //initialRoute: appUser == null ? RouteNames.index : RouteNames.studentHomeLayout ,
-                initialRoute: RouteNames.studentHomeLayout ,
+                initialRoute: RouteNames.parentHome ,
                 locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocal,
                 onGenerateRoute: RouteGenerator.generateRoute,
               ),

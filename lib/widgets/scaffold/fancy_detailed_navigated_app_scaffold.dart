@@ -10,6 +10,7 @@ class FancyDetailedNavigatedAppScaffold extends StatelessWidget {
   final String subtitle;
   final String image;
   final bool isLocalImage;
+  final Color? color;
 
   const FancyDetailedNavigatedAppScaffold(
       {Key? key,
@@ -17,7 +18,8 @@ class FancyDetailedNavigatedAppScaffold extends StatelessWidget {
       required this.title,
       required this.subtitle,
       required this.image,
-      required this.isLocalImage})
+      required this.isLocalImage,
+      this.color})
       : super(key: key);
 
   @override
@@ -46,7 +48,7 @@ class FancyDetailedNavigatedAppScaffold extends StatelessWidget {
             flexibleSpace: Stack(
               children: [
                 Container(
-                  color: CommonColors.studentHomeTopBar,
+                  color: color?? CommonColors.studentHomeTopBar,
                   height: 80.0,
                   width: double.infinity,
                 ),

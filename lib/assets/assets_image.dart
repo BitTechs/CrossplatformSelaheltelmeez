@@ -34,4 +34,17 @@ class AssetsImage {
   static const String attach = "assets/images/shared/input/attach.svg";
 
 
+  static const String ask = "assets/images/parent/askselaheltelmeez.png";
+  static const String remove = "assets/images/student/remove.png";
+  static const String add = "assets/images/student/add.png";
+
+  static const String subscribe = "assets/images/parent/subscribed.png";
+  static const String parentHeader = "assets/images/parent/parentheader.png";
+  static const String subscribeBtn = "assets/images/parent/subscribe.png";
+  static const String parentGuide = "assets/images/parent/parentguide.png";
+  static const String subjectStatistics = "assets/images/parent/subjectstatistics.png";
+  static const String paint = "assets/images/parent/paint.png";
+
+
+
 }

@@ -88,6 +88,7 @@ flutter:
   assets:
     - assets/images/landing/
     - assets/images/student/
+    - assets/images/parent/
     - assets/images/shared/input/
     - assets/images/shared/users/
     - assets/images/authentication/login/

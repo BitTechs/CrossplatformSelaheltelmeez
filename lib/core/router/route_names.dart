@@ -23,6 +23,21 @@ class RouteNames{
   static const String homeworkDetailedScreen = "/homework-detailed-screen";
   static const String quizScreen = "/quiz-screen";
 
+  static const String parentHome = "/parent-home";
+  static const String addChild = "/add-child";
+  static const String searchForChild = "/search-for-child";
+  static const String registerChild = "/register-child";
+  static const String childScreen = "/child-screen";
+  static const String parentSubject = "/parent-subject";
+  static const String subjectStatistics = "/subject-statistics";
+  static const String teacherScreen = "/teacher-screen";
+  static const String classroom = "/classroom";
+  static const String parentUsageReport = "/parent-usage-report";
+  static const String parentRecentActivity = "/parent-recent-activity";
+  static const String parentDetailedSubjectReport = "/parent-detailed-subject-report";
+  static const String parentDetailedLessonReport = "/parent-detailed-lesson-report";
+
+
 
   static const String webViewer = "/web-viewer";
   static const String youTubeViewer = "/youTube-viewer";
