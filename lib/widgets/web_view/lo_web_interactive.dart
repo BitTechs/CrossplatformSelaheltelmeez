@@ -6,7 +6,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class GameObjectWebViewer extends StatefulWidget {
   final String url;
-  const GameObjectWebViewer({Key? key, required this.url})
+  final bool isLandScape;
+  const GameObjectWebViewer({Key? key, required this.url, required this.isLandScape})
       : super(key: key);
 
   @override
@@ -26,16 +27,23 @@ class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
   Widget build(BuildContext context) {
     return FlatAppScaffold(
       child: WebView(
-          initialUrl: Uri.dataFromString(generateLandscapeLayout("https://www.selaheltelmeez.com/Media21-22/Ara_4R_2A/Interactive/Ara_4R_2A_01_01_03/mymovie.html", "75", 4), mimeType: 'text/html').toString(),
+          initialUrl: widget.url,
           javascriptMode: JavascriptMode.unrestricted,
           debuggingEnabled: true,
           onWebViewCreated: (WebViewController controller){
             _webController = controller;
+            _webController.runJavascript("""
+              window.postMessage({
+                  event_name: 'setStartPoint',
+                  data: { p1: 3, p2: '75' }
+              }, 'https://www.selaheltelmeez.com');
+              """);
           },
           javascriptChannels: {
             JavascriptChannel(
                 name: 'SendProgress',
                 onMessageReceived: (JavascriptMessage message) {
+                  //TODO: POST Message TO API
                   print("message got received");
                   print(message.message);
                 })
@@ -175,7 +183,7 @@ class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
         }
 
         bindEvent(window, 'message', function (e) {
-              SendProgress.postMessage(e.data);
+          
         });
       </script>
     </body>

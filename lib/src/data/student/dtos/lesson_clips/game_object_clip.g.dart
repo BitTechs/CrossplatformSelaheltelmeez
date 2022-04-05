@@ -17,6 +17,7 @@ GameObjectClip _$GameObjectClipFromJson(Map<String, dynamic> json) =>
       json['height'] as int,
       json['gameObjectUrl'] as String,
       json['isPremiumOnly'] as bool,
+      json['orientation'] as int,
     );
 
 Map<String, dynamic> _$GameObjectClipToJson(GameObjectClip instance) =>
@@ -30,4 +31,5 @@ Map<String, dynamic> _$GameObjectClipToJson(GameObjectClip instance) =>
       'height': instance.height,
       'gameObjectUrl': instance.gameObjectUrl,
       'isPremiumOnly': instance.isPremiumOnly,
+      'orientation': instance.orientation,
     };

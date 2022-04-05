@@ -2,6 +2,7 @@ import 'package:selaheltelmeez/core/data_transfer_object/value_commit_result.dar
 import 'package:selaheltelmeez/src/data/student/data_provider/curriculum/curriculum_data_provider.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/curriculum/student_curriculum.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/curriculum_score/identity_subject_score_response.dart';
+import 'package:selaheltelmeez/src/data/student/dtos/lesson_clips/identity_lesson_score_response.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/lesson_clips/lesson_clip_response.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/recent_progress/student_recent_lesson_progress_response.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/unit/curriculum_unit.dart';
@@ -15,4 +16,5 @@ class CurriculumRepository {
   Future<ValueCommitResult<List<CurriculumUnit>>> getCurriculumUnitsAsync(String curriculumId) async => await dataProvider.getCurriculumUnitsAsync(curriculumId);
   Future<ValueCommitResult<LessonClipResponse>> getLessonClipsAsync(int lessonId) async => await dataProvider.getLessonClipsAsync(lessonId);
   Future<ValueCommitResult<IdentitySubjectScoreResponse>> getSubjectScoreAsync(String subjectId) async => await dataProvider.getSubjectScoreAsync(subjectId);
+  Future<ValueCommitResult<IdentityLessonScoreResponse>> getLessonScoreAsync(int lessonId) async => await dataProvider.getLessonScoreAsync(lessonId);
 }

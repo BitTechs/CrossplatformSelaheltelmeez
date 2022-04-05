@@ -12,7 +12,8 @@ class GameObjectClip{
   final int height;
   final String gameObjectUrl;
   final bool isPremiumOnly;
-  GameObjectClip(this.id, this.clipName, this.clipType, this.thumbnail, this.clipScore, this.width, this.height, this.gameObjectUrl, this.isPremiumOnly);
+  final int orientation;
+  GameObjectClip(this.id, this.clipName, this.clipType, this.thumbnail, this.clipScore, this.width, this.height, this.gameObjectUrl, this.isPremiumOnly, this.orientation);
 
   factory GameObjectClip.fromJson(Map<String,dynamic> json)=> _$GameObjectClipFromJson(json);
   Map<String,dynamic> toJson()=> _$GameObjectClipToJson(this);

@@ -5,6 +5,7 @@ import 'package:selaheltelmeez/assets/assets_image.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/src/bloc/student/lesson_clips/lesson_clips_cubit.dart';
+import 'package:selaheltelmeez/src/bloc/student/lesson_clips/lesson_score_cubit.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/lesson_clips/clip_type.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/lesson_clips/game_object_clip.dart';
 import 'package:selaheltelmeez/src/data/student/repositories/curriculum/curriculum_repository.dart';
@@ -35,10 +36,17 @@ class _LessonScreenState extends State<LessonScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          LessonClipsCubit(context.read<CurriculumRepository>())
-            ..getLessonClipsAsync(10),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) =>
+                LessonClipsCubit(context.read<CurriculumRepository>())
+                  ..getLessonClipsAsync(10)),
+        BlocProvider(
+            create: (context) =>
+                LessonScoreCubit(context.read<CurriculumRepository>())
+                  ..loadStudentLessonScore(10)),
+      ],
       child: FancyDetailedNavigatedAppScaffold(
           title: widget.title,
           subtitle: widget.subtitle,
@@ -50,19 +58,27 @@ class _LessonScreenState extends State<LessonScreen> {
               const SizedBox(
                 height: 10.0,
               ),
-              LinearPercentIndicator(
-                width: (MediaQuery.of(context).size.width) - 100,
-                lineHeight: 8.0,
-                alignment: MainAxisAlignment.center,
-                percent: 0.5,
-                isRTL: true,
-                leading: const Text(
-                  "50.0%",
-                  style: TextStyle(fontSize: 12.0),
-                ),
-                barRadius: const Radius.circular(16),
-                backgroundColor: Colors.grey[300],
-                progressColor: Colors.amberAccent,
+              BlocBuilder<LessonScoreCubit, LessonScoreState>(
+                builder: (context, state) {
+                  if(state is LessonScoreSuccess){
+                    return LinearPercentIndicator(
+                      width: (MediaQuery.of(context).size.width) - 100,
+                      lineHeight: 8.0,
+                      alignment: MainAxisAlignment.center,
+                      percent: 0.5,
+                      isRTL: true,
+                      leading: Text(
+                        "${((state.studentScore / state.lessonScore) * 100).toStringAsFixed(2)} %",
+                        style: const TextStyle(fontSize: 12.0),
+                      ),
+                      barRadius: const Radius.circular(16),
+                      backgroundColor: Colors.grey[300],
+                      progressColor: Colors.amberAccent,
+                    );
+                  }else{
+                    return const SizedBox();
+                  }
+                },
               ),
               const SizedBox(
                 height: 10.0,
@@ -109,18 +125,29 @@ class _LessonScreenState extends State<LessonScreen> {
                                   itemBuilder: (context, index) =>
                                       GestureDetector(
                                           onTap: () {
-                                            final type = state.lessonsClip.clips[index].clipType;
+                                            final type = state.lessonsClip
+                                                .clips[index].clipType;
                                             if (type == 1) // interactive
                                             {
-                                                  final url = state.lessonsClip.clips[index].gameObjectUrl;
-                                                  final title = state.lessonsClip.clips[index].clipName;
-                                                  Navigator.of(context).pushNamed(RouteNames.gameObjectInteractiveViewer, arguments: [url,title]);
+                                              final url = state.lessonsClip
+                                                  .clips[index].gameObjectUrl;
+                                              final title = state.lessonsClip
+                                                  .clips[index].clipName;
+                                              Navigator.of(context).pushNamed(
+                                                  RouteNames
+                                                      .gameObjectInteractiveViewer,
+                                                  arguments: [url, title]);
                                             }
-                                            if(type == 4) // youtube
+                                            if (type == 4) // youtube
                                             {
-                                              final url = state.lessonsClip.clips[index].gameObjectUrl;
-                                              final title = state.lessonsClip.clips[index].clipName;
-                                              Navigator.of(context).pushNamed(RouteNames.gameObjectInteractiveViewer, arguments: [url,title]);
+                                              final url = state.lessonsClip
+                                                  .clips[index].gameObjectUrl;
+                                              final title = state.lessonsClip
+                                                  .clips[index].clipName;
+                                              Navigator.of(context).pushNamed(
+                                                  RouteNames
+                                                      .gameObjectInteractiveViewer,
+                                                  arguments: [url, title]);
                                             }
                                           },
                                           child: itemLessonList(
