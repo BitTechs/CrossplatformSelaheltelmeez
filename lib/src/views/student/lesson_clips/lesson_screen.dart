@@ -7,6 +7,7 @@ import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/core/theme/common_colors.dart';
 import 'package:selaheltelmeez/src/bloc/student/lesson_clips/lesson_clips_cubit.dart';
 import 'package:selaheltelmeez/src/bloc/student/lesson_clips/lesson_score_cubit.dart';
+import 'package:selaheltelmeez/src/data/student/arguments/game_object_argument.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/game_object_activity/activity_request.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/lesson_clips/clip_type.dart';
 import 'package:selaheltelmeez/src/data/student/dtos/lesson_clips/game_object_clip.dart';
@@ -21,13 +22,13 @@ class LessonScreen extends StatefulWidget {
   final String subtitle;
   final String image;
   final int lessonId;
-
+  final String subjectId;
   const LessonScreen(
       {Key? key,
       required this.title,
       required this.subtitle,
       required this.image,
-      required this.lessonId})
+      required this.lessonId, required this.subjectId})
       : super(key: key);
 
   @override
@@ -131,12 +132,24 @@ class _LessonScreenState extends State<LessonScreen> {
                                             final type = state.lessonsClip.clips[index].clipType;
                                             if (type == 1) // interactive
                                             {
-                                              final url = state.lessonsClip.clips[index].gameObjectUrl;
-                                              final orientation = state.lessonsClip.clips[index].orientation;
-                                              final lessonId = state.lessonsClip.clips[index].lessonId;
-                                              final clipId = state.lessonsClip.clips[index].id;
-                                              final ValueCommitResult<int> activityId = await context.read<GameObjectActivityRepository>().insertActivity(ActivityRequest(clipId: clipId, lessonId: lessonId));
-                                              Navigator.of(context).pushNamed(RouteNames.gameObjectInteractiveViewer,arguments: [url, orientation, lessonId, clipId, activityId.value]);
+                                              if(state.lessonsClip.clips[index].activityId == null){
+                                                final ValueCommitResult<int> newActivityId = await context.read<GameObjectActivityRepository>()
+                                                    .insertActivity(ActivityRequest(clipId: state.lessonsClip.clips[index].id,
+                                                                                    lessonId: state.lessonsClip.clips[index].lessonId,
+                                                                                subjectId: widget.subjectId
+                                                ));
+
+                                                state.lessonsClip.clips[index].activityId = newActivityId.value!;
+                                              }
+                                              GameObjectArgument gameObjectArgument =
+                                              GameObjectArgument(url: state.lessonsClip.clips[index].gameObjectUrl,
+                                                  orientation: state.lessonsClip.clips[index].orientation,
+                                                  lessonId: state.lessonsClip.clips[index].lessonId,
+                                                  clipId: state.lessonsClip.clips[index].id,
+                                                  activityId: state.lessonsClip.clips[index].activityId!,
+                                                  code: state.lessonsClip.clips[index].gameObjectCode ?? 0,
+                                                  progress: state.lessonsClip.clips[index].gameObjectProgress ?? 0);
+                                                  Navigator.of(context).pushNamed(RouteNames.gameObjectInteractiveViewer,arguments: gameObjectArgument);
                                             }
                                             if (type == 4) // youtube
                                             {

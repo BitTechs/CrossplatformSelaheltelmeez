@@ -13,7 +13,7 @@ class CurriculumDataProvider {
   CurriculumDataProvider({required this.dioClient});
 
   Future<ValueCommitResult<List<StudentCurriculum>>> getStudentCurriculumsAsync() async{
-    Response<dynamic> response = await dioClient.getClient().get("/StudentCurriculum/GetIdentitySubjects");
+    Response<dynamic> response = await dioClient.getClient().get("/StudentCurriculum/GetStudentSubjects");
     return ValueCommitResult<List<StudentCurriculum>>.fromJson(response.data,(data)=> (data as List).map((e) => StudentCurriculum.fromJson(e as Map<String,dynamic>)).toList());
    }
 
@@ -23,12 +23,12 @@ class CurriculumDataProvider {
   }
 
   Future<ValueCommitResult<List<CurriculumUnit>>> getCurriculumUnitsAsync(String curriculumId)async{
-    Response<dynamic> response = await dioClient.getClient().get("/Curriculum/GetSubjectUnits?SubjectId=$curriculumId");
+    Response<dynamic> response = await dioClient.getClient().get("/Curriculum/GetUnits?SubjectId=$curriculumId");
     return ValueCommitResult<List<CurriculumUnit>>.fromJson(response.data,(data)=> (data as List).map((e) => CurriculumUnit.fromJson(e as Map<String,dynamic>)).toList());
   }
 
   Future<ValueCommitResult<LessonClipResponse>> getLessonClipsAsync(int lessonId) async{
-    Response<dynamic> response = await dioClient.getClient().get("/Curriculum/GetLessonClips?LessonId=$lessonId");
+    Response<dynamic> response = await dioClient.getClient().get("/Curriculum/GetClips?LessonId=$lessonId");
     return ValueCommitResult<LessonClipResponse>.fromJson(response.data,(data)=> LessonClipResponse.fromJson(data as Map<String,dynamic>));
   }
 

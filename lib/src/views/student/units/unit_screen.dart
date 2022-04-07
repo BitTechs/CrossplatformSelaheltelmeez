@@ -185,7 +185,7 @@ class UnitScreen extends StatelessWidget {
   Widget lessonsItem(UnitLesson item, context) => GestureDetector(
         onTap: () {
           Navigator.of(context).pushNamed(RouteNames.studentLesson,
-              arguments: [curriculumName, item.name, iconImage, item.id]);
+              arguments: [curriculumName, item.name, iconImage, item.id , curriculumId]);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

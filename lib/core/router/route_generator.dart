@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:selaheltelmeez/core/router/route_names.dart';
 import 'package:selaheltelmeez/src/data/landing/dtos/list_item.dart';
+import 'package:selaheltelmeez/src/data/student/arguments/game_object_argument.dart';
 import 'package:selaheltelmeez/src/views/landing/landing_screen.dart';
 import 'package:selaheltelmeez/src/views/parent/add_child/add_child_screen.dart';
 import 'package:selaheltelmeez/src/views/parent/child_screen/child_screen.dart';
@@ -78,7 +79,7 @@ class RouteGenerator {
         return PageTransition(child: UnitScreen(curriculumId: dynamicArgs[0],curriculumName: dynamicArgs[1], backgroundImage: dynamicArgs[2], iconImage: dynamicArgs[3],),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.studentLesson:
         List<dynamic> dynamicArgs = (args as List<dynamic>);
-        return PageTransition(child: LessonScreen(title: dynamicArgs[0], subtitle: dynamicArgs[1], image: dynamicArgs[2], lessonId: dynamicArgs[3]),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+        return PageTransition(child: LessonScreen(title: dynamicArgs[0], subtitle: dynamicArgs[1], image: dynamicArgs[2], lessonId: dynamicArgs[3], subjectId: dynamicArgs[4]),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.classSearch:
         return PageTransition(child: ClassSearchScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.usageReport:
@@ -127,15 +128,9 @@ class RouteGenerator {
         return PageTransition(child: const ParentDetailedSubjectReport(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
       case RouteNames.parentDetailedLessonReport:
         return PageTransition(child: const ParentDetailedLessonReport(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
-
       case RouteNames.gameObjectInteractiveViewer:
-        List<dynamic> dynamicArgs = (args as List<dynamic>);
-        final String url = dynamicArgs[0];
-        final int orientation = dynamicArgs[1];
-        final int lessonId = dynamicArgs[2];
-        final int clipId = dynamicArgs[3];
-        final int activityId = dynamicArgs[4];
-        return PageTransition(child: GameObjectWebViewer(url: url, orientation: orientation, lessonId: lessonId, clipId : clipId, activityId: activityId),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+        GameObjectArgument gameObjectArgument = (args as GameObjectArgument);
+        return PageTransition(child: GameObjectWebViewer(gameObjectArgument: gameObjectArgument,),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
     // Validation of correct data type
       case RouteNames.webViewer:
         ListItem listItem = (args as ListItem);

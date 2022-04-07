@@ -10,10 +10,12 @@ ActivityRequest _$ActivityRequestFromJson(Map<String, dynamic> json) =>
     ActivityRequest(
       clipId: json['clipId'] as int,
       lessonId: json['lessonId'] as int,
+      subjectId: json['subjectId'] as String,
     );
 
 Map<String, dynamic> _$ActivityRequestToJson(ActivityRequest instance) =>
     <String, dynamic>{
       'clipId': instance.clipId,
       'lessonId': instance.lessonId,
+      'subjectId': instance.subjectId,
     };

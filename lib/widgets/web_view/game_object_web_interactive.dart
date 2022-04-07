@@ -1,19 +1,14 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:selaheltelmeez/src/data/student/arguments/game_object_argument.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class GameObjectWebViewer extends StatefulWidget {
-  final String url;
-  final int orientation;
-  final int lessonId;
-  final int clipId;
-  final int activityId;
-
-  const GameObjectWebViewer({Key? key, required this.url, required this.orientation, required this.lessonId, required this.clipId, required this.activityId})
+  final GameObjectArgument gameObjectArgument;
+  const GameObjectWebViewer({Key? key, required this.gameObjectArgument})
       : super(key: key);
 
   @override
@@ -26,7 +21,7 @@ class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
   @override
   void initState() {
     super.initState();
-    if(widget.orientation == 1){
+    if(widget.gameObjectArgument.orientation == 1){
       SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
     }
     // Enable virtual display.
@@ -34,7 +29,7 @@ class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
 
   @override
   void dispose()  {
-    if(widget.orientation == 1){
+    if(widget.gameObjectArgument.orientation == 1){
       SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     }
     super.dispose();
@@ -45,8 +40,8 @@ class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
   Widget build(BuildContext context) {
     return FlatAppScaffold(
       child: InAppWebView(
-        initialUrlRequest: URLRequest(url: Uri.dataFromString(widget.orientation == 1? generateLandscapeLayout("https://www.selaheltelmeez.com/Media21-22/Ara_1R_2A/Interactive/Ara_1R_2A_01_01_03/mymovie.html",'75',3) :
-                                                                                       generatePortraitLayout("https://www.selaheltelmeez.com/Media21-22/Ara_1R_2A/Interactive/Ara_1R_2A_01_01_03/mymovie.html",'75',3) ,  mimeType: 'text/html',
+        initialUrlRequest: URLRequest(url: Uri.dataFromString(widget.gameObjectArgument.orientation == 1? generateLandscapeLayout(widget.gameObjectArgument.url,widget.gameObjectArgument.progress,widget.gameObjectArgument.code) :
+                                                                                       generatePortraitLayout(widget.gameObjectArgument.url,widget.gameObjectArgument.progress,widget.gameObjectArgument.code) ,  mimeType: 'text/html',
         encoding: Encoding.getByName('utf-8'))),
         onWebViewCreated: (InAppWebViewController controller) {
           _webController = controller;
@@ -70,7 +65,7 @@ class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
       )
     );
   }
-  String generateLandscapeLayout(String gameObjectUrl,String progress, int code){
+  String generateLandscapeLayout(String gameObjectUrl,int progress, int code){
     return """ 
     <!DOCTYPE html>
      <html lang="en">
@@ -211,7 +206,7 @@ class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
     """;
   }
 
-  String generatePortraitLayout(String gameObjectUrl,String progress, int code){
+  String generatePortraitLayout(String gameObjectUrl,int progress, int code){
     return """ 
     <!DOCTYPE html>
      <html lang="en">
