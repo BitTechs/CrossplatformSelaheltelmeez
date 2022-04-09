@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -44,6 +47,12 @@ Future<void> main() async {
   GetIt.I.registerSingletonAsync<ObjectBox>(() async => await ObjectBox.create());
   GetIt.I.registerSingletonAsync<SharedPreferences>(() async => await SharedPreferences.getInstance());
   await GetIt.I.allReady();
+
+
+  if (Platform.isAndroid) {
+    await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+  }
+
   // Trying to loading App User Entity Values
 
   runApp(
@@ -73,36 +82,22 @@ class SelaheltelmeezLauncher extends StatelessWidget {
 
 
         // Login
-        RepositoryProvider<RemoteLoginDataProvider>(
-            create: (context) => RemoteLoginDataProvider(
-                dioClient: context.read<AnonymousDioClient>())),
-
-        RepositoryProvider<LoginRepository>(
-            create: (context) => LoginRepository(dataProvider: context.read<RemoteLoginDataProvider>())),
-
+        RepositoryProvider<RemoteLoginDataProvider>(create: (context) => RemoteLoginDataProvider(dioClient: context.read<AnonymousDioClient>())),
+        RepositoryProvider<LoginRepository>(create: (context) => LoginRepository(dataProvider: context.read<RemoteLoginDataProvider>())),
         // Register
-        RepositoryProvider<RemoteRegisterDataProvider>(
-            create: (context) => RemoteRegisterDataProvider(
-                dioClient: context.read<AnonymousDioClient>())),
-        RepositoryProvider<RegisterRepository>(
-            create: (context) => RegisterRepository(
-                dataProvider: context.read<RemoteRegisterDataProvider>())),
+        RepositoryProvider<RemoteRegisterDataProvider>(create: (context) => RemoteRegisterDataProvider(dioClient: context.read<AnonymousDioClient>())),
+        RepositoryProvider<RegisterRepository>(create: (context) => RegisterRepository(dataProvider: context.read<RemoteRegisterDataProvider>())),
         // Update Profile
         RepositoryProvider<RemoteUpdateProfileDataProvider>(create: (context) => RemoteUpdateProfileDataProvider(dioClient: context.read<AuthorizedDioClient>())),
         RepositoryProvider<UpdateProfileRepository>(create: (context) => UpdateProfileRepository(dataProvider: context.read<RemoteUpdateProfileDataProvider>())),
         //Change Email Or Mobile
         RepositoryProvider<RemoteChangeEmailOrMobileDataProvider>(create: (context) => RemoteChangeEmailOrMobileDataProvider(dioClient: context.read<AuthorizedDioClient>())),
         RepositoryProvider<ChangeEmailOrMobileRepository>(create: (context) => ChangeEmailOrMobileRepository(dataProvider: context.read<RemoteChangeEmailOrMobileDataProvider>())),
-
         // Forget Password
         RepositoryProvider<RemoteForgetPasswordDataProvider>(create: (context) => RemoteForgetPasswordDataProvider(dioClient: context.read<AnonymousDioClient>())),
         RepositoryProvider<ForgetPasswordRepository>(create: (context) => ForgetPasswordRepository(dataProvider: context.read<RemoteForgetPasswordDataProvider>())),
-
         //Validate OTP
-        RepositoryProvider<RemoteValidateOTPDataProvider>(
-            create: (context) => RemoteValidateOTPDataProvider(
-                dioClient: context.read<AuthorizedDioClient>())),
-
+        RepositoryProvider<RemoteValidateOTPDataProvider>(create: (context) => RemoteValidateOTPDataProvider(dioClient: context.read<AuthorizedDioClient>())),
         RepositoryProvider<ValidateOTPRepository>(create: (context) => ValidateOTPRepository( dataProvider: context.read<RemoteValidateOTPDataProvider>())),
 
         RepositoryProvider<CurriculumDataProvider>(create: (context) => CurriculumDataProvider(dioClient: context.read<AuthorizedDioClient>())),
@@ -113,7 +108,6 @@ class SelaheltelmeezLauncher extends StatelessWidget {
 
         RepositoryProvider<InvitationDataProvider>(create: (context) => InvitationDataProvider(dioClient: context.read<AuthorizedDioClient>())),
         RepositoryProvider<InvitationRepository>(create: (context) => InvitationRepository(dataProvider: context.read<InvitationDataProvider>()))
-
       ],
       child: MultiBlocProvider(
         providers: [

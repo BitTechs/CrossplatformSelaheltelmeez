@@ -6,5 +6,6 @@ class GameObjectArgument{
   final int activityId;
   final int code;
   final int progress;
-  GameObjectArgument({required this.url, required this.orientation, required this.lessonId, required this.clipId, required this.activityId, required this.code, required this.progress});
+  final int clipScore;
+  GameObjectArgument({required this.clipScore, required this.url, required this.orientation, required this.lessonId, required this.clipId, required this.activityId, required this.code, required this.progress});
 }

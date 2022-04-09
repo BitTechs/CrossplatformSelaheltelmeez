@@ -17,7 +17,7 @@ import 'package:selaheltelmeez/widgets/buttons/scaled_button_image.dart';
 import 'package:selaheltelmeez/widgets/loading/double_bounce.dart';
 import 'package:selaheltelmeez/widgets/scaffold/fancy_detailed_navigated_app_scaffold.dart';
 
-class LessonScreen extends StatefulWidget {
+class LessonScreen extends StatelessWidget {
   final String title;
   final String subtitle;
   final String image;
@@ -30,13 +30,6 @@ class LessonScreen extends StatefulWidget {
       required this.image,
       required this.lessonId, required this.subjectId})
       : super(key: key);
-
-  @override
-  State<LessonScreen> createState() => _LessonScreenState();
-}
-
-class _LessonScreenState extends State<LessonScreen> {
-  int selectedItem = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +45,9 @@ class _LessonScreenState extends State<LessonScreen> {
                   ..loadStudentLessonScore(10)),
       ],
       child: FancyDetailedNavigatedAppScaffold(
-          title: widget.title,
-          subtitle: widget.subtitle,
-          image: widget.image,
+          title: title,
+          subtitle: subtitle,
+          image: image,
           isLocalImage: false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -107,15 +100,10 @@ class _LessonScreenState extends State<LessonScreen> {
                           Container(
                             height: 110.0,
                             color: Colors.white,
-                            child: ListView.separated(
+                            child: ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) => itemFilterList(
-                                  state.lessonsClip.types[index]),
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(
-                                width: 0.0,
-                              ),
-                              itemCount: state.lessonsClip.types.length,
+                              itemBuilder: (context, index) => itemFilterList(context,state.types[index]),
+                              itemCount: state.types.length,
                             ),
                           ),
                           const SizedBox(
@@ -129,43 +117,41 @@ class _LessonScreenState extends State<LessonScreen> {
                                   itemBuilder: (context, index) =>
                                       GestureDetector(
                                           onTap: () async {
-                                            final type = state.lessonsClip.clips[index].clipType;
+                                            final type = state.clips[index].clipType;
                                             if (type == 1) // interactive
                                             {
-                                              if(state.lessonsClip.clips[index].activityId == null){
+                                              if(state.clips[index].activityId == null)
+                                              {
                                                 final ValueCommitResult<int> newActivityId = await context.read<GameObjectActivityRepository>()
-                                                    .insertActivity(ActivityRequest(clipId: state.lessonsClip.clips[index].id,
-                                                                                    lessonId: state.lessonsClip.clips[index].lessonId,
-                                                                                subjectId: widget.subjectId
-                                                ));
+                                                    .insertActivityAsync(
+                                                    ActivityRequest(clipId: state.clips[index].id,
+                                                                    lessonId: state.clips[index].lessonId,
+                                                                    subjectId: subjectId));
 
-                                                state.lessonsClip.clips[index].activityId = newActivityId.value!;
+                                                state.clips[index].activityId = newActivityId.value!;
                                               }
                                               GameObjectArgument gameObjectArgument =
-                                              GameObjectArgument(url: state.lessonsClip.clips[index].gameObjectUrl,
-                                                  orientation: state.lessonsClip.clips[index].orientation,
-                                                  lessonId: state.lessonsClip.clips[index].lessonId,
-                                                  clipId: state.lessonsClip.clips[index].id,
-                                                  activityId: state.lessonsClip.clips[index].activityId!,
-                                                  code: state.lessonsClip.clips[index].gameObjectCode ?? 0,
-                                                  progress: state.lessonsClip.clips[index].gameObjectProgress ?? 0);
+                                              GameObjectArgument(url: state.clips[index].gameObjectUrl,
+                                                  clipScore : state.clips[index].clipScore,
+                                                  orientation: state.clips[index].orientation,
+                                                  lessonId: state.clips[index].lessonId,
+                                                  clipId: state.clips[index].id,
+                                                  activityId: state.clips[index].activityId!,
+                                                  code: state.clips[index].gameObjectCode ?? 0,
+                                                  progress: state.clips[index].gameObjectProgress ?? 0,);
                                                   Navigator.of(context).pushNamed(RouteNames.gameObjectInteractiveViewer,arguments: gameObjectArgument);
                                             }
                                             if (type == 4) // youtube
                                             {
-                                              final url = state.lessonsClip.clips[index].gameObjectUrl;
-                                              final title = state.lessonsClip.clips[index].clipName;
+                                              final url = state.clips[index].gameObjectUrl;
+                                              final title = state.clips[index].clipName;
 
-                                              Navigator.of(context).pushNamed(RouteNames.gameObjectInteractiveViewer,arguments: [url, title]);
+                                            //  Navigator.of(context).pushNamed(RouteNames.gameObjectInteractiveViewer,arguments: [url, title]);
                                             }
                                           },
-                                          child: itemLessonList(
-                                              state.lessonsClip.clips[index])),
-                                  separatorBuilder: (context, index) =>
-                                      const SizedBox(
-                                        height: 15.0,
-                                      ),
-                                  itemCount: state.lessonsClip.clips.length),
+                                          child: itemLessonList(state.clips[index])),separatorBuilder: (context, index) =>
+                                          const SizedBox(height: 15.0,),
+                                           itemCount: state.clips.length),
                             ),
                           ),
                         ],
@@ -181,15 +167,13 @@ class _LessonScreenState extends State<LessonScreen> {
     );
   }
 
-  Widget itemFilterList(ClipType clipType) => Padding(
+  Widget itemFilterList(BuildContext context, ClipType clipType) => Padding(
         padding: const EdgeInsets.all(16.0),
         child: ScaledWidget(
-          scale: (selectedItem == clipType.value) ? 1.2 : 1.0,
-          opacity: (selectedItem == clipType.value) ? 1.0 : 0.6,
+          scale: (context.read<LessonClipsCubit>().selectedClipType == clipType.value) ? 1.2 : 1.0,
+          opacity: (context.read<LessonClipsCubit>().selectedClipType == clipType.value) ? 1.0 : 0.6,
           onTap: () {
-            setState(() {
-              selectedItem == clipType.value;
-            });
+            context.read<LessonClipsCubit>().applyFilter(clipType.value!);
           },
           child: Column(
             children: [
@@ -203,17 +187,6 @@ class _LessonScreenState extends State<LessonScreen> {
             ],
           ),
         ),
-      );
-
-  Widget selectedItemFilterList() => Column(
-        children: const [
-          Image(
-            height: 60,
-            width: 60,
-            image: AssetImage(AssetsImage.all),
-          ),
-          Text('فيديو'),
-        ],
       );
 
   Widget itemLessonList(GameObjectClip gameObjectClip) => SizedBox(
