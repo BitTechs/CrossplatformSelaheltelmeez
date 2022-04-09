@@ -9,6 +9,7 @@ class RouteNames{
   static const String validateForgetPassword = "/validate-forget-password-otp";
   static const String resetPassword = "/reset-password";
 
+
   static const String studentHomeLayout = "/student-home";
   static const String studentSubject = "/student-subject";
   static const String studentLesson = "/student-lesson";
@@ -22,6 +23,7 @@ class RouteNames{
   static const String homeworkScreen = "/homework-screen";
   static const String homeworkDetailedScreen = "/homework-detailed-screen";
   static const String quizScreen = "/quiz-screen";
+
 
   static const String parentHome = "/parent-home";
   static const String addChild = "/add-child";
@@ -38,6 +40,27 @@ class RouteNames{
   static const String parentDetailedLessonReport = "/parent-detailed-lesson-report";
 
 
+  static const String teacherHome = "/teacher-home";
+  static const String teacherSubjects = "/teacher-subjects";
+  static const String teacherAddSubject = "/teacher-add-subject";
+  static const String teacherSubjectScreen = "/teacher-subject-screen";
+  static const String teacherSubjectTimeline = "/teacher-subject-timeline";
+  static const String teacherClassesScreen = "/teacher-classes-screen";
+  static const String teacherAddClass = "/teacher-add-class";
+  static const String teacherClassScreen = "/teacher-class-screen";
+  static const String teacherEditClass = "/teacher-edit-class";
+  static const String teacherJoinedStudents = "/teacher-joined-students";
+  static const String teacherStudentScreen = "/teacher-student-screen";
+  static const String teacherStudentProgress = "/teacher-student-progress";
+  static const String teacherExamsDetails = "/teacher-exams-details";
+  static const String teacherExamsScreen = "/teacher-exams-screen";
+  static const String teacherAddExam = "/teacher-add-exam";
+  static const String teacherExamScreen = "/teacher-exam-screen";
+  static const String teacherExamResult = "/teacher-exam-result";
+  static const String teacherHomeworks = "/teacher-homeworks";
+  static const String teacherAddHomework = "/teacher-add-homework";
+  static const String teacherHomeworkScreen = "/teacher-homework-screen";
+
 
   static const String webViewer = "/web-viewer";
   static const String youTubeViewer = "/youTube-viewer";
@@ -45,7 +68,4 @@ class RouteNames{
 
   static const String gameObjectInteractiveViewer = "/game-object-interactive-viewer";
   static const String gameObjectYouTubeViewer = "/game-object-youtube-viewer";
-
-
-
 }

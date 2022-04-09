@@ -45,6 +45,23 @@ class AssetsImage {
   static const String subjectStatistics = "assets/images/parent/subjectstatistics.png";
   static const String paint = "assets/images/parent/paint.png";
 
-
+  static const String teacherAsk = "assets/images/teacher/ask.png";
+  static const String classes = "assets/images/teacher/classes.png";
+  static const String exams = "assets/images/teacher/exams.png";
+  static const String statisticsChart = "assets/images/teacher/statisticschart.png";
+  static const String subjects = "assets/images/teacher/subjects.png";
+  static const String teacherCode = "assets/images/teacher/teachercode.png";
+  static const String subjectCircle = "assets/images/teacher/subjectcircle.png";
+  static const String timelineTable = "assets/images/teacher/timelinetable.png";
+  static const String ebookIcon = "assets/images/teacher/ebookicon.png";
+  static const String classesCricle = "assets/images/teacher/classescricle.png";
+  static const String copyText = "assets/images/teacher/copytext.png";
+  static const String editClass = "assets/images/teacher/editclass.png";
+  static const String examsDetails = "assets/images/teacher/examsdetails.png";
+  static const String joinedStudents = "assets/images/teacher/joinedstudents.png";
+  static const String joinedStudentsCircle = "assets/images/teacher/joinedstudentscircle.png";
+  static const String paintCircle = "assets/images/teacher/paintcircle.png";
+  static const String pasteText = "assets/images/teacher/pastetext.png";
+  static const String homeworkCircle = "assets/images/teacher/homeworkcircle.png";
 
 }

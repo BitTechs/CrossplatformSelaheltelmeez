@@ -120,8 +120,6 @@ class SearchForChildScreen extends StatelessWidget {
 
                         ],
                       ),
-
-
                     ],
                   ),
                 ],

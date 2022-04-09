@@ -19,7 +19,7 @@ class FancyAddButton extends StatelessWidget {
         children: [
           SizedBox(
             height: 5.h,
-            width: 50.w,
+            width: width?? 50.w,
             child: SvgPicture.asset(
               AssetsImage.inputBackground,
               color: CommonColors.inputBackgroundColor,

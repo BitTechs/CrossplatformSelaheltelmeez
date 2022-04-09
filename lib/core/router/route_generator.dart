@@ -38,6 +38,26 @@ import 'package:selaheltelmeez/src/views/authentication/validate_otp/validate_ot
 import 'package:selaheltelmeez/src/views/student/classes/class_search_screen.dart';
 import 'package:selaheltelmeez/src/views/student/units/unit_screen.dart';
 import 'package:selaheltelmeez/src/views/student/usage_report/usage_report_screen.dart';
+import 'package:selaheltelmeez/src/views/teacher/add_new_class/TeacherAddClass.dart';
+import 'package:selaheltelmeez/src/views/teacher/add_new_exam/teacher_add_exam.dart';
+import 'package:selaheltelmeez/src/views/teacher/add_new_homework/teacher_add_homework.dart';
+import 'package:selaheltelmeez/src/views/teacher/add_subject/TeacherAddSubject.dart';
+import 'package:selaheltelmeez/src/views/teacher/class_screen/teacher_class_screen.dart';
+import 'package:selaheltelmeez/src/views/teacher/classes/teacher_classes_screen.dart';
+import 'package:selaheltelmeez/src/views/teacher/edit_class/teacher_edit_class.dart';
+import 'package:selaheltelmeez/src/views/teacher/exam_result/teacher_exam_result.dart';
+import 'package:selaheltelmeez/src/views/teacher/exam_screen/teacher_exam_screen.dart';
+import 'package:selaheltelmeez/src/views/teacher/exams/teacher_exams_screen.dart';
+import 'package:selaheltelmeez/src/views/teacher/exams_details/teacher_exams_details.dart';
+import 'package:selaheltelmeez/src/views/teacher/homework_screen/teacher_homework_screen.dart';
+import 'package:selaheltelmeez/src/views/teacher/homeworks/teacher_homeworks.dart';
+import 'package:selaheltelmeez/src/views/teacher/joined_students/teacher_joined_students.dart';
+import 'package:selaheltelmeez/src/views/teacher/navigation_bar/Teacher_navigation_bar_screen.dart';
+import 'package:selaheltelmeez/src/views/teacher/student_progress/teacher_student_progress.dart';
+import 'package:selaheltelmeez/src/views/teacher/student_screen/teacher_student_screen.dart';
+import 'package:selaheltelmeez/src/views/teacher/subject_screen/teacher_subject_screen.dart';
+import 'package:selaheltelmeez/src/views/teacher/subject_timeline/teacher_subject_timeline.dart';
+import 'package:selaheltelmeez/src/views/teacher/subjects_screen/teacher_subjects_screen.dart';
 import 'package:selaheltelmeez/widgets/web_view/game_object_web_interactive.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
@@ -131,6 +151,50 @@ class RouteGenerator {
       case RouteNames.gameObjectInteractiveViewer:
         GameObjectArgument gameObjectArgument = (args as GameObjectArgument);
         return PageTransition(child: GameObjectWebViewer(gameObjectArgument: gameObjectArgument,),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+
+    //Teacher Screens
+      case RouteNames.teacherHome:
+        return PageTransition(child: const TeacherNavBarScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherSubjects:
+        return PageTransition(child: const TeacherSubjectsScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherAddSubject:
+        return PageTransition(child: const TeacherAddSubject(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherSubjectScreen:
+        return PageTransition(child: const TeacherSubjectScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherSubjectTimeline:
+        return PageTransition(child: const TeacherSubjectTimeline(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherClassesScreen:
+        return PageTransition(child: const TeacherClassesScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherAddClass:
+        return PageTransition(child: const TeacherAddClass(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherClassScreen:
+        return PageTransition(child: const TeacherClassScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherEditClass:
+        return PageTransition(child: const TeacherEditClass(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherJoinedStudents:
+        return PageTransition(child: const TeacherJoinedStudents(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherStudentScreen:
+        return PageTransition(child: const TeacherStudentScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherStudentProgress:
+        return PageTransition(child: const TeacherStudentProgress(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherExamsDetails:
+        return PageTransition(child: const TeacherExamsDetails(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherExamsScreen:
+        return PageTransition(child: const TeacherExamsScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherAddExam:
+        return PageTransition(child: const TeacherAddExam(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherExamScreen:
+        return PageTransition(child: const TeacherExamScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherExamResult:
+        return PageTransition(child: const TeacherExamResult(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherHomeworks:
+        return PageTransition(child: const TeacherHomeworks(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherAddHomework:
+        return PageTransition(child: const TeacherAddHomework(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+      case RouteNames.teacherHomeworkScreen:
+        return PageTransition(child: const TeacherHomeworkScreen(),type: pageTransitionType,alignment: pageAlignment,reverseDuration: popDuration,duration: pushDuration);
+
+
     // Validation of correct data type
       case RouteNames.webViewer:
         ListItem listItem = (args as ListItem);

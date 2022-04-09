@@ -41,4 +41,7 @@ class CommonColors{
   /// Parent Colors
   static get parentColor => const Color(0xff49c6a6);
 
+  /// Teacher Colors
+  static get teacherColor => const Color(0xff346a9a);
+
 }
