@@ -5,7 +5,7 @@ part 'student_recent_lesson_progress_response.g.dart';
 class StudentRecentLessonProgressResponse{
   final String lessonName;
   final int lessonPoints;
-  final int studentPoints;
+  final double studentPoints;
   final double progress;
   StudentRecentLessonProgressResponse(this.lessonName, this.lessonPoints, this.studentPoints, this.progress);
 

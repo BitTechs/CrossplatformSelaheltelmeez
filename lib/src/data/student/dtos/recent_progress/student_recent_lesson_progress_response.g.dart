@@ -11,7 +11,7 @@ StudentRecentLessonProgressResponse
         StudentRecentLessonProgressResponse(
           json['lessonName'] as String,
           json['lessonPoints'] as int,
-          json['studentPoints'] as int,
+          (json['studentPoints'] as num).toDouble(),
           (json['progress'] as num).toDouble(),
         );
 

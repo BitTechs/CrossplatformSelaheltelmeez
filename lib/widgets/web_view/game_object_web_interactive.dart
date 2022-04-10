@@ -1,15 +1,21 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:selaheltelmeez/src/data/student/arguments/game_object_argument.dart';
+import 'package:selaheltelmeez/src/data/student/dtos/game_object_activity/update_activity_request.dart';
+import 'package:selaheltelmeez/src/data/student/repositories/game_object_activity/game_object_activity_repository.dart';
 import 'package:selaheltelmeez/widgets/widget_imports.dart';
 
 class GameObjectWebViewer extends StatefulWidget {
   final GameObjectArgument gameObjectArgument;
   const GameObjectWebViewer({Key? key, required this.gameObjectArgument})
       : super(key: key);
+
+
 
   @override
   State<GameObjectWebViewer> createState() => _GameObjectWebViewerState();
@@ -18,9 +24,13 @@ class GameObjectWebViewer extends StatefulWidget {
 class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
 
   late InAppWebViewController _webController;
+  late Timer _timer;
+  late int learningDuration = 0;
+
   @override
   void initState() {
     super.initState();
+    _timer = Timer.periodic(const Duration(seconds:1), (Timer t) => learningDuration++);
     if(widget.gameObjectArgument.orientation == 1){
       SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
     }
@@ -32,6 +42,7 @@ class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
     if(widget.gameObjectArgument.orientation == 1){
       SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     }
+    _timer.cancel();
     super.dispose();
   }
 
@@ -40,8 +51,8 @@ class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
   Widget build(BuildContext context) {
     return FlatAppScaffold(
       child: InAppWebView(
-        initialUrlRequest: URLRequest(url: Uri.dataFromString(widget.gameObjectArgument.orientation == 1? generateLandscapeLayout(widget.gameObjectArgument.url,widget.gameObjectArgument.progress,widget.gameObjectArgument.code) :
-                                                                                       generatePortraitLayout(widget.gameObjectArgument.url,widget.gameObjectArgument.progress,widget.gameObjectArgument.code) ,  mimeType: 'text/html',
+        initialUrlRequest: URLRequest(url: Uri.dataFromString(widget.gameObjectArgument.orientation == 1? generateLandscapeLayout(widget.gameObjectArgument.url,getTextProgress(widget.gameObjectArgument.code),widget.gameObjectArgument.code) :
+                                                                                       generatePortraitLayout(widget.gameObjectArgument.url,getTextProgress(widget.gameObjectArgument.code),widget.gameObjectArgument.code) ,  mimeType: 'text/html',
         encoding: Encoding.getByName('utf-8'))),
         onWebViewCreated: (InAppWebViewController controller) {
           _webController = controller;
@@ -59,13 +70,55 @@ class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
         ),
         onConsoleMessage: (controller, consoleMessage) {
           if(consoleMessage.message.startsWith('{"code":')){
-            print("Console:Message:" +  consoleMessage.message);
+            Map<String, dynamic> paredJson = jsonDecode(consoleMessage.message);
+            final int code = paredJson["code"];
+            print(code);
+            final double progress =  getProgress(code);
+            context.read<GameObjectActivityRepository>()
+                .updateActivityAsync(UpdateActivityRequest(
+                learningDurationInSec: learningDuration,
+                code: code,
+                activityId: widget.gameObjectArgument.activityId,
+                studentPoints: widget.gameObjectArgument.clipScore * progress));
           }
         },
       )
     );
   }
-  String generateLandscapeLayout(String gameObjectUrl,int progress, int code){
+  double getProgress(int code){
+    switch(code){
+      case 0 :
+        return 0;
+      case 1:
+        return 0.25;
+      case 2 :
+        return 0.50;
+      case 3:
+        return 0.75;
+      case 4:
+        return 1.0;
+      default:
+        return 0;
+    }
+  }
+  String getTextProgress(int code){
+    switch(code){
+      case 0 :
+        return '0';
+      case 1:
+        return '25';
+      case 2 :
+        return '50';
+      case 3:
+        return '75';
+      case 4:
+        return '100';
+      default:
+        return '0';
+    }
+  }
+
+  String generateLandscapeLayout(String gameObjectUrl,String progress, int code){
     return """ 
     <!DOCTYPE html>
      <html lang="en">
@@ -206,7 +259,7 @@ class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
     """;
   }
 
-  String generatePortraitLayout(String gameObjectUrl,int progress, int code){
+  String generatePortraitLayout(String gameObjectUrl,String progress, int code){
     return """ 
     <!DOCTYPE html>
      <html lang="en">
@@ -215,8 +268,6 @@ class _GameObjectWebViewerState extends State<GameObjectWebViewer> {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    @*<script src="html/StandAlone/jquery.min.js"></script>*@
-    @*<script src="html/StandAlone/resizePortrait.js"></script>*@
     <style>
         body {
             width: 100vw;
