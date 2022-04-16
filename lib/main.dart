@@ -41,6 +41,7 @@ import 'src/bloc/parent/parent_navigation_bar/navigation_bar_cubit.dart';
 import 'src/bloc/student/classes/class_search_cubit.dart';
 import 'src/bloc/teacher/teacher_navigation_bar/navigation_bar_cubit.dart';
 import 'src/data/student/data_provider/curriculum/curriculum_data_provider.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 
 Future<void> main() async {
@@ -133,6 +134,15 @@ class SelaheltelmeezLauncher extends StatelessWidget {
         return Sizer(
             builder: (context, orientation, deviceType)=>
                 MaterialApp(
+                  builder: (context, widget) => ResponsiveWrapper.builder(
+                    BouncingScrollWrapper.builder(context, widget!),
+                    //maxWidth: 1200,
+                    //minWidth: 450,
+                    defaultScale: true,
+                    breakpoints:[
+                      const ResponsiveBreakpoint.autoScale(600),
+                    ] ,
+                  ),
                 onGenerateTitle: (context) => S.of(context).appTitle,
                 localizationsDelegates: const [
                   S.delegate,
@@ -144,7 +154,7 @@ class SelaheltelmeezLauncher extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.lightTheme,
                 //initialRoute: appUser == null ? RouteNames.index : RouteNames.studentHomeLayout ,
-                initialRoute: RouteNames.teacherHome ,
+                initialRoute: RouteNames.parentHome ,
                 locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocal,
                 onGenerateRoute: RouteGenerator.generateRoute,
               ),

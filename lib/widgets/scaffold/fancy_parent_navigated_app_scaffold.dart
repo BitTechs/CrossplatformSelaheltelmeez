@@ -96,14 +96,15 @@ class FancyParentNavigatedAppScaffold extends StatelessWidget {
                     ),
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
+                       SizedBox(width: 22.w,),
                       Stack(
                         alignment: AlignmentDirectional.bottomStart,
                         children: [
                           Padding(
-                            padding: EdgeInsetsDirectional.only(start: 4.w),
+                            padding:  EdgeInsetsDirectional.only(start: 10.w),
                             child: Container(
                               height: 7.h,
                               width: 56.w,
@@ -154,11 +155,12 @@ class FancyParentNavigatedAppScaffold extends StatelessWidget {
                           ),
                         ],
                       ),
+
                       SizedBox(
                         width: 4.w,
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.only(top: 4.w, end: 4.w),
+                        padding: EdgeInsetsDirectional.only(top: 4.w),
                         child: GestureDetector(
                           onTap: onPressed,
                           child: Image(
