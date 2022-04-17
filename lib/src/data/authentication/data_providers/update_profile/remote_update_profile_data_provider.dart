@@ -15,12 +15,12 @@ class RemoteUpdateProfileDataProvider{
   }
 
   Future<ValueCommitResult<List<AvatarResponse>>> getAvatarsAsync()async {
-    Response<dynamic> response = await dioClient.getClient().get('/Identity/GetAvatars');
+    Response<dynamic> response = await dioClient.getClient().get('/provider/GetAvatars');
     return ValueCommitResult<List<AvatarResponse>>.fromJson(response.data,(data)=> (data as List).map((e) => AvatarResponse.fromJson(e as Map<String,dynamic>)).toList());
   }
 
   Future<ValueCommitResult<List<GovernorateResponse>>> getGovernoratesAsync()async {
-    Response<dynamic> response = await dioClient.getClient().get('/Identity/GetGovernorates');
+    Response<dynamic> response = await dioClient.getClient().get('/provider/GetGovernorates');
     return ValueCommitResult<List<GovernorateResponse>>.fromJson(response.data,(data)=> (data as List).map((e) => GovernorateResponse.fromJson(e as Map<String,dynamic>)).toList());
   }
 
