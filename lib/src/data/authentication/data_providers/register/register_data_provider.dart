@@ -9,7 +9,7 @@ class RemoteRegisterDataProvider {
   final IDioClient dioClient;
   RemoteRegisterDataProvider({required this.dioClient});
   Future<ValueCommitResult<List<GradeMenuItem>>> getGradeMenuItemsAsync() async {
-    Response<dynamic> response = await dioClient.getClient().get("/Identity/GetGradesDropDownMenu");
+    Response<dynamic> response = await dioClient.getClient().get("/provider/GetGradesDropDownMenu");
     return ValueCommitResult<List<GradeMenuItem>>.fromJson(response.data,(data)=> (data as List).map((e) => GradeMenuItem.fromJson(e as Map<String,dynamic>)).toList());
   }
   Future<ValueCommitResult<RegisterResponse>> registerAsync(RegisterRequest request) async {

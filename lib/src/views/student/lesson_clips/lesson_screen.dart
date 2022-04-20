@@ -65,7 +65,7 @@ class LessonScreen extends StatelessWidget {
                       percent: (state.studentScore / state.lessonScore),
                       isRTL: true,
                       leading: Text(
-                        "${((state.studentScore / state.lessonScore) * 100).toStringAsFixed(2)} %",
+                        " %",
                         style: const TextStyle(fontSize: 12.0),
                       ),
                       barRadius: const Radius.circular(16),
